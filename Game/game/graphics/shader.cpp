@@ -1,6 +1,7 @@
 // Includes:
 #include "shader.h"
 
+#include <utility>
 #include <stdexcept>
 
 // Namespace(s):
@@ -46,7 +47,10 @@ namespace game
 
 		shader::shader(const std::string& vertex, const std::string& fragment)
 		{
-			build(vertex, fragment);
+			if (!build(vertex, fragment))
+			{
+				throw std::runtime_error("Failed to compile shader.");
+			}
 		}
 
 		// Destructor(s):
@@ -56,15 +60,17 @@ namespace game
 		}
 
 		// Operator overloads:
-		shader& shader::operator=(shader&& input)
+		shader& shader::operator=(shader&& s)
 		{
-			this->instance = input.instance;
+			destroy();
+
+			std::swap(this->instance, s.instance);
 
 			return *this;
 		}
 
 		// Methods:
-		void shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, shaderHandle* vertex_out, shaderHandle* fragment_out)
+		bool shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, shaderHandle* vertex_out, shaderHandle* fragment_out)
 		{
 			if (exists())
 			{
@@ -148,7 +154,7 @@ namespace game
 			// Set the internal program instance.
 			this->instance = programID;
 
-			return;
+			return !error;
 		}
 
 		void shader::destroy()
@@ -156,6 +162,7 @@ namespace game
 			if (instance != noinstance)
 			{
 				glDeleteProgram(instance);
+
 				instance = noinstance;
 			}
 

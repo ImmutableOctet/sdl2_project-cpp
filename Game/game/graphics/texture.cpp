@@ -37,7 +37,9 @@ namespace game
 		// Operator overloads:
 		texture& texture::operator=(texture&& input)
 		{
-			this->instances = std::move(input.instances);
+			destroy(true);
+
+			std::swap(this->instances, input.instances);
 
 			return *this;
 		}

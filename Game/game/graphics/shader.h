@@ -55,13 +55,11 @@ namespace game
 					In addition, the two handles will be set to 'noinstance'.
 				*/
 
-				virtual void build(const GLchar* vertex, const GLchar* fragment, shaderHandle* vertex_out = nullptr, shaderHandle* fragment_out = nullptr);
+				virtual bool build(const GLchar* vertex, const GLchar* fragment, shaderHandle* vertex_out = nullptr, shaderHandle* fragment_out = nullptr);
 
-				inline void build(const std::string& vertex, const std::string& fragment, shaderHandle* vertex_out = nullptr, shaderHandle* fragment_out = nullptr)
+				inline bool build(const std::string& vertex, const std::string& fragment, shaderHandle* vertex_out = nullptr, shaderHandle* fragment_out = nullptr)
 				{
-					build(vertex.c_str(), fragment.c_str(), vertex_out, fragment_out);
-
-					return;
+					return build(vertex.c_str(), fragment.c_str(), vertex_out, fragment_out);
 				}
 
 				virtual void destroy();

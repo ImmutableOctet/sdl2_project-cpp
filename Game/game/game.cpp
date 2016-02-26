@@ -95,6 +95,8 @@ namespace game
 			throw std::runtime_error("Unable to build test shader.");
 		}
 
+		defaultShader.build(vShaderSource, fShaderSource);
+
 		defaultShader = std::move(shaderInstance);
 
 		// Set the default clear-color.
