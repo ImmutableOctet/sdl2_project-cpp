@@ -81,7 +81,7 @@ namespace game
 
 		auto x = std::move(shaderInstance);
 
-
+		std::cout << "Hello world." << std::endl;
 
 		return;
 	}

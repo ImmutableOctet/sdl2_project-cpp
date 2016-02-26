@@ -169,6 +169,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\config.h" />
     <ClInclude Include="game\display.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\graphics.h" />

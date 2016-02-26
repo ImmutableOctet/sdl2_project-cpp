@@ -4,6 +4,16 @@
 #include <iostream>
 #include <stdexcept>
 
+#ifdef GAME_CONSOLE
+	#include <cstdio>
+
+	#ifdef PLATFORM_WINDOWS
+		#define	WIN32_LEAN_AND_MEAN
+		
+		#include <windows.h>
+	#endif
+#endif
+
 // Functions:
 int main(int argc, char** argv)
 {
@@ -12,6 +22,18 @@ int main(int argc, char** argv)
 
 	using namespace game;
 	using namespace game::display;
+
+	#ifdef GAME_CONSOLE // GAME_DEBUG
+		#ifdef PLATFORM_WINDOWS
+			// Enable the developer-console.
+			AllocConsole();
+			
+			// Connect standard I/O to our console:
+			auto conin = freopen("conin$", "r", stdin);
+			auto conout = freopen("conout$", "w", stdout);
+			auto conerr = freopen("conout$", "w", stderr);
+		#endif
+	#endif
 
 	// Initialize SDL.
 	SDL_Init(SDL_INIT_VIDEO);
@@ -47,6 +69,16 @@ int main(int argc, char** argv)
 
 	// Deinitialize SDL.
 	SDL_Quit();
+
+	#ifdef GAME_CONSOLE // GAME_DEBUG
+		#ifdef PLATFORM_WINDOWS
+			fclose(conin);
+			fclose(conout);
+			fclose(conerr);
+			
+			FreeConsole();
+		#endif
+	#endif
 
 	// Return the calculated response.
 	return responseCode;

@@ -3,6 +3,7 @@
 // Includes:
 
 // Local:
+#include "config.h"
 #include "display.h"
 #include "graphics.h"
 
