@@ -178,6 +178,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\graphics\graphics.h" />
     <ClInclude Include="game\graphics\opengl.h" />
     <ClInclude Include="game\graphics\shader.h" />
+    <ClInclude Include="game\graphics\texture.h" />
     <ClInclude Include="game\graphics\types.h" />
     <ClInclude Include="game\graphics\uniform.h" />
   </ItemGroup>

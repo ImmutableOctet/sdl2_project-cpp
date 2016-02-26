@@ -9,5 +9,6 @@ namespace game
 	{
 		using shaderHandle = GLuint;
 		using shaderLocation = GLint;
+		using textureHandle = GLuint;
 	}
 }

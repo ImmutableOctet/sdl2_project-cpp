@@ -112,7 +112,7 @@ namespace game
 					throw std::runtime_error("Failed to link shader program.");
 				}
 			}
-			catch (std::exception& e)
+			catch (std::exception&)
 			{
 				error = true;
 
