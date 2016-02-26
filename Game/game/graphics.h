@@ -81,7 +81,8 @@ namespace game
 				shader();
 				shader(const std::string& vertex, const std::string& fragment);
 
-				// Force objects to be move-only.
+				// Force this type to be move-only:
+				shader(const shader&) = delete;
 				shader(shader&& s) = default;
 
 				// Destructor(s):
@@ -94,16 +95,30 @@ namespace game
 				}
 
 				// Methods:
-				virtual void build(const GLchar* vertex, const GLchar* fragment);
+
+				/*
+					The 'vertex_out' and 'fragment_out' arguments may be used to pass handles to compiled shaders.
+					
+					If these arguments are specified, the shaders will not be disposed of, and will instead be given to the user.
+					In contrast, if even one of the two arguments is ignored, then the shaders will be deleted properly.
+					In addition, the two handles will be set to 'noinstance'.
+				*/
+
+				virtual void build(const GLchar* vertex, const GLchar* fragment, shaderHandle* vertex_out=nullptr, shaderHandle* fragment_out=nullptr);
 				
-				inline void build(const std::string& vertex, const std::string& fragment)
+				inline void build(const std::string& vertex, const std::string& fragment, shaderHandle* vertex_out=nullptr, shaderHandle* fragment_out=nullptr)
 				{
-					build(vertex.c_str(), fragment.c_str());
+					build(vertex.c_str(), fragment.c_str(), vertex_out, fragment_out);
 
 					return;
 				}
 
 				virtual void destroy();
+
+				inline bool exists() const
+				{
+					return (instance != noinstance);
+				}
 
 				inline shaderHandle getInstance() const
 				{

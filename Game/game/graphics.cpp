@@ -93,14 +93,21 @@ namespace game
 		}
 
 		// Methods:
-		void shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource)
+		void shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, shaderHandle* vertex_out, shaderHandle* fragment_out)
 		{
+			if (exists())
+			{
+				throw std::runtime_error("Attempted to build an existing shader; please call 'destroy' first.");
+			}
+
 			// Allocate a program-handle.
 			shaderHandle programID = glCreateProgram();
 
 			// These act as handles for our shaders:
 			shaderHandle vertexShader = noinstance;
 			shaderHandle fragmentShader = noinstance;
+
+			bool error = false;
 
 			try
 			{
@@ -136,19 +143,35 @@ namespace game
 			}
 			catch (std::exception& e)
 			{
+				error = true;
+
 				glDeleteProgram(programID);
-				
+
 				programID = noinstance;
 			}
 
-			if (vertexShader != noinstance)
+			if (!error && (fragment_out != nullptr && vertex_out != nullptr))
 			{
-				glDeleteShader(vertexShader);
+				*vertex_out = vertexShader;
+				*fragment_out = fragmentShader;
 			}
-
-			if (fragmentShader != noinstance)
+			else
 			{
-				glDeleteShader(fragmentShader);
+				if (vertexShader != noinstance)
+				{
+					glDeleteShader(vertexShader);
+				}
+
+				if (fragmentShader != noinstance)
+				{
+					glDeleteShader(fragmentShader);
+				}
+
+				if (fragment_out != nullptr)
+					*fragment_out = noinstance;
+
+				if (vertex_out != nullptr)
+					*vertex_out = noinstance;
 			}
 
 			// Set the internal program instance.
