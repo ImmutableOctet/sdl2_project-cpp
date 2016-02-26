@@ -100,6 +100,12 @@ namespace game
 		// Set the default clear-color.
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+		// Set texture filtering:
+		/*
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		*/
+
 		return;
 	}
 
@@ -183,14 +189,16 @@ namespace game
 	{
 		using namespace std;
 
-		cout << "Hello world." << endl;
+		//cout << "Hello world." << endl;
 
 		return;
 	}
 
 	void application::onRender(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
-		//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		SDL_GL_SwapWindow(window);
 
 		return;
 	}

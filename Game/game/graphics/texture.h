@@ -13,6 +13,9 @@ namespace game
 		class texture
 		{
 			public:
+				// Constant variable(s):
+				static const textureHandle notexture = textureHandle();
+
 				// Constructor(s):
 				texture();
 
@@ -35,7 +38,17 @@ namespace game
 					return instances;
 				}
 
-				void load(const std::string& path);
+				virtual bool load(const char** paths, size_t count, bool destroyFirst=true);
+				
+				inline bool load(const std::string& path, bool destroyFirst=true)
+				{
+					const char* pathCharacters = path.c_str();
+					const char** input = &pathCharacters;
+
+					return load(input, 1, destroyFirst);
+				}
+
+				virtual void destroy(bool clear=true);
 			protected:
 				// Fields:
 				std::vector<textureHandle> instances;

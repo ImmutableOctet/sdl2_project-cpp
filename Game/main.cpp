@@ -45,10 +45,11 @@ int main(int argc, char** argv)
 	windowMode display;
 
 	// Configure the window:
-	display.title = "Application";
+	display.title = "OpenGL Application";
 	display.width = 1280;
 	display.height = 720;
 	display.flags |= (SDL_WINDOW_RESIZABLE); // SDL_WINDOW_MAXIMIZED;
+	//display.vsync = false;
 
 	application app(app_arguments(argc, (const char**)argv), display);
 
