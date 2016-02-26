@@ -1,50 +1,13 @@
 // Includes:
-#include "graphics.h"
+#include "shader.h"
 
 #include <stdexcept>
 
+// Namespace(s):
 namespace game
 {
 	namespace graphics
 	{
-		// Functions:
-		void configureGL()
-		{
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1); // 3
-			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-			return;
-		}
-
-		bool initializeGL(bool experimental, bool autocfg)
-		{
-			if (autocfg)
-			{
-				configureGL();
-			}
-
-			// Initialize GLEW:
-			glewExperimental = experimental;
-
-			auto errorCode = glewInit();
-
-			if (errorCode != GLEW_OK)
-			{
-				return false;
-			}
-
-			// Return the default response. (Success)
-			return true;
-		}
-
-		void deinitializeGL()
-		{
-			// Nothing so far.
-		}
-
-		// Classes:
-
 		// shader:
 
 		// Functions:

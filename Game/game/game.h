@@ -5,7 +5,7 @@
 // Local:
 #include "config.h"
 #include "display.h"
-#include "graphics.h"
+#include "graphics/graphics.h"
 
 // Libraries:
 

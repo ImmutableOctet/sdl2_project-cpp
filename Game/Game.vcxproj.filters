@@ -19,6 +19,12 @@
     <Filter Include="Header Files\game">
       <UniqueIdentifier>{1872548d-6916-4d9c-8ce8-3de93f8e905a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\game\graphics">
+      <UniqueIdentifier>{b0eb48ec-9cb2-487a-bf94-b664fb2fd97f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\graphics">
+      <UniqueIdentifier>{8c8365a1-0bf4-48d6-86bd-87600aa7d9e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,8 +36,14 @@
     <ClCompile Include="game\display.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="game\graphics.cpp">
-      <Filter>Source Files\game</Filter>
+    <ClCompile Include="game\graphics\graphics.cpp">
+      <Filter>Source Files\game\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="game\graphics\shader.cpp">
+      <Filter>Source Files\game\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="game\graphics\context.cpp">
+      <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,11 +53,26 @@
     <ClInclude Include="game\display.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="game\graphics.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
     <ClInclude Include="game\config.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\uniform.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\graphics.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\shader.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\types.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\context.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\opengl.h">
+      <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
