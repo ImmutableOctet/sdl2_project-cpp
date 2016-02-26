@@ -33,24 +33,41 @@ namespace game
 		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z) { glUniform3ui(attr, x, y, z); }
 		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z, GLuint w) { glUniform4ui(attr, x, y, z, w); }
 
-		inline void setVector1(shaderLocation attr, GLfloat* values, GLsizei count = 1) { glUniform1fv(attr, count, values); }
-		inline void setVector2(shaderLocation attr, GLfloat* values, GLsizei count = 2) { glUniform2fv(attr, count, values); }
-		inline void setVector3(shaderLocation attr, GLfloat* values, GLsizei count = 3) { glUniform3fv(attr, count, values); }
-		inline void setVector4(shaderLocation attr, GLfloat* values, GLsizei count = 4) { glUniform4fv(attr, count, values); }
+		inline void setVector1(shaderLocation attr, const GLfloat* values, GLsizei count = 1) { glUniform1fv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, const GLfloat* values, GLsizei count = 2) { glUniform2fv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, const GLfloat* values, GLsizei count = 3) { glUniform3fv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, const GLfloat* values, GLsizei count = 4) { glUniform4fv(attr, count, values); }
 
-		inline void setVector1(shaderLocation attr, GLdouble* values, GLsizei count = 1) { glUniform1dv(attr, count, values); }
-		inline void setVector2(shaderLocation attr, GLdouble* values, GLsizei count = 2) { glUniform2dv(attr, count, values); }
-		inline void setVector3(shaderLocation attr, GLdouble* values, GLsizei count = 3) { glUniform3dv(attr, count, values); }
-		inline void setVector4(shaderLocation attr, GLdouble* values, GLsizei count = 4) { glUniform4dv(attr, count, values); }
+		inline void setVector1(shaderLocation attr, const GLdouble* values, GLsizei count = 1) { glUniform1dv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, const GLdouble* values, GLsizei count = 2) { glUniform2dv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, const GLdouble* values, GLsizei count = 3) { glUniform3dv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, const GLdouble* values, GLsizei count = 4) { glUniform4dv(attr, count, values); }
 
-		inline void setVector1(shaderLocation attr, GLint* values, GLsizei count = 1) { glUniform1iv(attr, count, values); }
-		inline void setVector2(shaderLocation attr, GLint* values, GLsizei count = 2) { glUniform2iv(attr, count, values); }
-		inline void setVector3(shaderLocation attr, GLint* values, GLsizei count = 3) { glUniform3iv(attr, count, values); }
-		inline void setVector4(shaderLocation attr, GLint* values, GLsizei count = 4) { glUniform4iv(attr, count, values); }
+		inline void setVector1(shaderLocation attr, const GLint* values, GLsizei count = 1) { glUniform1iv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, const GLint* values, GLsizei count = 2) { glUniform2iv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, const GLint* values, GLsizei count = 3) { glUniform3iv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, const GLint* values, GLsizei count = 4) { glUniform4iv(attr, count, values); }
 
-		inline void setVector1(shaderLocation attr, GLuint* values, GLsizei count = 1) { glUniform1uiv(attr, count, values); }
-		inline void setVector2(shaderLocation attr, GLuint* values, GLsizei count = 2) { glUniform2uiv(attr, count, values); }
-		inline void setVector3(shaderLocation attr, GLuint* values, GLsizei count = 3) { glUniform3uiv(attr, count, values); }
-		inline void setVector4(shaderLocation attr, GLuint* values, GLsizei count = 4) { glUniform4uiv(attr, count, values); }
+		inline void setVector1(shaderLocation attr, const GLuint* values, GLsizei count = 1) { glUniform1uiv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, const GLuint* values, GLsizei count = 2) { glUniform2uiv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, const GLuint* values, GLsizei count = 3) { glUniform3uiv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, const GLuint* values, GLsizei count = 4) { glUniform4uiv(attr, count, values); }
+
+		// Abstraction layer:
+		template <typename T, typename = std::enable_if_t<std::is_integral<T>::value> || std::enable_if_t<std::is_floating_point<T>::value>>
+		inline void setVector(shaderLocation attr, T* values, GLsizei count)
+		{
+			switch (count)
+			{
+				case 1:
+					setVector1(attr, values, count); break;
+				case 2:
+					setVector2(attr, values, count); break;
+				case 3:
+					setVector3(attr, values, count); break;
+				case 4:
+					setVector4(attr, values, count); break;
+			}
+		}
 	}
 }
