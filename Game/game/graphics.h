@@ -67,25 +67,25 @@ namespace game
 		void deinitializeGL();
 
 		// GL API Wrapper:
-		inline void setUniform(shaderLocation attr, GLfloat value);
-		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y);
-		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y, GLfloat z);
-		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-		
-		inline void setUniform(shaderLocation attr, GLdouble value);
-		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y);
-		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y, GLdouble z);
-		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
-		
-		inline void setUniform(shaderLocation attr, GLint value);
-		inline void setUniform(shaderLocation attr, GLint x, GLint y);
-		inline void setUniform(shaderLocation attr, GLint x, GLint y, GLint z);
-		inline void setUniform(shaderLocation attr, GLint x, GLint y, GLint z, GLint w);
-		
-		inline void setUniform(shaderLocation attr, GLuint value);
-		inline void setUniform(shaderLocation attr, GLuint x, GLuint y);
-		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z);
-		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z, GLuint w);
+		inline void setUniform(shaderLocation attr, GLfloat value) { glUniform1f(attr, value); }
+		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y) { glUniform2f(attr, x, y); }
+		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y, GLfloat z) { glUniform3f(attr, x, y, z); }
+		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y, GLfloat z, GLfloat w) { glUniform4f(attr, x, y, z, w); }
+
+		inline void setUniform(shaderLocation attr, GLdouble value) { glUniform1d(attr, value); }
+		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y) { glUniform2d(attr, x, y); }
+		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y, GLdouble z) { glUniform3d(attr, x, y, z); }
+		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y, GLdouble z, GLdouble w) { glUniform4d(attr, x, y, z, w); }
+
+		inline void setUniform(shaderLocation attr, GLint value) { glUniform1i(attr, value); }
+		inline void setUniform(shaderLocation attr, GLint x, GLint y) { glUniform2i(attr, x, y); }
+		inline void setUniform(shaderLocation attr, GLint x, GLint y, GLint z) { glUniform3i(attr, x, y, z); }
+		inline void setUniform(shaderLocation attr, GLint x, GLint y, GLint z, GLint w) { glUniform4i(attr, x, y, z, w); }
+
+		inline void setUniform(shaderLocation attr, GLuint value) { glUniform1ui(attr, value); }
+		inline void setUniform(shaderLocation attr, GLuint x, GLuint y) { glUniform2ui(attr, x, y); }
+		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z) { glUniform3ui(attr, x, y, z); }
+		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z, GLuint w) { glUniform4ui(attr, x, y, z, w); }
 
 		inline void setVector1(shaderLocation attr, GLfloat* values, GLsizei count = 1) { glUniform1fv(attr, count, values); }
 		inline void setVector2(shaderLocation attr, GLfloat* values, GLsizei count = 2) { glUniform2fv(attr, count, values); }
