@@ -166,6 +166,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="game\display.cpp" />
     <ClCompile Include="game\game.cpp" />
     <ClCompile Include="game\graphics\context.cpp" />
+    <ClCompile Include="game\graphics\FBO.cpp" />
     <ClCompile Include="game\graphics\graphics.cpp" />
     <ClCompile Include="game\graphics\shader.cpp" />
     <ClCompile Include="game\graphics\texture.cpp" />
@@ -176,6 +177,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\display.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\graphics\context.h" />
+    <ClInclude Include="game\graphics\FBO.h" />
     <ClInclude Include="game\graphics\graphics.h" />
     <ClInclude Include="game\graphics\opengl.h" />
     <ClInclude Include="game\graphics\shader.h" />

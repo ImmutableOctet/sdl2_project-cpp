@@ -14,7 +14,7 @@ namespace game
 		{
 			public:
 				// Constant variable(s):
-				static const textureHandle notexture = textureHandle();
+				static const textureHandle noinstance = textureHandle();
 
 				// Constructor(s):
 				texture();

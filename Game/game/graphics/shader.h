@@ -17,7 +17,7 @@ namespace game
 				using location = shaderLocation;
 
 				// Constant variable(s):
-				static const shaderHandle noinstance = 0;
+				static const shaderHandle noinstance = shaderHandle();
 
 				// Functions:
 				static shaderHandle buildProgram(const GLchar* str, GLenum shaderType);

@@ -48,6 +48,9 @@
     <ClCompile Include="game\graphics\texture.cpp">
       <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="game\graphics\FBO.cpp">
+      <Filter>Source Files\game\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\game.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
     <ClInclude Include="game\graphics\texture.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\FBO.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
   </ItemGroup>

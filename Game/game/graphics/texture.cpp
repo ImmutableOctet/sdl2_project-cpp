@@ -84,7 +84,7 @@ namespace game
 			auto startIndex = instances.size();
 
 			// Allocate the extra memory we need.
-			instances.resize(startIndex + count, notexture);
+			instances.resize(startIndex + count, noinstance);
 			
 			// Point to the new area.
 			textureHandle* const raw_ptr = (instances.data() + startIndex);

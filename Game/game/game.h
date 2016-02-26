@@ -123,6 +123,9 @@ namespace game
 
 			graphics::shader defaultShader;
 
+			graphics::VBOHandle testVertices;
+			graphics::IBOHandle testIndices;
+
 			bool closed = false;
 	};
 }

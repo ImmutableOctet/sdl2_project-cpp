@@ -9,6 +9,11 @@ namespace game
 	{
 		using shaderHandle = GLuint;
 		using shaderLocation = GLint;
+
 		using textureHandle = GLuint;
+
+		using VBOHandle = GLuint;
+		using IBOHandle = GLuint;
+		using FBOHandle = GLuint;
 	}
 }
