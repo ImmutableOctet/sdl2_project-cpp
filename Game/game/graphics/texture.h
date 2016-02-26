@@ -13,8 +13,11 @@ namespace game
 		class texture
 		{
 			public:
+				// Constructor(s):
 				texture();
-				~texture();
+
+				// Destructor(s):
+				virtual ~texture();
 
 				// Force this type to be move-only:
 				texture(texture&& t) = default;
@@ -25,6 +28,14 @@ namespace game
 
 				bool operator==(textureHandle inst) const;
 				bool operator==(const std::vector<textureHandle>& insts) const;
+
+				// Methods:
+				inline const std::vector<textureHandle>& getInstances() const
+				{
+					return instances;
+				}
+
+				void load(const std::string& path);
 			protected:
 				// Fields:
 				std::vector<textureHandle> instances;

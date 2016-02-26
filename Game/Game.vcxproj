@@ -69,28 +69,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Other\Programming Languages\C++\GLEW\lib\Release\Win32;E:\Other\Programming Languages\C++\SDL\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Other\Programming Languages\C++\SDL2_Image\include;E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Other\Programming Languages\C++\SDL2_Image\lib\x86;E:\Other\Programming Languages\C++\GLEW\lib\Release\Win32;E:\Other\Programming Languages\C++\SDL\lib\x86;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\cache\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Other\Programming Languages\C++\GLEW\lib\Release\Win32;E:\Other\Programming Languages\C++\SDL\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Other\Programming Languages\C++\SDL2_Image\include;E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Other\Programming Languages\C++\SDL2_Image\lib\x86;E:\Other\Programming Languages\C++\GLEW\lib\Release\Win32;E:\Other\Programming Languages\C++\SDL\lib\x86;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\cache\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Other\Programming Languages\C++\GLEW\lib\Release\x64;E:\Other\Programming Languages\C++\SDL\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Other\Programming Languages\C++\SDL2_Image\include;E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Other\Programming Languages\C++\SDL2_Image\lib\x64;E:\Other\Programming Languages\C++\GLEW\lib\Release\x64;E:\Other\Programming Languages\C++\SDL\lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\cache\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Other\Programming Languages\C++\GLEW\lib\Release\x64;E:\Other\Programming Languages\C++\SDL\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Other\Programming Languages\C++\SDL2_Image\include;E:\Other\Programming Languages\C++\GLEW\include;E:\Other\Programming Languages\C++\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Other\Programming Languages\C++\SDL2_Image\lib\x64;E:\Other\Programming Languages\C++\GLEW\lib\Release\x64;E:\Other\Programming Languages\C++\SDL\lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)build\cache\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -101,7 +101,7 @@
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_image.lib;opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -116,7 +116,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_image.lib;opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -135,7 +135,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_image.lib;opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
@@ -154,7 +154,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2_image.lib;opengl32.lib;GlU32.Lib;glew32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>

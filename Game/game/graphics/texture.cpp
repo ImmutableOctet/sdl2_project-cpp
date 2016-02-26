@@ -1,7 +1,14 @@
 // Includes:
+
+// Local:
 #include "texture.h"
 #include "opengl.h"
 
+// SDL:
+#include <SDL.h>
+#include <SDL_image.h>
+
+// STL:
 #include <utility>
 
 // Namespace(s):
@@ -12,14 +19,20 @@ namespace game
 		// Classes:
 
 		// texture:
+
+		// Constructor(s):
 		texture::texture()
 		{
 			// Nothing so far.
 		}
 
+		// Destructor(s):
 		texture::~texture()
 		{
-			glDeleteTextures(instances.size(), instances.data());
+			if (!instances.empty())
+			{
+				glDeleteTextures(static_cast<GLsizei>(instances.size()), instances.data());
+			}
 		}
 
 		// Operator overloads:
@@ -47,6 +60,16 @@ namespace game
 		bool texture::operator==(const std::vector<textureHandle>& insts) const
 		{
 			return (insts == instances);
+		}
+
+		// Methods:
+		void texture::load(const std::string& path)
+		{
+			SDL_Surface* surface = IMG_Load(path.c_str());
+
+
+
+			return;
 		}
 	}
 }
