@@ -121,6 +121,8 @@ namespace game
 			display::systemWindow window;
 			display::windowMode video;
 
+			graphics::shader defaultShader;
+
 			bool closed = false;
 	};
 }

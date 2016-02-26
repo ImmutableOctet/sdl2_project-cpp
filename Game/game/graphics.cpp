@@ -92,6 +92,14 @@ namespace game
 			destroy();
 		}
 
+		// Operator overloads:
+		shader& shader::operator=(shader&& input)
+		{
+			this->instance = input.instance;
+
+			return *this;
+		}
+
 		// Methods:
 		void shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, shaderHandle* vertex_out, shaderHandle* fragment_out)
 		{
@@ -189,6 +197,19 @@ namespace game
 			}
 
 			return;
+		}
+
+		shaderLocation shader::getAttribute(const GLchar* name)
+		{
+			return static_cast<shaderLocation>(glGetAttribLocation(instance, name));
+		}
+
+		bool shader::setFloat(shaderLocation location, GLfloat value)
+		{
+			glUniform1f(location, value);
+
+			// Return the default response.
+			return true;
 		}
 	}
 }

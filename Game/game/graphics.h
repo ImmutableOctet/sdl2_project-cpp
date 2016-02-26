@@ -18,7 +18,9 @@ namespace game
 	{
 		// Typedefs:
 		using context = SDL_GLContext;
+
 		using shaderHandle = GLuint;
+		using shaderLocation = GLint;
 
 		// Constant variable(s):
 		static const context nocontext = nullptr;
@@ -82,13 +84,14 @@ namespace game
 				shader(const std::string& vertex, const std::string& fragment);
 
 				// Force this type to be move-only:
-				shader(const shader&) = delete;
 				shader(shader&& s) = default;
 
 				// Destructor(s):
 				virtual ~shader();
 
 				// Operator overloads:
+				shader& operator=(shader&& input);
+
 				inline bool operator==(shaderHandle inst) const
 				{
 					return (this->instance == inst);
@@ -115,6 +118,12 @@ namespace game
 
 				virtual void destroy();
 
+				// This retrieves a 'shaderLocation' representing an attribute.
+				// Attributes are commonly uniform' variables.
+				shaderLocation getAttribute(const GLchar* name);
+
+				bool setFloat(shaderLocation location, GLfloat value);
+
 				inline bool exists() const
 				{
 					return (instance != noinstance);
@@ -125,6 +134,8 @@ namespace game
 					return instance;
 				}
 			protected:
+				//shader(const shader&); // = delete;
+
 				// Fields:
 				shaderHandle instance = noinstance;
 		};

@@ -69,8 +69,24 @@ namespace game
 	void application::onCreate(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
 		// Temporary vertex shader source code:
-		const GLchar* vShaderSource = "#version 140\nin vec2 LVertexPos2D; void main() { gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0, 1 ); }";
-		const GLchar* fShaderSource = "#version 140\nout vec4 LFragment; void main() { LFragment = vec4( 1.0, 1.0, 1.0, 1.0 ); }";
+		const GLchar* vShaderSource =
+			"#version 140""\n"
+			
+			"in vec2 LVertexPos2D;"
+			
+			"void main()"
+			"{"
+				"gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0, 1 );"
+			"}";
+		const GLchar* fShaderSource =
+			"#version 140" "\n"
+			
+			"out vec4 LFragment;"
+			
+			"void main()"
+			"{"
+				"LFragment = vec4( 1.0, 1.0, 1.0, 1.0 );"
+			"}";
 
 		auto shaderInstance = graphics::shader(vShaderSource, fShaderSource);
 
@@ -79,9 +95,10 @@ namespace game
 			throw std::runtime_error("Unable to build test shader.");
 		}
 
-		auto& x = shaderInstance;
+		defaultShader = std::move(shaderInstance);
 
-		std::cout << "Hello world." << std::endl;
+		// Set the default clear-color.
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		return;
 	}
