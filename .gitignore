@@ -1,0 +1,8 @@
+.vs
+build
+bin
+resources
+library
+*.pdb
+*.sdf
+*.opendb
