@@ -168,6 +168,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="game\graphics\context.cpp" />
     <ClCompile Include="game\graphics\graphics.cpp" />
     <ClCompile Include="game\graphics\shader.cpp" />
+    <ClCompile Include="game\graphics\texture.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

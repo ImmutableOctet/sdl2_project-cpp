@@ -45,6 +45,9 @@
     <ClCompile Include="game\graphics\context.cpp">
       <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="game\graphics\texture.cpp">
+      <Filter>Source Files\game\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\game.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
     <ClInclude Include="game\graphics\opengl.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\texture.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
   </ItemGroup>
