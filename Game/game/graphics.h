@@ -33,6 +33,8 @@ namespace game
 
 		// Functions:
 
+		// Support layer:
+
 		// This configures OpenGL contexts.
 		// Please call this before calling 'initializeGL',
 		// or use the 'autocfg' argument of that function.
@@ -64,10 +66,54 @@ namespace game
 
 		void deinitializeGL();
 
+		// GL API Wrapper:
+		inline void setUniform(shaderLocation attr, GLfloat value);
+		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y);
+		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y, GLfloat z);
+		inline void setUniform(shaderLocation attr, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+		
+		inline void setUniform(shaderLocation attr, GLdouble value);
+		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y);
+		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y, GLdouble z);
+		inline void setUniform(shaderLocation attr, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
+		
+		inline void setUniform(shaderLocation attr, GLint value);
+		inline void setUniform(shaderLocation attr, GLint x, GLint y);
+		inline void setUniform(shaderLocation attr, GLint x, GLint y, GLint z);
+		inline void setUniform(shaderLocation attr, GLint x, GLint y, GLint z, GLint w);
+		
+		inline void setUniform(shaderLocation attr, GLuint value);
+		inline void setUniform(shaderLocation attr, GLuint x, GLuint y);
+		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z);
+		inline void setUniform(shaderLocation attr, GLuint x, GLuint y, GLuint z, GLuint w);
+
+		inline void setVector1(shaderLocation attr, GLfloat* values, GLsizei count = 1) { glUniform1fv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, GLfloat* values, GLsizei count = 2) { glUniform2fv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, GLfloat* values, GLsizei count = 3) { glUniform3fv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, GLfloat* values, GLsizei count = 4) { glUniform4fv(attr, count, values); }
+
+		inline void setVector1(shaderLocation attr, GLdouble* values, GLsizei count = 1) { glUniform1dv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, GLdouble* values, GLsizei count = 2) { glUniform2dv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, GLdouble* values, GLsizei count = 3) { glUniform3dv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, GLdouble* values, GLsizei count = 4) { glUniform4dv(attr, count, values); }
+
+		inline void setVector1(shaderLocation attr, GLint* values, GLsizei count = 1) { glUniform1iv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, GLint* values, GLsizei count = 2) { glUniform2iv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, GLint* values, GLsizei count = 3) { glUniform3iv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, GLint* values, GLsizei count = 4) { glUniform4iv(attr, count, values); }
+
+		inline void setVector1(shaderLocation attr, GLuint* values, GLsizei count = 1) { glUniform1uiv(attr, count, values); }
+		inline void setVector2(shaderLocation attr, GLuint* values, GLsizei count = 2) { glUniform2uiv(attr, count, values); }
+		inline void setVector3(shaderLocation attr, GLuint* values, GLsizei count = 3) { glUniform3uiv(attr, count, values); }
+		inline void setVector4(shaderLocation attr, GLuint* values, GLsizei count = 4) { glUniform4uiv(attr, count, values); }
+
 		// Classes:
 		class shader
 		{
 			public:
+				// Typedefs:
+				using location = shaderLocation;
+
 				// Constant variable(s):
 				static const shaderHandle noinstance = 0;
 
@@ -118,11 +164,12 @@ namespace game
 
 				virtual void destroy();
 
-				// This retrieves a 'shaderLocation' representing an attribute.
+				// This retrieves a 'location' representing an attribute.
 				// Attributes are commonly uniform' variables.
-				shaderLocation getAttribute(const GLchar* name);
-
-				bool setFloat(shaderLocation location, GLfloat value);
+				inline location getAttribute(const GLchar* name)
+				{
+					return glGetAttribLocation(instance, name);
+				}
 
 				inline bool exists() const
 				{
