@@ -81,6 +81,9 @@ namespace game
 				shader();
 				shader(const std::string& vertex, const std::string& fragment);
 
+				// Force objects to be move-only.
+				shader(shader&& s) = default;
+
 				// Destructor(s):
 				virtual ~shader();
 

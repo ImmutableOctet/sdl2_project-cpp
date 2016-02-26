@@ -79,6 +79,8 @@ namespace game
 			throw std::runtime_error("Unable to build test shader.");
 		}
 
+		auto x = std::move(shaderInstance);
+
 
 
 		return;
