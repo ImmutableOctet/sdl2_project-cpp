@@ -92,7 +92,7 @@ namespace game
 				"LFragment = vec4( 1.0, 1.0, 1.0, 1.0 );"
 			"}";
 
-		GLfloat vertexData[] =
+		std::vector<GLfloat> vertexData =
 		{
 			-0.5f, -0.5f,
 			0.5f, -0.5f,
@@ -100,7 +100,7 @@ namespace game
 			-0.5f,  0.5f
 		};
 
-		GLuint indexData[] = { 0, 1, 2, 3 };
+		std::vector<GLuint> indexData = { 0, 1, 2, 3 };
 
 		auto shaderInstance = graphics::shader(vShaderSource, fShaderSource);
 
@@ -116,16 +116,8 @@ namespace game
 		// Set the default clear-color.
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		{
-			auto vertices = std::vector<GLfloat>();
-			auto indices = std::vector<GLuint>();
-
-			vertices.assign(vertexData, vertexData + 8);
-			indices.assign(indexData, indexData + 4);
-
-			testVertices = graphics::vertexBufferObject(vertices, GL_STATIC_DRAW);
-			testIndices = graphics::indexBufferObject(indices, GL_STATIC_DRAW);
-		}
+		testVertices = graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW);
+		testIndices = graphics::indexBufferObject(indexData, GL_STATIC_DRAW);
 
 		return;
 	}
