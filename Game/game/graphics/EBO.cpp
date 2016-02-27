@@ -33,9 +33,7 @@ namespace game
 		// Operator overloads:
 		elementBufferObject& elementBufferObject::operator=(elementBufferObject&& input)
 		{
-			destroy(true);
-
-			std::swap(this->instances, input.instances);
+			resource::operator=(input);
 
 			return *this;
 		}
