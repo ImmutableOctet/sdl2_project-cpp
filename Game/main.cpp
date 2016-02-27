@@ -46,8 +46,8 @@ int main(int argc, char** argv)
 
 	// Configure the window:
 	display.title = "OpenGL Application";
-	display.width = 1280;
-	display.height = 720;
+	display.width = 1280; // 960;
+	display.height = 720; // 540;
 	display.flags |= (SDL_WINDOW_RESIZABLE); // SDL_WINDOW_MAXIMIZED;
 	//display.vsync = false;
 
