@@ -115,7 +115,7 @@ namespace game
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		testVertices = graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW);
-		testIndices = graphics::indexBufferObject(indexData, GL_STATIC_DRAW);
+		testIndices = graphics::elementBufferObject(indexData, GL_STATIC_DRAW);
 
 		return;
 	}

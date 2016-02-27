@@ -9,22 +9,22 @@ namespace game
 	namespace graphics
 	{
 		// Classes:
-		class indexBufferObject : public bufferObject<IBOHandle>
+		class elementBufferObject : public bufferObject<IBOHandle>
 		{
 			public:
 				// Constructor(s):
-				indexBufferObject();
-				indexBufferObject(const std::vector<GLuint>& indexData, GLenum usage);
+				elementBufferObject();
+				elementBufferObject(const std::vector<GLuint>& indexData, GLenum usage);
 
 				// Force this type to be move-only:
-				indexBufferObject(indexBufferObject&& t) = default;
-				//indexBufferObject(const indexBufferObject&) = delete;
+				elementBufferObject(elementBufferObject&& t) = default;
+				//elementBufferObject(const elementBufferObject&) = delete;
 
 				// Destructor(s):
-				virtual ~indexBufferObject();
+				virtual ~elementBufferObject();
 
 				// Operator overloads:
-				indexBufferObject& operator=(indexBufferObject&& input);
+				elementBufferObject& operator=(elementBufferObject&& input);
 
 				// Methods:
 				virtual bool init(const std::vector<std::vector<GLuint>>& indexDataArray, GLenum usage, bool destroyFirst=true);

@@ -124,7 +124,7 @@ namespace game
 			graphics::shader defaultShader;
 
 			graphics::vertexBufferObject testVertices;
-			graphics::indexBufferObject testIndices;
+			graphics::elementBufferObject testIndices;
 
 			bool closed = false;
 	};

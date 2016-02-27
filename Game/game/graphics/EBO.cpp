@@ -2,7 +2,7 @@
 #include "opengl.h"
 #include "uniform.h"
 
-#include "IBO.h"
+#include "EBO.h"
 
 // Namespace(s):
 namespace game
@@ -11,27 +11,27 @@ namespace game
 	{
 		// Classes:
 
-		// indexBufferObject:
+		// elementBufferObject:
 
 		// Constructor(s):
-		indexBufferObject::indexBufferObject()
+		elementBufferObject::elementBufferObject()
 		{
 			// Nothing so far.
 		}
 
-		indexBufferObject::indexBufferObject(const std::vector<GLuint>& indexData, GLenum usage)
+		elementBufferObject::elementBufferObject(const std::vector<GLuint>& indexData, GLenum usage)
 		{
 			init(indexData, usage, false);
 		}
 
 		// Destructor(s):
-		indexBufferObject::~indexBufferObject()
+		elementBufferObject::~elementBufferObject()
 		{
 			// Nothing so far.
 		}
 
 		// Operator overloads:
-		indexBufferObject& indexBufferObject::operator=(indexBufferObject&& input)
+		elementBufferObject& elementBufferObject::operator=(elementBufferObject&& input)
 		{
 			destroy(true);
 
@@ -41,7 +41,7 @@ namespace game
 		}
 
 		// Methods:
-		bool indexBufferObject::init(const std::vector<std::vector<GLuint>>& indexDataArray, GLenum usage, bool destroyFirst)
+		bool elementBufferObject::init(const std::vector<std::vector<GLuint>>& indexDataArray, GLenum usage, bool destroyFirst)
 		{
 			// Check if we should release existing handles first:
 			if (destroyFirst)
@@ -52,7 +52,7 @@ namespace game
 			return rawBufferUpload<GLuint, IBOHandle>(this->instances, indexDataArray, usage, GL_ELEMENT_ARRAY_BUFFER);
 		}
 
-		void indexBufferObject::destroy(bool clear)
+		void elementBufferObject::destroy(bool clear)
 		{
 			destroyBuffers(this->instances, clear);
 

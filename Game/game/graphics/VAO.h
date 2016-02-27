@@ -4,7 +4,7 @@
 #include "resource_container.h"
 
 #include "VBO.h"
-#include "IBO.h"
+#include "EBO.h"
 
 // Namespace(s):
 namespace game
@@ -19,7 +19,7 @@ namespace game
 			VAOHandle instance;
 
 			vertexBufferObject vertices;
-			indexBufferObject indices;
+			elementBufferObject indices;
 		};
 
 		// Classes:
