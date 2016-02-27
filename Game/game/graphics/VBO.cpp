@@ -23,6 +23,16 @@ namespace game
 			// Nothing so far.
 		}
 
+		// Operator overloads:
+		vertexBufferObject& vertexBufferObject::operator=(vertexBufferObject&& input)
+		{
+			destroy(true);
+
+			std::swap(this->instances, input.instances);
+
+			return *this;
+		}
+
 		// Methods:
 		bool vertexBufferObject::init(const std::vector<std::vector<GLfloat>>& vertexDataArray, GLenum usage, bool destroyFirst)
 		{
@@ -33,6 +43,13 @@ namespace game
 			}
 
 			return rawBufferUpload<GLfloat, IBOHandle>(this->instances, vertexDataArray, usage, GL_ARRAY_BUFFER);
+		}
+
+		void vertexBufferObject::destroy(bool clear)
+		{
+			destroyBuffers(this->instances, clear);
+
+			return;
 		}
 	}
 }

@@ -15,8 +15,15 @@ namespace game
 				// Constructor(s):
 				vertexBufferObject();
 
+				// Force this type to be move-only:
+				vertexBufferObject(vertexBufferObject&& t) = default;
+				//vertexBufferObject(const vertexBufferObject&) = delete;
+
 				// Destructor(s):
 				virtual ~vertexBufferObject();
+
+				// Operator overloads:
+				vertexBufferObject& operator=(vertexBufferObject&& input);
 
 				// Methods:
 				virtual bool init(const std::vector<std::vector<GLfloat>>& vertexDataArray, GLenum usage, bool destroyFirst=true);
@@ -27,6 +34,8 @@ namespace game
 
 					return init(input, usage, destroyFirst);
 				}
+
+				virtual void destroy(bool clear=true) override;
 		};
 	}
 }

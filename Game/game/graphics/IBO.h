@@ -15,8 +15,15 @@ namespace game
 				// Constructor(s):
 				indexBufferObject();
 
+				// Force this type to be move-only:
+				indexBufferObject(indexBufferObject&& t) = default;
+				//indexBufferObject(const indexBufferObject&) = delete;
+
 				// Destructor(s):
 				virtual ~indexBufferObject();
+
+				// Operator overloads:
+				indexBufferObject& operator=(indexBufferObject&& input);
 
 				// Methods:
 				virtual bool init(const std::vector<std::vector<GLuint>>& indexDataArray, GLenum usage, bool destroyFirst=true);
@@ -27,6 +34,8 @@ namespace game
 
 					return init(input, usage, destroyFirst);
 				}
+
+				virtual void destroy(bool clear=true) override;
 		};
 	}
 }

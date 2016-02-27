@@ -22,6 +22,19 @@ namespace game
 		// Functions:
 
 		// GL API Wrapper:
+		template <typename handleType=GLuint>
+		inline void destroyBuffers(std::vector<handleType>& instances, bool clear=true)
+		{
+			if (!instances.empty())
+			{
+				glDeleteBuffers(static_cast<GLsizei>(instances.size()), instances.data());
+
+				if (clear)
+				{
+					instances.clear();
+				}
+			}
+		}
 
 		template <typename T, typename handleType=GLuint>
 		inline bool rawBufferUpload(std::vector<handleType>& instances, const std::vector<std::vector<T>>& inputDataset, GLenum usage, GLenum target)
