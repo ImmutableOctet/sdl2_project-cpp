@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes:
-#include "bufferobject.h"
+#include "resource.h"
 
 // Namespaces:
 namespace game
@@ -9,7 +9,7 @@ namespace game
 	namespace graphics
 	{
 		// Classes:
-		class frameBufferObject : public bufferObject<FBOHandle>
+		class frameBufferObject : public resource<FBOHandle>
 		{
 			public:
 				// Constructor(s):

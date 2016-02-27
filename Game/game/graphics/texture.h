@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes:
-#include "bufferobject.h"
+#include "resource.h"
 
 #include <cstddef>
 
@@ -10,14 +10,14 @@ namespace game
 {
 	namespace graphics
 	{
-		class texture : public bufferObject<textureHandle>
+		class texture : public resource<textureHandle>
 		{
 			public:
 				// Constructor(s):
 				texture();
 
 				// Destructor(s):
-				virtual ~texture();
+				~texture(); // virtual
 
 				// Force this type to be move-only:
 				texture(texture&& t) = default;
@@ -27,17 +27,17 @@ namespace game
 				texture& operator=(texture&& input);
 
 				// Methods:
-				virtual bool load(const char** paths, std::size_t count, bool destroyFirst=true);
+				virtual bool load(const char* path, bool should_unbind=true);
 				
-				inline bool load(const std::string& path, bool destroyFirst=true)
+				inline bool load(const std::string& path, bool should_unbind=true)
 				{
-					const char* pathCharacters = path.c_str();
-					const char** input = &pathCharacters;
-
-					return load(input, 1, destroyFirst);
+					return load(path.c_str(), should_unbind);
 				}
 
-				virtual void destroy(bool clear=true) override;
+				void destroy() override;
+
+				void bind() const override;
+				void unbind() const override;
 		};
 	}
 }

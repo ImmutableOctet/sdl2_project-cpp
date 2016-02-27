@@ -8,9 +8,7 @@
 #include "uniform.h"
 #include "texture.h"
 #include "shader.h"
-#include "VBO.h"
-#include "FBO.h"
-#include "IBO.h"
+#include "VAO.h"
 
 // Namespace(s):
 namespace game

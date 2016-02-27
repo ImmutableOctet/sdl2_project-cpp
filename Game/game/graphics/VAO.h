@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes:
-#include "bufferobject.h"
+#include "resource_container.h"
 
 #include "VBO.h"
 #include "IBO.h"
@@ -23,9 +23,9 @@ namespace game
 		};
 
 		// Classes:
-		class vertexArrayObject : public bufferObject<vertexDataManifold>
+		class vertexArrayObject : public resourceContainer<vertexDataManifold>
 		{
-
+			// Nothing so far.
 		};
 	}
 }

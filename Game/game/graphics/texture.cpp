@@ -35,109 +35,52 @@ namespace game
 		// Destructor(s):
 		texture::~texture()
 		{
-			destroy(false);
+			destroy();
 		}
 
 		// Operator overloads:
 		texture& texture::operator=(texture&& input)
 		{
-			destroy(true);
-
-			std::swap(this->instances, input.instances);
+			resource::operator=(input);
 
 			return *this;
 		}
 
 		// Methods:
-		bool texture::load(const char** paths, std::size_t count, bool destroyFirst)
+		bool texture::load(const char* path, bool should_unbind)
 		{
-			// Typedefs:
-			typedef GLsizei iterationType; // int // std::size_t
-
-			// Constant variable(s):
-
-			// This is used to represent an undefined index.
-			static const iterationType noindex = static_cast<iterationType>(-1);
-
-			// Check if we should destroy existing textures first:
-			if (destroyFirst)
-			{
-				destroy(true);
-			}
-
-			// Get the current size, so we can use it as a starting index.
-			auto startIndex = instances.size();
-
-			// Allocate the extra memory we need.
-			instances.resize(startIndex + count, noinstance);
-			
-			// Point to the new area.
-			textureHandle* const raw_ptr = (instances.data() + startIndex);
-
-			// This represents the active array-index when loading textures.
-			iterationType currentIndex = noindex;
-
 			try
 			{
 				// Generate texture handles.
-				glGenTextures(static_cast<GLsizei>(count), raw_ptr);
+				glGenTextures(1, &instance);
 
-				for (currentIndex = 0; currentIndex < count; currentIndex++)
+				// Load a surface using the described file-path.
+				SDL_Surface* surface = IMG_Load(path);
+
+				// Bind the texture-handle we generated.
+				bind();
+
+				// Upload the surface's contents to the GPU.
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels); // 4
+				
+				// Release the surface we loaded.
+				SDL_FreeSurface(surface);
+
+				// Not sure about these yet:
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+				if (should_unbind)
 				{
-					// Retrieve the current surface's path.
-					const char* path = paths[currentIndex];
-
-					// Load a surface using the described file-path.
-					SDL_Surface* surface = IMG_Load(path);
-
-					/*
-						try
-						{
-							// ...
-						}
-						catch (const std::exception& e)
-						{
-							if (surface != nullptr)
-							{
-								SDL_FreeSurface(surface);
-							}
-
-							throw e;
-						}
-						if (surface == nullptr)
-						{
-							throw std::runtime_error("Unable to surface at \q" + std::string(path) + "\q");
-						}
-					*/
-
-					// Retrive the current texture-handle.
-					auto currentHandle = raw_ptr[currentIndex];
-
-					// Bind the texture-handle we generated.
-					glBindTexture(GL_TEXTURE_2D, currentHandle);
-
-					// Upload the surface's contents to the GPU.
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels); // 4
-
-					// Release the surface we loaded.
-					SDL_FreeSurface(surface);
-
-					// Not sure about these yet:
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+					unbind();
 				}
 			}
 			catch (const std::exception&)
 			{
-				// Error recovery:
-				if (currentIndex > 0 && currentIndex != noindex)
+				if (instance != noinstance)
 				{
-					// Release our texture-handles to the driver.
-					glDeleteTextures(static_cast<GLsizei>(currentIndex), raw_ptr);
+					destroy();
 				}
-
-				// Resize back to what the vector was.
-				instances.resize(startIndex);
 
 				// Tell the user the bad news.
 				return false;
@@ -147,11 +90,24 @@ namespace game
 			return true;
 		}
 
-		void texture::destroy(bool clear)
+		void texture::destroy()
 		{
-			destroyTextures(this->instances, clear);
+			glDeleteTextures(1, &instance);
+			instance = noinstance;
 
 			return;
+		}
+
+		void texture::bind() const
+		{
+			glBindTexture(GL_TEXTURE_2D, instance);
+
+			return;
+		}
+
+		void texture::unbind() const
+		{
+			glBindTexture(GL_TEXTURE_2D, noinstance);
 		}
 	}
 }

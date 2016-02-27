@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes:
-#include "bufferobject.h"
+#include "resource.h"
 
 // Namespaces:
 namespace game

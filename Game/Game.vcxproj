@@ -168,7 +168,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="game\graphics\context.cpp" />
     <ClCompile Include="game\graphics\FBO.cpp" />
     <ClCompile Include="game\graphics\graphics.cpp" />
-    <ClCompile Include="game\graphics\IBO.cpp" />
+    <ClCompile Include="game\graphics\EBO.cpp" />
     <ClCompile Include="game\graphics\shader.cpp" />
     <ClCompile Include="game\graphics\texture.cpp" />
     <ClCompile Include="game\graphics\VAO.cpp" />
@@ -179,12 +179,13 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\config.h" />
     <ClInclude Include="game\display.h" />
     <ClInclude Include="game\game.h" />
-    <ClInclude Include="game\graphics\bufferobject.h" />
+    <ClInclude Include="game\graphics\resource.h" />
     <ClInclude Include="game\graphics\context.h" />
     <ClInclude Include="game\graphics\FBO.h" />
     <ClInclude Include="game\graphics\graphics.h" />
-    <ClInclude Include="game\graphics\IBO.h" />
+    <ClInclude Include="game\graphics\EBO.h" />
     <ClInclude Include="game\graphics\opengl.h" />
+    <ClInclude Include="game\graphics\resource_container.h" />
     <ClInclude Include="game\graphics\shader.h" />
     <ClInclude Include="game\graphics\texture.h" />
     <ClInclude Include="game\graphics\types.h" />

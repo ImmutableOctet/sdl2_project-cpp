@@ -12,23 +12,23 @@ namespace game
 {
 	namespace graphics
 	{
-		template <typename bufferHandle_t>
-		class bufferObject
+		template <typename resourceHandle_t>
+		class resourceContainer
 		{
 			public:
 				// Constant variable(s):
-				static const bufferHandle_t noinstance = bufferHandle_t();
+				static const resourceHandle_t noinstance = resourceHandle_t();
 
 				// Constructor(s):
-				inline bufferObject() {}
+				inline resourceContainer() {}
 
 				// Operator overloads:
-				inline bufferHandle_t operator[](std::size_t index) const
+				inline resourceHandle_t operator[](std::size_t index) const
 				{
 					return instances[index];
 				}
 
-				bool operator==(const bufferHandle_t& inst) const
+				bool operator==(const resourceHandle_t& inst) const
 				{
 					for (const auto& handle : instances)
 					{
@@ -42,13 +42,13 @@ namespace game
 					return false;
 				}
 
-				bool operator==(const std::vector<bufferHandle_t>& insts) const
+				bool operator==(const std::vector<resourceHandle_t>& insts) const
 				{
 					return (insts == instances);
 				}
 
 				// Methods:
-				inline const std::vector<bufferHandle_t>& getInstances() const
+				inline const std::vector<resourceHandle_t>& getInstances() const
 				{
 					return instances;
 				}
@@ -57,7 +57,7 @@ namespace game
 				virtual void destroy(bool clear = true) = 0;
 			protected:
 				// Fields:
-				std::vector<bufferHandle_t> instances;
+				std::vector<resourceHandle_t> instances;
 		};
 	}
 }
