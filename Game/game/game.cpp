@@ -7,6 +7,10 @@
 // STL:
 #include <stdexcept>
 #include <iostream>
+#include <vector>
+
+// C STDLIB:
+#include <cstddef>
 
 namespace game
 {
@@ -88,6 +92,16 @@ namespace game
 				"LFragment = vec4( 1.0, 1.0, 1.0, 1.0 );"
 			"}";
 
+		GLfloat vertexData[] =
+		{
+			-0.5f, -0.5f,
+			0.5f, -0.5f,
+			0.5f,  0.5f,
+			-0.5f,  0.5f
+		};
+
+		GLuint indexData[] = { 0, 1, 2, 3 };
+
 		auto shaderInstance = graphics::shader(vShaderSource, fShaderSource);
 
 		if (shaderInstance == graphics::shader::noinstance)
@@ -102,11 +116,16 @@ namespace game
 		// Set the default clear-color.
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		// Set texture filtering:
-		/*
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		*/
+		{
+			auto vertices = std::vector<GLfloat>();
+			auto indices = std::vector<GLuint>();
+
+			vertices.assign(vertexData, vertexData + 8);
+			indices.assign(indexData, indexData + 4);
+
+			testVertices = graphics::vertexBufferObject(vertices, GL_STATIC_DRAW);
+			testIndices = graphics::indexBufferObject(indices, GL_STATIC_DRAW);
+		}
 
 		return;
 	}
@@ -198,7 +217,23 @@ namespace game
 
 	void application::onRender(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
+		auto vertexPos2DLocation = defaultShader.getAttribute("LVertexPos2D");
+
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		glUseProgram(defaultShader.getInstance());
+
+		glEnableVertexAttribArray(vertexPos2DLocation);
+
+		glBindBuffer(GL_ARRAY_BUFFER, testVertices[0]);
+		glVertexAttribPointer(vertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, testIndices[0]);
+		glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL);
+
+		glDisableVertexAttribArray(vertexPos2DLocation);
+
+		glUseProgram(NULL);
 
 		SDL_GL_SwapWindow(window);
 

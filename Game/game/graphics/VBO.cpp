@@ -17,6 +17,11 @@ namespace game
 			// Nothing so far.
 		}
 
+		vertexBufferObject::vertexBufferObject(const std::vector<GLfloat>& vertexData, GLenum usage)
+		{
+			init(vertexData, usage, false);
+		}
+
 		// Destructor(s):
 		vertexBufferObject::~vertexBufferObject()
 		{

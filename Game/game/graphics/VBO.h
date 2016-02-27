@@ -14,6 +14,7 @@ namespace game
 			public:
 				// Constructor(s):
 				vertexBufferObject();
+				vertexBufferObject(const std::vector<GLfloat>& vertexData, GLenum usage);
 
 				// Force this type to be move-only:
 				vertexBufferObject(vertexBufferObject&& t) = default;

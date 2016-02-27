@@ -19,6 +19,11 @@ namespace game
 			// Nothing so far.
 		}
 
+		indexBufferObject::indexBufferObject(const std::vector<GLuint>& indexData, GLenum usage)
+		{
+			init(indexData, usage, false);
+		}
+
 		// Destructor(s):
 		indexBufferObject::~indexBufferObject()
 		{

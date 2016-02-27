@@ -14,6 +14,7 @@ namespace game
 			public:
 				// Constructor(s):
 				indexBufferObject();
+				indexBufferObject(const std::vector<GLuint>& indexData, GLenum usage);
 
 				// Force this type to be move-only:
 				indexBufferObject(indexBufferObject&& t) = default;
