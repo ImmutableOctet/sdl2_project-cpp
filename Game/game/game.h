@@ -123,7 +123,7 @@ namespace game
 
 			graphics::shader defaultShader;
 
-			graphics::VBOHandle testVertices;
+			graphics::VBOHandle testVertices = vertexBufferObject::noinstance;
 			graphics::IBOHandle testIndices;
 
 			bool closed = false;

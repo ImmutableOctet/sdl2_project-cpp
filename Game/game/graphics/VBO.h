@@ -9,14 +9,14 @@ namespace game
 	namespace graphics
 	{
 		// Classes:
-		class frameBufferObject : public bufferObject<FBOHandle>
+		class vertexBufferObject : public bufferObject<FBOHandle>
 		{
 			public:
 				// Constructor(s):
-				frameBufferObject();
+				vertexBufferObject();
 
 				// Destructor(s):
-				virtual ~frameBufferObject();
+				virtual ~vertexBufferObject();
 		};
 	}
 }

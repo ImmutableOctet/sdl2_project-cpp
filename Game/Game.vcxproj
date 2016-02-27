@@ -170,12 +170,14 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="game\graphics\graphics.cpp" />
     <ClCompile Include="game\graphics\shader.cpp" />
     <ClCompile Include="game\graphics\texture.cpp" />
+    <ClCompile Include="game\graphics\VBO.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\config.h" />
     <ClInclude Include="game\display.h" />
     <ClInclude Include="game\game.h" />
+    <ClInclude Include="game\graphics\bufferobject.h" />
     <ClInclude Include="game\graphics\context.h" />
     <ClInclude Include="game\graphics\FBO.h" />
     <ClInclude Include="game\graphics\graphics.h" />
@@ -184,6 +186,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\graphics\texture.h" />
     <ClInclude Include="game\graphics\types.h" />
     <ClInclude Include="game\graphics\uniform.h" />
+    <ClInclude Include="game\graphics\VBO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
