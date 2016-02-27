@@ -2,8 +2,11 @@
 
 #include "types.h"
 
-#include <type_traits>
+// STL:
 #include <vector>
+
+// C STDLIB:
+#include <cstddef>
 
 namespace game
 {
@@ -20,7 +23,7 @@ namespace game
 				inline bufferObject() {}
 
 				// Operator overloads:
-				inline bufferHandle_t operator[](std::vector<bufferHandle_t>::size_type index) const
+				inline bufferHandle_t operator[](std::size_t index) const
 				{
 					return instances[index];
 				}

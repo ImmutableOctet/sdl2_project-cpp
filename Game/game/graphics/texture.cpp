@@ -13,6 +13,9 @@
 #include <stdexcept>
 #include <string>
 
+// C STDLIB:
+#include <cstddef>
+
 // Namespace(s):
 namespace game
 {
@@ -45,10 +48,10 @@ namespace game
 		}
 
 		// Methods:
-		bool texture::load(const char** paths, size_t count, bool destroyFirst)
+		bool texture::load(const char** paths, std::size_t count, bool destroyFirst)
 		{
 			// Typedefs:
-			typedef size_t iterationType; // int
+			typedef GLsizei iterationType; // int // std::size_t
 
 			// Constant variable(s):
 
@@ -129,7 +132,7 @@ namespace game
 				if (currentIndex > 0 && currentIndex != noindex)
 				{
 					// Release our texture-handles to the driver.
-					glDeleteTextures(currentIndex, raw_ptr);
+					glDeleteTextures(static_cast<GLsizei>(currentIndex), raw_ptr);
 				}
 
 				// Resize back to what the vector was.

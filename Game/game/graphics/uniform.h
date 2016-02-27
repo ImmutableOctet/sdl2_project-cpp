@@ -12,6 +12,7 @@
 
 // STL:
 #include <vector>
+#include <type_traits>
 
 // Namespace(s):
 namespace game
@@ -96,7 +97,7 @@ namespace game
 		inline void setVector4(shaderLocation attr, const GLuint* values, GLsizei count = 4) { glUniform4uiv(attr, count, values); }
 
 		// Abstraction layer:
-		template <typename T, typename = std::enable_if_t<std::is_integral<T>::value> || std::is_floating_point<T>::value> T>
+		template <typename T, typename = std::enable_if_t<std::is_integral<T>::value || std::is_floating_point<T>::value>>
 		inline void setVector(shaderLocation attr, T* values, GLsizei count)
 		{
 			switch (count)

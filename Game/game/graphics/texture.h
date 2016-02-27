@@ -3,6 +3,8 @@
 // Includes:
 #include "bufferobject.h"
 
+#include <cstddef>
+
 // Namespace(s):
 namespace game
 {
@@ -25,7 +27,7 @@ namespace game
 				texture& operator=(texture&& input);
 
 				// Methods:
-				virtual bool load(const char** paths, size_t count, bool destroyFirst=true);
+				virtual bool load(const char** paths, std::size_t count, bool destroyFirst=true);
 				
 				inline bool load(const std::string& path, bool destroyFirst=true)
 				{

@@ -245,7 +245,7 @@ namespace game
 	}
 
 	// app_arguments:
-	app_arguments::app_arguments(size_t argc, const char** argv)
+	app_arguments::app_arguments(std::size_t argc, const char** argv)
 	{
 		data = std::vector<std::string>(argc);
 

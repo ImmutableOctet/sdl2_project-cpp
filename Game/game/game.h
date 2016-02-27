@@ -27,7 +27,7 @@ namespace game
 
 	struct app_arguments
 	{
-		app_arguments(size_t argc, const char** argv);
+		app_arguments(std::size_t argc, const char** argv);
 		app_arguments(std::vector<std::string> data);
 
 		std::vector<std::string> data;
