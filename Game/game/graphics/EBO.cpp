@@ -4,6 +4,9 @@
 
 #include "EBO.h"
 
+// STL:
+#include <stdexcept>
+
 // Namespace(s):
 namespace game
 {
@@ -19,9 +22,20 @@ namespace game
 			// Nothing so far.
 		}
 
+		elementBufferObject::elementBufferObject(const GLuint* indexData, GLenum usage)
+		{
+			if (!init(indexData, usage))
+			{
+				throw std::runtime_error("Failed to initialize EBO using raw data.");
+			}
+		}
+
 		elementBufferObject::elementBufferObject(const std::vector<GLuint>& indexData, GLenum usage)
 		{
-			init(indexData, usage, false);
+			if (!init(indexData, usage))
+			{
+				throw std::runtime_error("Failed to initialize EBO using 'std::vector'.");
+			}
 		}
 
 		// Destructor(s):

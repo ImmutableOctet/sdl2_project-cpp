@@ -9,11 +9,12 @@ namespace game
 	namespace graphics
 	{
 		// Classes:
-		class elementBufferObject : public bufferObject<IBOHandle>
+		class elementBufferObject : public resource<IBOHandle>
 		{
 			public:
 				// Constructor(s):
 				elementBufferObject();
+				elementBufferObject(const GLuint* indexData, GLenum usage);
 				elementBufferObject(const std::vector<GLuint>& indexData, GLenum usage);
 
 				// Force this type to be move-only:
@@ -21,22 +22,20 @@ namespace game
 				//elementBufferObject(const elementBufferObject&) = delete;
 
 				// Destructor(s):
-				virtual ~elementBufferObject();
+				~elementBufferObject(); // virtual
 
 				// Operator overloads:
 				elementBufferObject& operator=(elementBufferObject&& input);
 
 				// Methods:
-				virtual bool init(const std::vector<std::vector<GLuint>>& indexDataArray, GLenum usage, bool destroyFirst=true);
+				virtual bool init(const GLuint* indexDataArray, GLenum usage);
 
-				inline bool init(const std::vector<GLuint>& indexData, GLenum usage, bool destroyFirst=true)
+				inline bool init(const std::vector<GLuint>& indexData, GLenum usage)
 				{
-					auto input = std::vector<std::vector<GLuint>>(1, indexData);
-
-					return init(input, usage, destroyFirst);
+					return init(indexData.data(), usage);
 				}
 
-				virtual void destroy(bool clear=true) override;
+				void destroy() override;
 		};
 	}
 }
