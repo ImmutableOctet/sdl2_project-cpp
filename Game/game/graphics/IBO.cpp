@@ -1,4 +1,4 @@
-#include "VBO.h"
+#include "IBO.h"
 #include "opengl.h"
 
 // Namespace(s):
@@ -8,16 +8,16 @@ namespace game
 	{
 		// Classes:
 
-		// vertexBufferObject:
+		// indexBufferObject:
 
 		// Constructor(s):
-		vertexBufferObject::vertexBufferObject()
+		indexBufferObject::indexBufferObject()
 		{
 			// Nothing so far.
 		}
 
 		// Destructor(s):
-		vertexBufferObject::~vertexBufferObject()
+		indexBufferObject::~indexBufferObject()
 		{
 			// Nothing so far.
 		}

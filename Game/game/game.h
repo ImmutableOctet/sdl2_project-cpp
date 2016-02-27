@@ -123,8 +123,8 @@ namespace game
 
 			graphics::shader defaultShader;
 
-			graphics::VBOHandle testVertices = vertexBufferObject::noinstance;
-			graphics::IBOHandle testIndices;
+			graphics::VBOHandle testVertices = graphics::vertexBufferObject::noinstance;
+			graphics::IBOHandle testIndices = graphics::indexBufferObject::noinstance;
 
 			bool closed = false;
 	};

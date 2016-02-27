@@ -24,9 +24,6 @@ namespace game
 				// Operator overloads:
 				texture& operator=(texture&& input);
 
-				bool operator==(textureHandle inst) const;
-				bool operator==(const std::vector<textureHandle>& insts) const;
-
 				// Methods:
 				virtual bool load(const char** paths, size_t count, bool destroyFirst=true);
 				
