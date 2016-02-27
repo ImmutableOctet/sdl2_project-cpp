@@ -1,8 +1,9 @@
 // Includes:
 
 // Local:
-#include "texture.h"
 #include "opengl.h"
+#include "texture.h"
+#include "uniform.h"
 
 // SDL:
 #include <SDL.h>
@@ -148,19 +149,7 @@ namespace game
 
 		void texture::destroy(bool clear)
 		{
-			// Check if we have any textures bound to this object:
-			if (!instances.empty())
-			{
-				// Release our texture-handles to the driver.
-				glDeleteTextures(static_cast<GLsizei>(instances.size()), instances.data());
-
-				// Check if the user requested a full clear of 'instances'.
-				if (clear)
-				{
-					// Clear the internal 'textureHandle' container.
-					instances.clear();
-				}
-			}
+			destroyTextures(this->instances, clear);
 
 			return;
 		}

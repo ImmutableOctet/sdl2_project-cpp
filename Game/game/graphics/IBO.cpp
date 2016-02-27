@@ -1,6 +1,8 @@
-#include "IBO.h"
+// Includes:
 #include "opengl.h"
 #include "uniform.h"
+
+#include "IBO.h"
 
 // Namespace(s):
 namespace game

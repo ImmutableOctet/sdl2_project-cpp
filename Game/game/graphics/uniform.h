@@ -5,8 +5,8 @@
 */
 
 // Includes:
-#include "types.h"
 #include "opengl.h"
+#include "types.h"
 
 //#include <GL/glew.h>
 
@@ -34,6 +34,25 @@ namespace game
 					instances.clear();
 				}
 			}
+		}
+
+		inline void destroyTextures(std::vector<textureHandle>& instances, bool clear=true)
+		{
+			// Check if we have any textures bound to this object:
+			if (!instances.empty())
+			{
+				// Release our texture-handles to the driver.
+				glDeleteTextures(static_cast<GLsizei>(instances.size()), instances.data());
+
+				// Check if the user requested a full clear of 'instances'.
+				if (clear)
+				{
+					// Clear the internal 'textureHandle' container.
+					instances.clear();
+				}
+			}
+
+			return;
 		}
 
 		template <typename T, typename handleType=GLuint>
