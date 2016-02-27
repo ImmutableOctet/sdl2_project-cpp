@@ -54,6 +54,9 @@
     <ClCompile Include="game\graphics\VBO.cpp">
       <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="game\graphics\IBO.cpp">
+      <Filter>Source Files\game\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\game.h">
@@ -93,6 +96,9 @@
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
     <ClInclude Include="game\graphics\VBO.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\IBO.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
   </ItemGroup>

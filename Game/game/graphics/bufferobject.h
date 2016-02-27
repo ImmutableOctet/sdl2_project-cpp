@@ -2,6 +2,7 @@
 
 #include "types.h"
 
+#include <type_traits>
 #include <vector>
 
 namespace game
@@ -19,6 +20,11 @@ namespace game
 				inline bufferObject() {}
 
 				// Operator overloads:
+				inline bufferHandle_t operator[](std::vector<bufferHandle_t>::size_type index) const
+				{
+					return instances[index];
+				}
+
 				bool operator==(bufferHandle_t inst) const
 				{
 					for (const auto& handle : instances)
