@@ -1,21 +1,16 @@
 #pragma once
 
 // Includes:
-#include "types.h"
-
-#include <vector>
+#include "bufferobject.h"
 
 // Namespace(s):
 namespace game
 {
 	namespace graphics
 	{
-		class texture
+		class texture : public bufferObject<textureHandle>
 		{
 			public:
-				// Constant variable(s):
-				static const textureHandle noinstance = textureHandle();
-
 				// Constructor(s):
 				texture();
 
@@ -33,11 +28,6 @@ namespace game
 				bool operator==(const std::vector<textureHandle>& insts) const;
 
 				// Methods:
-				inline const std::vector<textureHandle>& getInstances() const
-				{
-					return instances;
-				}
-
 				virtual bool load(const char** paths, size_t count, bool destroyFirst=true);
 				
 				inline bool load(const std::string& path, bool destroyFirst=true)
@@ -48,10 +38,7 @@ namespace game
 					return load(input, 1, destroyFirst);
 				}
 
-				virtual void destroy(bool clear=true);
-			protected:
-				// Fields:
-				std::vector<textureHandle> instances;
+				virtual void destroy(bool clear=true) override;
 		};
 	}
 }

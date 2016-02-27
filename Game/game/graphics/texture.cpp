@@ -44,25 +44,6 @@ namespace game
 			return *this;
 		}
 
-		bool texture::operator==(textureHandle inst) const
-		{
-			for (const auto& handle : instances)
-			{
-				if (handle == inst)
-				{
-					return true;
-				}
-			}
-
-			// Return the default response.
-			return false;
-		}
-
-		bool texture::operator==(const std::vector<textureHandle>& insts) const
-		{
-			return (insts == instances);
-		}
-
 		// Methods:
 		bool texture::load(const char** paths, size_t count, bool destroyFirst)
 		{
@@ -99,7 +80,10 @@ namespace game
 
 				for (currentIndex = 0; currentIndex < count; currentIndex++)
 				{
+					// Retrieve the current surface's path.
 					const char* path = paths[currentIndex];
+
+					// Load a surface using the described file-path.
 					SDL_Surface* surface = IMG_Load(path);
 
 					/*
@@ -122,11 +106,16 @@ namespace game
 						}
 					*/
 
+					// Retrive the current texture-handle.
 					auto currentHandle = raw_ptr[currentIndex];
 
+					// Bind the texture-handle we generated.
 					glBindTexture(GL_TEXTURE_2D, currentHandle);
+
+					// Upload the surface's contents to the GPU.
 					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels); // 4
 
+					// Release the surface we loaded.
 					SDL_FreeSurface(surface);
 
 					// Not sure about these yet:
@@ -136,29 +125,36 @@ namespace game
 			}
 			catch (const std::exception&)
 			{
+				// Error recovery:
 				if (currentIndex > 0 && currentIndex != noindex)
 				{
+					// Release our texture-handles to the driver.
 					glDeleteTextures(currentIndex, raw_ptr);
 				}
 
 				// Resize back to what the vector was.
 				instances.resize(startIndex);
 
+				// Tell the user the bad news.
 				return false;
 			}
 
-			// Return the default response.
+			// Return the default response. (Success)
 			return true;
 		}
 
 		void texture::destroy(bool clear)
 		{
+			// Check if we have any textures bound to this object:
 			if (!instances.empty())
 			{
+				// Release our texture-handles to the driver.
 				glDeleteTextures(static_cast<GLsizei>(instances.size()), instances.data());
 
+				// Check if the user requested a full clear of 'instances'.
 				if (clear)
 				{
+					// Clear the internal 'textureHandle' container.
 					instances.clear();
 				}
 			}
