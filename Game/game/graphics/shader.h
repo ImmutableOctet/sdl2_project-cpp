@@ -57,7 +57,7 @@ namespace game
 
 				virtual bool build(const GLchar* vertex, const GLchar* fragment, GLchar* log_out=nullptr, GLsizei log_maxLength=0, shaderHandle* vertex_out=nullptr, shaderHandle* fragment_out=nullptr);
 
-				inline bool build(const std::string& vertex, const std::string& fragment, GLchar* log_out=nullptr, GLsizei log_maxLength =0, shaderHandle* vertex_out=nullptr, shaderHandle* fragment_out=nullptr)
+				inline bool build(const std::string& vertex, const std::string& fragment, GLchar* log_out=nullptr, GLsizei log_maxLength=0, shaderHandle* vertex_out=nullptr, shaderHandle* fragment_out=nullptr)
 				{
 					return build(vertex.c_str(), fragment.c_str(), log_out, log_maxLength, vertex_out, fragment_out);
 				}

@@ -28,7 +28,7 @@ namespace game
 					return instances[index];
 				}
 
-				bool operator==(bufferHandle_t inst) const
+				bool operator==(const bufferHandle_t& inst) const
 				{
 					for (const auto& handle : instances)
 					{

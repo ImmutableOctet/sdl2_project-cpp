@@ -171,6 +171,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="game\graphics\IBO.cpp" />
     <ClCompile Include="game\graphics\shader.cpp" />
     <ClCompile Include="game\graphics\texture.cpp" />
+    <ClCompile Include="game\graphics\VAO.cpp" />
     <ClCompile Include="game\graphics\VBO.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -188,6 +189,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\graphics\texture.h" />
     <ClInclude Include="game\graphics\types.h" />
     <ClInclude Include="game\graphics\uniform.h" />
+    <ClInclude Include="game\graphics\VAO.h" />
     <ClInclude Include="game\graphics\VBO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

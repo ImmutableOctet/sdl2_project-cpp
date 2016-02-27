@@ -73,34 +73,32 @@ namespace game
 	void application::onCreate(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
 		// Temporary vertex shader source code:
-		const GLchar* vShaderSource =
-			"#version 330 core""\n"
-			
-			"in vec2 LVertexPos2D;"
-			
-			"void main()"
-			"{"
-				"gl_Position = vec4(LVertexPos2D.x, LVertexPos2D.y, 0, 1);"
-			"}";
-		const GLchar* fShaderSource =
-			"#version 330 core" "\n"
-			
-			"out vec4 LFragment;"
-			
-			"void main()"
-			"{"
-				"LFragment = vec4(1.0f, 0.5f, 0.2f, 1.0f);"
-			"}";
+		const GLchar* vShaderSource = "#version 330 core\n"
+										"layout (location = 0) in vec3 position;\n"
+										"void main()\n"
+										"{\n"
+											"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+										"}\0";
+		const GLchar* fShaderSource = "#version 330 core\n"
+										"out vec4 color;\n"
+										"void main()\n"
+										"{\n"
+											"color = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+										"}\n\0";
 
 		std::vector<GLfloat> vertexData =
 		{
-			-0.5f, -0.5f,
-			0.5f, -0.5f,
-			0.5f,  0.5f,
-			-0.5f,  0.5f
+			0.5f,  0.5f, 0.0f,  // Top Right
+			0.5f, -0.5f, 0.0f,  // Bottom Right
+			-0.5f, -0.5f, 0.0f,  // Bottom Left
+			-0.5f,  0.5f, 0.0f   // Top Left
 		};
 
-		std::vector<GLuint> indexData = { 0, 1, 2, 3 };
+		std::vector<GLuint> indexData =
+		{
+			0, 1, 3,
+			1, 2, 3
+		};
 
 		auto shaderInstance = graphics::shader(vShaderSource, fShaderSource);
 
@@ -217,6 +215,7 @@ namespace game
 
 		glUseProgram(defaultShader.getInstance());
 
+		/*
 		glEnableVertexAttribArray(vertexPos2DLocation);
 
 		glBindBuffer(GL_ARRAY_BUFFER, testVertices[0]);
@@ -226,6 +225,7 @@ namespace game
 		glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL);
 
 		glDisableVertexAttribArray(vertexPos2DLocation);
+		*/
 
 		glUseProgram(NULL);
 

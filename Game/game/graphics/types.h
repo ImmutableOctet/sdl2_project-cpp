@@ -12,8 +12,10 @@ namespace game
 
 		using textureHandle = GLuint;
 
+		using VAOHandle = GLuint;
 		using VBOHandle = GLuint;
 		using IBOHandle = GLuint;
+
 		using FBOHandle = GLuint;
 	}
 }
