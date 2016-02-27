@@ -74,22 +74,22 @@ namespace game
 	{
 		// Temporary vertex shader source code:
 		const GLchar* vShaderSource =
-			"#version 140""\n"
+			"#version 330 core""\n"
 			
 			"in vec2 LVertexPos2D;"
 			
 			"void main()"
 			"{"
-				"gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0, 1 );"
+				"gl_Position = vec4(LVertexPos2D.x, LVertexPos2D.y, 0, 1);"
 			"}";
 		const GLchar* fShaderSource =
-			"#version 140" "\n"
+			"#version 330 core" "\n"
 			
 			"out vec4 LFragment;"
 			
 			"void main()"
 			"{"
-				"LFragment = vec4( 1.0, 1.0, 1.0, 1.0 );"
+				"LFragment = vec4(1.0f, 0.5f, 0.2f, 1.0f);"
 			"}";
 
 		std::vector<GLfloat> vertexData =

@@ -12,7 +12,7 @@ namespace game
 		// shader:
 
 		// Functions:
-		shaderHandle shader::buildProgram(const GLchar* str, GLenum shaderType)
+		shaderHandle shader::buildProgram(const GLchar* str, GLenum shaderType, GLchar* log_out, GLsizei log_maxLength)
 		{
 			// Create a vertex shader.
 			shaderHandle shaderInstance = glCreateShader(shaderType);
@@ -31,6 +31,11 @@ namespace game
 
 			if (shaderCompileStatus != GL_TRUE)
 			{
+				if ((log_out != nullptr) && log_maxLength > 0)
+				{
+					glGetShaderInfoLog(shaderInstance, log_maxLength, nullptr, log_out);
+				}
+
 				glDeleteShader(shaderInstance);
 
 				return noinstance;
@@ -70,7 +75,7 @@ namespace game
 		}
 
 		// Methods:
-		bool shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, shaderHandle* vertex_out, shaderHandle* fragment_out)
+		bool shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, GLchar* log_out, GLsizei log_maxLength, shaderHandle* vertex_out, shaderHandle* fragment_out)
 		{
 			if (exists())
 			{
@@ -94,27 +99,32 @@ namespace game
 				if (vertexShader == noinstance)
 					throw std::runtime_error("Failed to compile vertex shader.");
 
-				// Attach our compiled vertex shader.
-				glAttachShader(programID, vertexShader);
-
 				// Build our fragment shader's source code.
 				fragmentShader = buildProgram(fShaderSource, GL_FRAGMENT_SHADER);
 
 				if (fragmentShader == noinstance)
 					throw std::runtime_error("Failed to compile fragment shader.");
 
-				// Attach our compiled vertex shader.
+				// Attach our compiled shaders:
+				glAttachShader(programID, vertexShader);
 				glAttachShader(programID, fragmentShader);
 
 				// Link our shaders into one program.
 				glLinkProgram(programID);
 
+				// This will represent the status of our shader-program.
 				GLint programStatus = GL_TRUE;
 
+				// Check for errors:
 				glGetProgramiv(programID, GL_LINK_STATUS, &programStatus);
 
 				if (programStatus != GL_TRUE)
 				{
+					if (log_out != nullptr && log_maxLength > 0)
+					{
+						glGetProgramInfoLog(programID, log_maxLength, nullptr, log_out);
+					}
+
 					throw std::runtime_error("Failed to link shader program.");
 				}
 			}

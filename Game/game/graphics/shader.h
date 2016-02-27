@@ -20,11 +20,11 @@ namespace game
 				static const shaderHandle noinstance = shaderHandle();
 
 				// Functions:
-				static shaderHandle buildProgram(const GLchar* str, GLenum shaderType);
+				static shaderHandle buildProgram(const GLchar* str, GLenum shaderType, GLchar* log_out=nullptr, GLsizei log_maxLength=0);
 
-				inline static shaderHandle buildProgram(const std::string& str, GLenum shaderType)
+				inline static shaderHandle buildProgram(const std::string& str, GLenum shaderType, GLchar* log_out=nullptr, GLsizei log_maxLength=0)
 				{
-					return buildProgram(str.c_str(), shaderType);
+					return buildProgram(str.c_str(), shaderType, log_out, log_maxLength);
 				}
 
 				// Constructor(s):
@@ -55,11 +55,11 @@ namespace game
 					In addition, the two handles will be set to 'noinstance'.
 				*/
 
-				virtual bool build(const GLchar* vertex, const GLchar* fragment, shaderHandle* vertex_out = nullptr, shaderHandle* fragment_out = nullptr);
+				virtual bool build(const GLchar* vertex, const GLchar* fragment, GLchar* log_out=nullptr, GLsizei log_maxLength=0, shaderHandle* vertex_out=nullptr, shaderHandle* fragment_out=nullptr);
 
-				inline bool build(const std::string& vertex, const std::string& fragment, shaderHandle* vertex_out = nullptr, shaderHandle* fragment_out = nullptr)
+				inline bool build(const std::string& vertex, const std::string& fragment, GLchar* log_out=nullptr, GLsizei log_maxLength =0, shaderHandle* vertex_out=nullptr, shaderHandle* fragment_out=nullptr)
 				{
-					return build(vertex.c_str(), fragment.c_str(), vertex_out, fragment_out);
+					return build(vertex.c_str(), fragment.c_str(), log_out, log_maxLength, vertex_out, fragment_out);
 				}
 
 				virtual void destroy();
