@@ -39,6 +39,29 @@ namespace game
 			}
 		}
 
+		// This deletes the buffer located at 'instance', then sets 'instance' to 'empty'.
+		template <typename handleType=GLuint, handleType empty=handleType()>
+		inline void destroyGLBuffer(handleType& instance)
+		{
+			if (instance != empty)
+			{
+				glDeleteBuffers(1, &instance);
+
+				instance = empty;
+			}
+		}
+
+		// This deletes the buffer located at 'instance', but does not set it to 'empty'.
+		// Essentially, this is called only when an r-value was used.
+		template <typename handleType = GLuint, handleType empty = handleType()>
+		inline void destroyGLBuffer(handleType&& instance) // handleType
+		{
+			if (instance != empty)
+			{
+				glDeleteBuffers(1, &instance);
+			}
+		}
+
 		// This generates a set of managed buffers using OpenGL, and outputs them to 'instances'.
 		template <typename T, typename handleType=GLuint>
 		inline bool generateGLBuffers(std::vector<handleType>& instances, const std::vector<std::vector<T>>& inputDataset, GLenum usage, GLenum target)
@@ -74,7 +97,7 @@ namespace game
 
 		// The 'length' argument represents the number of entries in 'inputData', not the size in bytes.
 		// To change this behavior, and instead use the size in bytes, set 'raw_length' to 'true'.
-		template <typename T, typename handleType = GLuint>
+		template <typename T, typename handleType=GLuint>
 		inline bool generateGLBuffer(handleType& instance, const T* inputData, GLsizei length, GLenum usage, GLenum target, bool should_unbind=true, bool raw_length=false)
 		{
 			// Generate buffer handles.
@@ -91,6 +114,7 @@ namespace game
 				glBindBuffer(target, handleType());
 			}
 
+			// Return the default response.
 			return true;
 		}
 

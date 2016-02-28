@@ -60,7 +60,7 @@ namespace game
 
 		void elementBufferObject::destroy()
 		{
-			destroyBuffers(1, &this->instance);
+			destroyGLBuffer(this->instance);
 
 			return;
 		}
