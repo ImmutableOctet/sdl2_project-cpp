@@ -28,11 +28,11 @@ namespace game
 				elementBufferObject& operator=(elementBufferObject&& input);
 
 				// Methods:
-				virtual bool init(const GLuint* indexDataArray, GLenum usage);
+				virtual bool init(const GLuint* indexData, GLsizei length, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false);
 
-				inline bool init(const std::vector<GLuint>& indexData, GLenum usage)
+				inline bool init(const std::vector<GLuint>& indexData, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
 				{
-					return init(indexData.data(), usage);
+					return init(indexData.data(), indexData.size(), usage, useLengthInBytes);
 				}
 
 				void destroy() override;

@@ -53,9 +53,9 @@ namespace game
 		}
 
 		// Methods:
-		bool elementBufferObject::init(const GLuint* indexDataArray, GLenum usage)
+		bool elementBufferObject::init(const GLuint* indexData, GLsizei length, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
 		{
-			return rawBufferUpload<GLuint, IBOHandle>(this->instance, indexDataArray, usage, GL_ELEMENT_ARRAY_BUFFER);
+			return generateGLBuffer(this->instance, indexData, length, usage, GL_ELEMENT_ARRAY_BUFFER, should_unbind, useLengthInBytes);
 		}
 
 		void elementBufferObject::destroy()
