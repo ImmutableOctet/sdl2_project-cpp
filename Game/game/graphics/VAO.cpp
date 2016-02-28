@@ -22,8 +22,7 @@ namespace game
 
 		vertexArrayObject::vertexArrayObject(vertexBufferObject&& vertexData, elementBufferObject&& indexData)
 		{
-			vertices = std::move(vertexData);
-			elements = std::move(indexData);
+			init(std::move(vertexData), std::move(indexData));
 		}
 
 		// Destructor(s):
@@ -33,6 +32,21 @@ namespace game
 		}
 
 		// Methods:
+		void vertexArrayObject::init(vertexBufferObject&& vertexData, elementBufferObject&& elementData)
+		{
+			vertices = std::move(vertexData);
+			elements = std::move(elementData);
+
+			bind();
+
+			auto VBO = resource_lock<decltype(vertexData)>(vertexData);
+			auto EBO = resource_lock<decltype(elementData)>(elementData);
+
+			unbind();
+
+			return;
+		}
+
 		void vertexArrayObject::destroy()
 		{
 			return;

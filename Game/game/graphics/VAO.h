@@ -26,6 +26,8 @@ namespace game
 				~vertexArrayObject();
 
 				// Methods:
+				void init(vertexBufferObject&& vertexData, elementBufferObject&& elementData);
+
 				void destroy() override;
 
 				inline const vertexBufferObject& getVertices() const

@@ -4,11 +4,13 @@
 
 // STL:
 #include <type_traits>
+#include <utility>
 
 namespace game
 {
 	namespace graphics
 	{
+		// Classes:
 		template <typename resourceHandle_t, resourceHandle_t noinstance_value=resourceHandle_t()>
 		class resource
 		{
@@ -54,6 +56,64 @@ namespace game
 			protected:
 				// Fields:
 				resourceHandle_t instance;
+		};
+
+		// Structures:
+		template <typename resourceType>
+		class resource_lock
+		{
+			protected:
+				const resourceType* resource_ref = nullptr;
+			public:
+				resource_lock() = delete;
+				resource_lock(const resource_lock&) = delete;
+
+				inline resource_lock(const resourceType* rptr) : resource_ref(rptr)
+				{
+					bind();
+				}
+				
+				inline resource_lock(const resourceType& ref) : resource_lock(&ref) { /* Nothing so far. */ }
+
+				inline resource_lock(resource_lock&& res) // = default
+				{
+					std::swap(this->resource_ref, res.resource_ref);
+				}
+
+				inline ~resource_lock()
+				{
+					unbind();
+				}
+
+				// Methods:
+				inline void bind() const
+				{
+					if (resource_ref == nullptr)
+					{
+						return;
+					}
+
+					resource_ref->bind();
+
+					return;
+				}
+
+				inline void unbind() const
+				{
+					if (resource_ref == nullptr)
+					{
+						return;
+					}
+
+					resource_ref->unbind();
+
+					return;
+				}
+
+				inline resourceType& getReference() const
+				{
+					return *resource_ref;
+				}
 		};
 	}
 }
