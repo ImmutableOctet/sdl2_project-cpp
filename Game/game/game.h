@@ -123,8 +123,7 @@ namespace game
 
 			graphics::shader defaultShader;
 
-			graphics::vertexBufferObject testVertices;
-			graphics::elementBufferObject testIndices;
+			graphics::vertexArrayObject testVAO;
 
 			bool closed = false;
 	};

@@ -25,7 +25,7 @@ namespace game
 					return instances[index];
 				}
 
-				bool operator==(const resourceHandle_t& inst) const
+				inline bool operator==(const resourceHandle_t& inst) const
 				{
 					for (const auto& handle : instances)
 					{
@@ -39,7 +39,7 @@ namespace game
 					return false;
 				}
 
-				bool operator==(const std::vector<resourceHandle_t>& insts) const
+				inline bool operator==(const std::vector<resourceHandle_t>& insts) const
 				{
 					return (insts == instances);
 				}
