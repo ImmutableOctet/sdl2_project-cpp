@@ -16,9 +16,6 @@ namespace game
 		class resourceContainer
 		{
 			public:
-				// Constant variable(s):
-				static const resourceHandle_t noinstance = resourceHandle_t();
-
 				// Constructor(s):
 				inline resourceContainer() {}
 
