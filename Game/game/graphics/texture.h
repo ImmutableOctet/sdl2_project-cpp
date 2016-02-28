@@ -3,6 +3,10 @@
 // Includes:
 #include "resource.h"
 
+// STL:
+#include <string>
+
+// C STDLIB:
 #include <cstddef>
 
 // Namespace(s):
