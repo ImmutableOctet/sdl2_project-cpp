@@ -19,7 +19,10 @@ namespace game
 				static const resourceHandle_t noinstance = noinstance_value;
 
 				// Destructor(s):
-				virtual ~resource() = 0;
+				inline virtual ~resource()
+				{
+					// Nothing so far.
+				}
 
 				// Operator overloads:
 				template <typename T = std::enable_if<std::is_base_of<resource, T>::value>::type>

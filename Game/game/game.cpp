@@ -209,13 +209,21 @@ namespace game
 
 	void application::onRender(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
+		using namespace game::graphics;
+
 		auto vertexPos2DLocation = defaultShader.getAttribute("LVertexPos2D");
 
-		glViewport(0, 0, video.width, video.height);
+		//glViewport(0, 0, video.width, video.height);
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(defaultShader.getInstance());
+
+		glBindVertexArray(testVAO.getInstance());
+
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+		glBindVertexArray(vertexArrayObject::noinstance);
 
 		/*
 		glEnableVertexAttribArray(vertexPos2DLocation);
