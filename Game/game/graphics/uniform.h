@@ -73,7 +73,7 @@ namespace game
 			instances.resize(startIndex + inputDataset.size());
 
 			// Point to the new area.
-			IBOHandle* const raw_ptr = (instances.data() + startIndex);
+			EBOHandle* const raw_ptr = (instances.data() + startIndex);
 
 			// Generate buffer handles.
 			glGenBuffers(static_cast<GLsizei>(inputDataset.size()), raw_ptr);

@@ -168,17 +168,16 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="game\graphics\context.cpp" />
     <ClCompile Include="game\graphics\FBO.cpp" />
     <ClCompile Include="game\graphics\graphics.cpp" />
-    <ClCompile Include="game\graphics\EBO.cpp" />
     <ClCompile Include="game\graphics\shader.cpp" />
     <ClCompile Include="game\graphics\texture.cpp" />
     <ClCompile Include="game\graphics\VAO.cpp" />
-    <ClCompile Include="game\graphics\VBO.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\config.h" />
     <ClInclude Include="game\display.h" />
     <ClInclude Include="game\game.h" />
+    <ClInclude Include="game\graphics\buffer_object.h" />
     <ClInclude Include="game\graphics\resource.h" />
     <ClInclude Include="game\graphics\context.h" />
     <ClInclude Include="game\graphics\FBO.h" />

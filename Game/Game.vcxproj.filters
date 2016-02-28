@@ -51,14 +51,8 @@
     <ClCompile Include="game\graphics\FBO.cpp">
       <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="game\graphics\VBO.cpp">
-      <Filter>Source Files\game\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="game\graphics\VAO.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\graphics\EBO.cpp">
-      <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +102,9 @@
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
     <ClInclude Include="game\graphics\EBO.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\buffer_object.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
   </ItemGroup>

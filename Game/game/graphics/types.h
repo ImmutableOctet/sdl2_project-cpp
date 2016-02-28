@@ -14,7 +14,7 @@ namespace game
 
 		using VAOHandle = GLuint;
 		using VBOHandle = GLuint;
-		using IBOHandle = GLuint;
+		using EBOHandle = GLuint;
 
 		using FBOHandle = GLuint;
 	}
