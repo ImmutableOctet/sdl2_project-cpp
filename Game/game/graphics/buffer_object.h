@@ -62,7 +62,7 @@ namespace game
 
 				inline bool init(const std::vector<dataType>& indexData, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
 				{
-					return init(indexData.data(), indexData.size(), usage, useLengthInBytes);
+					return init(indexData.data(), static_cast<GLsizei>(indexData.size()), usage, useLengthInBytes);
 				}
 
 				inline void destroy() override
