@@ -24,7 +24,7 @@ namespace game
 				{
 					if (!init(indexData, usage))
 					{
-						throw std::runtime_error("Failed to initialize EBO using raw data.");
+						throw std::runtime_error("Failed to initialize buffer-object using raw data.");
 					}
 				}
 
@@ -32,7 +32,7 @@ namespace game
 				{
 					if (!init(indexData, usage))
 					{
-						throw std::runtime_error("Failed to initialize EBO using 'std::vector'.");
+						throw std::runtime_error("Failed to initialize buffer-object using 'std::vector'.");
 					}
 				}
 
