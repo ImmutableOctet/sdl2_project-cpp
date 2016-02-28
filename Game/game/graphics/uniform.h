@@ -26,7 +26,7 @@ namespace game
 
 		// GL API Wrapper:
 		template <typename handleType=GLuint>
-		inline void destroyBuffers(std::vector<handleType>& instances, bool clear=true)
+		inline void destroyGLBuffers(std::vector<handleType>& instances, bool clear=true)
 		{
 			if (!instances.empty())
 			{
@@ -39,8 +39,9 @@ namespace game
 			}
 		}
 
+		// This generates a set of managed buffers using OpenGL, and outputs them to 'instances'.
 		template <typename T, typename handleType=GLuint>
-		inline bool rawBufferUpload(std::vector<handleType>& instances, const std::vector<std::vector<T>>& inputDataset, GLenum usage, GLenum target)
+		inline bool generateGLBuffers(std::vector<handleType>& instances, const std::vector<std::vector<T>>& inputDataset, GLenum usage, GLenum target)
 		{
 			// Get the current size, so we can use it as a starting index.
 			auto startIndex = instances.size();
@@ -58,16 +59,38 @@ namespace game
 			for (auto i = 0; i < inputDataset.size(); i++)
 			{
 				// Retrieve the current entry.
-				const std::vector<T>& vertexData = inputDataset[i];
+				const std::vector<T>& inputData = inputDataset[i];
 
 				// Bind one of the buffers we generated.
 				glBindBuffer(target, raw_ptr[i]);
 
 				// Upload the buffer's contents to the GPU.
-				glBufferData(target, sizeof(T) * vertexData.size(), vertexData.data(), usage);
+				glBufferData(target, sizeof(T) * inputData.size(), inputData.data(), usage);
 			}
 
 			// Return the default response.
+			return true;
+		}
+
+		// The 'length' argument represents the number of entries in 'inputData', not the size in bytes.
+		// To change this behavior, and instead use the size in bytes, set 'raw_length' to 'true'.
+		template <typename T, typename handleType = GLuint>
+		inline bool generateGLBuffer(handleType& instance, const T* inputData, GLsizei length, GLenum usage, GLenum target, bool should_unbind=true, bool raw_length=false)
+		{
+			// Generate buffer handles.
+			glGenBuffers(1, &instance);
+
+			// Bind one of the buffers we generated.
+			glBindBuffer(target, instance);
+
+			// Upload the buffer's contents to the GPU.
+			glBufferData(target, ((raw_length) ? length : (sizeof(T) * length)), inputData, usage);
+
+			if (should_unbind)
+			{
+				glBindBuffer(target, handleType());
+			}
+
 			return true;
 		}
 
