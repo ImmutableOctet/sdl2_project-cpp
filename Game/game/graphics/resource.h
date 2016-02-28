@@ -58,7 +58,7 @@ namespace game
 				virtual void unbind() const = 0;
 			protected:
 				// Fields:
-				resourceHandle_t instance;
+				resourceHandle_t instance = noinstance;
 		};
 
 		// Structures:

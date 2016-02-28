@@ -77,10 +77,8 @@ namespace game
 			}
 			catch (const std::exception&)
 			{
-				if (instance != noinstance)
-				{
-					destroy();
-				}
+				
+				destroy();
 
 				// Tell the user the bad news.
 				return false;
@@ -92,8 +90,11 @@ namespace game
 
 		void texture::destroy()
 		{
-			glDeleteTextures(1, &instance);
-			instance = noinstance;
+			if (instance != noinstance)
+			{
+				glDeleteTextures(1, &instance);
+				instance = noinstance;
+			}
 
 			return;
 		}

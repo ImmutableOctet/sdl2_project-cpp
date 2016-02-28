@@ -107,7 +107,14 @@ namespace game
 			throw std::runtime_error("Unable to build test shader.");
 		}
 
-		defaultShader.build(vShaderSource, fShaderSource);
+		GLchar shaderLog[512];
+
+		if (!defaultShader.build(vShaderSource, fShaderSource, shaderLog, 512))
+		{
+			std::cout << "Failed to build shader:" << std::endl;
+
+			std::cout << shaderLog;
+		}
 
 		defaultShader = std::move(shaderInstance);
 

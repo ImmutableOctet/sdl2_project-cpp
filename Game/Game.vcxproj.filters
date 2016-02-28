@@ -52,7 +52,7 @@
       <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
     <ClCompile Include="game\graphics\VAO.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

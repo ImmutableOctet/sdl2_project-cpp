@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <stdexcept>
+#include <cstring>
 
 // Namespace(s):
 namespace game
@@ -80,6 +81,11 @@ namespace game
 			if (exists())
 			{
 				throw std::runtime_error("Attempted to build an existing shader; please call 'destroy' first.");
+			}
+
+			if (log_out != nullptr && log_maxLength == 0)
+			{
+				log_maxLength = static_cast<GLsizei>(std::strlen((const char*)log_out));
 			}
 
 			// Allocate a program-handle.

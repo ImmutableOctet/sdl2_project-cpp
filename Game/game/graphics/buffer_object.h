@@ -67,7 +67,12 @@ namespace game
 
 				inline void destroy() override
 				{
-					destroyGLBuffer(this->instance);
+					if (instance != noinstance)
+					{
+						destroyGLBuffer(instance);
+
+						instance = noinstance;
+					}
 
 					return;
 				}

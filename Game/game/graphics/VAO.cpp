@@ -72,9 +72,12 @@ namespace game
 
 		void vertexArrayObject::destroy()
 		{
-			glDeleteVertexArrays(1, &instance);
-			
-			instance = noinstance;
+			if (instance != noinstance)
+			{
+				glDeleteVertexArrays(1, &instance);
+
+				instance = noinstance;
+			}
 
 			return;
 		}
