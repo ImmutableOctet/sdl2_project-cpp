@@ -14,9 +14,31 @@ namespace game
 		// Classes:
 		class vertexArrayObject : public resource<VAOHandle>
 		{
+			public:
+				// Constructor(s):
+				vertexArrayObject();
+
+				vertexArrayObject(vertexArrayObject&&) = default;
+				//vertexArrayObject(const vertexArrayObject&) = delete;
+
+				// Destructor(s):
+				~vertexArrayObject();
+
+				// Methods:
+				void destroy() override;
+
+				inline const vertexBufferObject& getVertices() const
+				{
+					return vertices;
+				}
+
+				inline const elementBufferObject& getElements() const
+				{
+					return elements;
+				}
 			protected:
 				vertexBufferObject vertices;
-				elementBufferObject indices;
+				elementBufferObject elements;
 		};
 	}
 }
