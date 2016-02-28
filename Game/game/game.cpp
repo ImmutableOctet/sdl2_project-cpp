@@ -111,7 +111,10 @@ namespace game
 
 		defaultShader = std::move(shaderInstance);
 
-		testVAO = graphics::vertexArrayObject(vertexData, indexData, GL_STATIC_DRAW, GL_STATIC_DRAW);
+		auto vertices = graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW);
+		auto indices = graphics::elementBufferObject(indexData, GL_STATIC_DRAW);
+
+		testVAO = graphics::vertexArrayObject(std::move(vertices), std::move(indices));
 
 		// Set the default clear-color.
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

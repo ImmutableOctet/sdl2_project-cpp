@@ -25,10 +25,16 @@ namespace game
 				// Destructor(s):
 				~vertexArrayObject();
 
+				// Operator overloads:
+				vertexArrayObject& operator=(vertexArrayObject&& input);
+
 				// Methods:
-				void init(vertexBufferObject&& vertexData, elementBufferObject&& elementData);
+				void init(vertexBufferObject&& vertexData, elementBufferObject&& elementData, bool should_unbind=true);
 
 				void destroy() override;
+
+				void bind() const override;
+				void unbind() const override;
 
 				inline const vertexBufferObject& getVertices() const
 				{
