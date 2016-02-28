@@ -1,7 +1,7 @@
 #pragma once
 
 // Includes:
-#include "resource_container.h"
+#include "resource.h"
 
 #include "VBO.h"
 #include "EBO.h"
@@ -11,21 +11,12 @@ namespace game
 {
 	namespace graphics
 	{
-		// Structures:
-
-		// This is used to represent a group vertices and indices.
-		struct vertexDataManifold
-		{
-			VAOHandle instance;
-
-			vertexBufferObject vertices;
-			elementBufferObject indices;
-		};
-
 		// Classes:
-		class vertexArrayObject : public resourceContainer<vertexDataManifold>
+		class vertexArrayObject : public resource<VAOHandle>
 		{
-			// Nothing so far.
+			protected:
+				vertexBufferObject vertices;
+				elementBufferObject indices;
 		};
 	}
 }
