@@ -72,14 +72,14 @@ namespace game
 					return;
 				}
 
-				inline void bind() override
+				inline void bind() const override
 				{
 					glBindBuffer(target, this->instance);
 
 					return;
 				}
 
-				inline void unbind() override
+				inline void unbind() const override
 				{
 					glBindBuffer(target, noinstance);
 
