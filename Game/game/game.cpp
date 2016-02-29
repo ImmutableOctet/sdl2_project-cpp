@@ -212,13 +212,13 @@ namespace game
 		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(defaultShader.getInstance());
+		defaultShader.bind();
 
-		glBindVertexArray(testVAO.getInstance());
+		testVAO.bind();
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-		glBindVertexArray(vertexArrayObject::noinstance);
+		testVAO.unbind();
 
 		/*
 		glEnableVertexAttribArray(vertexPos2DLocation);
@@ -232,7 +232,7 @@ namespace game
 		glDisableVertexAttribArray(vertexPos2DLocation);
 		*/
 
-		glUseProgram(NULL);
+		defaultShader.unbind();
 
 		SDL_GL_SwapWindow(window);
 
