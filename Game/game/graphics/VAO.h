@@ -20,9 +20,11 @@ namespace game
 			public:
 				// Constructor(s):
 				vertexArrayObject();
-				vertexArrayObject(vertexArrayObject&& rval);
-				vertexArrayObject(const vertexArrayObject&) = delete;
 				vertexArrayObject(vertexBufferObject&& vertexData, elementBufferObject&& elementData);
+
+				// Force this type to be move-only:
+				vertexArrayObject(const vertexArrayObject&) = delete;
+				vertexArrayObject(vertexArrayObject&& rval);
 
 				// Destructor(s):
 				~vertexArrayObject();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "types.h"
+#include "resource.h"
 
 #include <string>
 
@@ -10,14 +10,14 @@ namespace game
 	namespace graphics
 	{
 		// Classes:
-		class shader
+		class shader : public resource<shaderHandle>
 		{
+			private:
+				// Typedefs:
+				using super = resource<shaderHandle>;
 			public:
 				// Typedefs:
 				using location = shaderLocation;
-
-				// Constant variable(s):
-				static const shaderHandle noinstance = shaderHandle();
 
 				// Functions:
 				static shaderHandle buildProgram(const GLchar* str, GLenum shaderType, GLchar* log_out=nullptr, GLsizei log_maxLength=0);
@@ -32,18 +32,14 @@ namespace game
 				shader(const std::string& vertex, const std::string& fragment);
 
 				// Force this type to be move-only:
-				shader(shader&& s) = default;
+				//shader(const shader&) = delete;
+				shader(shader&&) = default;
 
 				// Destructor(s):
 				virtual ~shader();
 
 				// Operator overloads:
-				shader& operator=(shader&& input);
-
-				inline bool operator==(shaderHandle inst) const
-				{
-					return (this->instance == inst);
-				}
+				shader& operator=(shader&&) = default;
 
 				// Methods:
 
@@ -62,7 +58,10 @@ namespace game
 					return build(vertex.c_str(), fragment.c_str(), log_out, log_maxLength, vertex_out, fragment_out);
 				}
 
-				virtual void destroy();
+				virtual void destroy() override;
+
+				virtual void bind() const override;
+				virtual void unbind() const override;
 
 				// This retrieves a 'location' representing an attribute.
 				// Attributes are commonly uniform' variables.
@@ -70,21 +69,6 @@ namespace game
 				{
 					return glGetAttribLocation(instance, name);
 				}
-
-				inline bool exists() const
-				{
-					return (instance != noinstance);
-				}
-
-				inline shaderHandle getInstance() const
-				{
-					return instance;
-				}
-			protected:
-				//shader(const shader&); // = delete;
-
-				// Fields:
-				shaderHandle instance = noinstance;
 		};
 	}
 }

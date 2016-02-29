@@ -23,14 +23,14 @@ namespace game
 			// Nothing so far.
 		}
 
-		vertexArrayObject::vertexArrayObject(vertexArrayObject&& rval)
-		{
-			*this = std::move(rval);
-		}
-
 		vertexArrayObject::vertexArrayObject(vertexBufferObject&& vertexData, elementBufferObject&& indexData)
 		{
 			init(std::forward<vertexBufferObject>(vertexData), std::forward<elementBufferObject>(indexData));
+		}
+
+		vertexArrayObject::vertexArrayObject(vertexArrayObject&& rval)
+		{
+			*this = std::move(rval);
 		}
 
 		// Destructor(s):
@@ -70,6 +70,7 @@ namespace game
 
 			// Unbind the vertex-buffer, but keep the element-buffer bound.
 			vertexData.unbind();
+			//elementData.unbind();
 
 			// Check if we were requested to unbind:
 			if (should_unbind)

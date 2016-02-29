@@ -65,16 +65,6 @@ namespace game
 			destroy();
 		}
 
-		// Operator overloads:
-		shader& shader::operator=(shader&& s)
-		{
-			destroy();
-
-			std::swap(this->instance, s.instance);
-
-			return *this;
-		}
-
 		// Methods:
 		bool shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, GLchar* log_out, GLsizei log_maxLength, shaderHandle* vertex_out, shaderHandle* fragment_out)
 		{
@@ -181,6 +171,20 @@ namespace game
 
 				instance = noinstance;
 			}
+
+			return;
+		}
+
+		void shader::bind() const
+		{
+			glUseProgram(instance);
+
+			return;
+		}
+
+		void shader::unbind() const
+		{
+			glUseProgram(noinstance);
 
 			return;
 		}

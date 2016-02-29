@@ -27,6 +27,9 @@ namespace game
 					*this = std::move(rval);
 				}
 
+				// Destructor(s):
+				inline virtual ~resource() { /* This destructor cannot call 'destroy'. */ }
+
 				// Operator overloads:
 				inline resource& operator=(resource&& rval)
 				{

@@ -42,10 +42,8 @@ namespace game
 				}
 
 				// Force this type to be move-only:
-				bufferObject(bufferObject&& t) : super(std::move(t))
-				{
-					// Nothing so far.
-				}
+				//bufferObject(const buferObject& buffer) = delete;
+				bufferObject(bufferObject&& buffer) = default;
 
 				// Destructor(s):
 				inline ~bufferObject()
