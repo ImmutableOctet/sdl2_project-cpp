@@ -36,6 +36,9 @@ namespace game
 		{
 			resource::operator=(input);
 
+			vertices = std::move(input.vertices);
+			elements = std::move(input.elements);
+
 			return *this;
 		}
 

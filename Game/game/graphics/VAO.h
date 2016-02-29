@@ -17,9 +17,8 @@ namespace game
 			public:
 				// Constructor(s):
 				vertexArrayObject();
-				vertexArrayObject(vertexBufferObject&& vertexData, elementBufferObject&& elementData);
-
 				vertexArrayObject(vertexArrayObject&&) = default;
+				vertexArrayObject(vertexBufferObject&& vertexData, elementBufferObject&& elementData);
 				//vertexArrayObject(const vertexArrayObject&) = delete;
 
 				// Destructor(s):

@@ -38,6 +38,14 @@ namespace game
 
 				// Force this type to be move-only:
 				bufferObject(bufferObject&& t) = default;
+
+				/*
+				inline bufferObject(bufferObject&& t)
+				{
+					*this = t;
+				}
+				*/
+
 				//bufferObject(const bufferObject&) = delete;
 
 				// Destructor(s):

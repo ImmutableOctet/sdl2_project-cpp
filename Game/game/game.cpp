@@ -100,13 +100,6 @@ namespace game
 			1, 2, 3
 		};
 
-		auto shaderInstance = graphics::shader(vShaderSource, fShaderSource);
-
-		if (shaderInstance == graphics::shader::noinstance)
-		{
-			throw std::runtime_error("Unable to build test shader.");
-		}
-
 		GLchar shaderLog[512];
 
 		if (!defaultShader.build(vShaderSource, fShaderSource, shaderLog, 512))
@@ -116,12 +109,9 @@ namespace game
 			std::cout << shaderLog;
 		}
 
-		defaultShader = std::move(shaderInstance);
+		auto x = graphics::vertexArrayObject(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
 
-		auto vertices = graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW);
-		auto indices = graphics::elementBufferObject(indexData, GL_STATIC_DRAW);
-
-		testVAO = graphics::vertexArrayObject(std::move(vertices), std::move(indices));
+		testVAO = graphics::vertexArrayObject(std::move(x));
 
 		// Set the default clear-color.
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
