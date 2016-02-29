@@ -20,15 +20,15 @@ namespace game
 				// Constructor(s):
 				texture();
 
+				// Force this type to be move-only:
+				texture(texture&& t) = default;
+				texture(const texture&) = delete;
+
 				// Destructor(s):
 				~texture(); // virtual
 
-				// Force this type to be move-only:
-				texture(texture&& t) = default;
-				//texture(const texture&) = delete;
-
 				// Operator overloads:
-				texture& operator=(texture&& input);
+				texture& operator=(texture&& input) = default;
 
 				// Methods:
 				virtual bool load(const char* path, bool should_unbind=true);

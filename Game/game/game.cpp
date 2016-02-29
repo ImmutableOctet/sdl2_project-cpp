@@ -109,9 +109,18 @@ namespace game
 			std::cout << shaderLog;
 		}
 
-		auto x = graphics::vertexArrayObject(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
+		{
+			graphics::vertexBufferObject v = graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW);
+			auto other = graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW);
 
-		testVAO = graphics::vertexArrayObject(std::move(x));
+			v = std::move(other);
+
+			auto i = graphics::elementBufferObject(indexData, GL_STATIC_DRAW);
+
+			auto x = graphics::vertexArrayObject(std::move(v), std::move(i));
+
+			testVAO = graphics::vertexArrayObject(std::move(x));
+		}
 
 		// Set the default clear-color.
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

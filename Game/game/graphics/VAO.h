@@ -14,18 +14,21 @@ namespace game
 		// Classes:
 		class vertexArrayObject : public resource<VAOHandle>
 		{
+			private:
+				// Typedefs:
+				using super = resource<VAOHandle>;
 			public:
 				// Constructor(s):
 				vertexArrayObject();
-				vertexArrayObject(vertexArrayObject&&) = default;
+				vertexArrayObject(vertexArrayObject&& rval);
+				vertexArrayObject(const vertexArrayObject&) = delete;
 				vertexArrayObject(vertexBufferObject&& vertexData, elementBufferObject&& elementData);
-				//vertexArrayObject(const vertexArrayObject&) = delete;
 
 				// Destructor(s):
 				~vertexArrayObject();
 
 				// Operator overloads:
-				vertexArrayObject& operator=(vertexArrayObject&& input);
+				vertexArrayObject& operator=(vertexArrayObject&&);
 
 				// Methods:
 				void init(vertexBufferObject&& vertexData, elementBufferObject&& elementData, bool should_unbind=true);

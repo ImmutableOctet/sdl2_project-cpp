@@ -38,14 +38,6 @@ namespace game
 			destroy();
 		}
 
-		// Operator overloads:
-		texture& texture::operator=(texture&& input)
-		{
-			resource::operator=(input);
-
-			return *this;
-		}
-
 		// Methods:
 		bool texture::load(const char* path, bool should_unbind)
 		{

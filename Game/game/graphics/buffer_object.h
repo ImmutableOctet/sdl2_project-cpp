@@ -5,6 +5,7 @@
 #include "uniform.h"
 
 // STL:
+#include <utility>
 #include <stdexcept>
 #include <vector>
 
@@ -16,7 +17,11 @@ namespace game
 		template <typename resourceHandle_t, typename dataType, GLenum target, resourceHandle_t noinstance_value = resourceHandle_t()>
 		class bufferObject : public resource<resourceHandle_t, noinstance_value>
 		{
+			private:
+				// Typedefs:
+				using super = resource<resourceHandle_t, noinstance_value>;
 			public:
+
 				// Constructor(s):
 				inline bufferObject() { /* Nothing so far. */  }
 				
@@ -37,16 +42,10 @@ namespace game
 				}
 
 				// Force this type to be move-only:
-				bufferObject(bufferObject&& t) = default;
-
-				/*
-				inline bufferObject(bufferObject&& t)
+				bufferObject(bufferObject&& t) : super(std::move(t))
 				{
-					*this = t;
+					// Nothing so far.
 				}
-				*/
-
-				//bufferObject(const bufferObject&) = delete;
 
 				// Destructor(s):
 				inline ~bufferObject()
@@ -55,12 +54,16 @@ namespace game
 				}
 
 				// Operator overloads:
-				inline bufferObject& operator=(bufferObject&& input)
-				{
-					resource::operator=(input);
+				bufferObject& operator=(bufferObject&&) = default;
 
-					return *this;
-				}
+				/*
+					inline bufferObject& operator=(bufferObject&& input)
+					{
+						resource::operator=(input);
+
+						return *this;
+					}
+				*/
 
 				// Methods:
 				inline bool init(const dataType* indexData, GLsizei length, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)

@@ -5,6 +5,9 @@
 #include "VBO.h"
 #include "EBO.h"
 
+// STL:
+#include <utility>
+
 // Namespace(s):
 namespace game
 {
@@ -20,9 +23,14 @@ namespace game
 			// Nothing so far.
 		}
 
+		vertexArrayObject::vertexArrayObject(vertexArrayObject&& rval)
+		{
+			*this = std::move(rval);
+		}
+
 		vertexArrayObject::vertexArrayObject(vertexBufferObject&& vertexData, elementBufferObject&& indexData)
 		{
-			init(std::move(vertexData), std::move(indexData));
+			init(std::forward<vertexBufferObject>(vertexData), std::forward<elementBufferObject>(indexData));
 		}
 
 		// Destructor(s):
@@ -32,12 +40,12 @@ namespace game
 		}
 
 		// Operator overloads:
-		vertexArrayObject& vertexArrayObject::operator=(vertexArrayObject&& input)
+		vertexArrayObject& vertexArrayObject::operator=(vertexArrayObject&& rval)
 		{
-			resource::operator=(input);
+			resource::operator=(std::forward<resource>(rval));
 
-			vertices = std::move(input.vertices);
-			elements = std::move(input.elements);
+			this->vertices = std::move(rval.vertices);
+			this->elements = std::move(rval.elements);
 
 			return *this;
 		}

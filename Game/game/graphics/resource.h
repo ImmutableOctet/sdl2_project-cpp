@@ -18,19 +18,24 @@ namespace game
 				// Constant variable(s):
 				static const resourceHandle_t noinstance = noinstance_value;
 
-				// Destructor(s):
-				inline virtual ~resource()
+				// Constructor(s):
+				resource() = default;
+				resource(const resource&) = delete;
+				
+				inline resource(resource&& rval)
 				{
-					// Nothing so far.
+					*this = std::move(rval);
 				}
 
 				// Operator overloads:
-				template <typename T = std::enable_if<std::is_base_of<resource, T>::value>::type>
-				inline resource& operator=(T&& input)
+				inline resource& operator=(resource&& rval)
 				{
 					destroy();
 
-					std::swap(this->instance, input.instance);
+					//std::swap(this->instance, rval.instance);
+
+					this->instance = std::move(rval.instance);
+					rval.instance = noinstance;
 
 					return *this;
 				}
