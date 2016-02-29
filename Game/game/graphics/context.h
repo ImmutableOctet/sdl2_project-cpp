@@ -30,27 +30,27 @@ namespace game
 		void configureGL();
 
 		/*
-		This initializes OpenGL.
+			This initializes OpenGL.
 
-		DO NOT use the OpenGL API before this is called.
+			DO NOT use the OpenGL API before this is called.
 
-		Most applications automatically call this
-		before initializing graphical behavior.
+			Most applications automatically call this
+			before initializing graphical behavior.
 
-		The 'autocfg' argument should be 'true'
-		the first time this is called.
+			The 'autocfg' argument should be 'true'
+			the first time this is called.
 
-		That argument ensures a call to the 'configureGL'
-		command, which may or may not be required.
+			That argument ensures a call to the 'configureGL'
+			command, which may or may not be required.
 		*/
 
-		bool initializeGL(bool experimental = true, bool autocfg = true);
+		bool initializeGL(bool experimental=true, bool autocfg=true);
 
 		/*
-		This deinitializes OpenGL.
+			This deinitializes OpenGL.
 
-		DO NOT call this without first calling 'initializeGL'.
-		In addition, DO NOT use any OpenGL APIs after calling this function.
+			DO NOT call this without first calling 'initializeGL'.
+			In addition, DO NOT use any OpenGL APIs after calling this function.
 		*/
 
 		void deinitializeGL();
