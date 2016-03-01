@@ -211,8 +211,8 @@ namespace game
 		
 		glViewport(0, 0, video.width, video.height);
 		
-		//glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
+		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -222,11 +222,11 @@ namespace game
 
 		testVAO.bind();
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, testVAO.getElements().size(), getGLType<elementBufferObject::type>(), nullptr);
 
 		testVAO.unbind();
 
-		//defaultShader.unbind();
+		defaultShader.unbind();
 
 		SDL_GL_SwapWindow(window);
 

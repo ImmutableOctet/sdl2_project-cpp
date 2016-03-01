@@ -9,6 +9,9 @@
 #include <stdexcept>
 #include <vector>
 
+// C STDLIB:
+#include <cstddef>
+
 // Namespace(s):
 namespace game
 {
@@ -20,7 +23,11 @@ namespace game
 			private:
 				// Typedefs:
 				using super = resource<resourceHandle_t, noinstance_value>;
+			protected:
+				std::size_t count = 0;
 			public:
+				// Typedefs:
+				using type = dataType;
 
 				// Constructor(s):
 				inline bufferObject() { /* Nothing so far. */  }
@@ -64,7 +71,7 @@ namespace game
 				*/
 
 				// Methods:
-				inline bool init(const dataType* indexData, GLsizei length, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
+				inline bool init(const dataType* data, GLsizei length, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
 				{
 					// Before anything else, make sure we don't have any existing content:
 					if (exists())
@@ -72,7 +79,21 @@ namespace game
 						return false;
 					}
 
-					return generateGLBuffer(this->instance, indexData, length, usage, target, should_unbind, useLengthInBytes);
+					bool response = generateGLBuffer(this->instance, data, length, usage, target, should_unbind, useLengthInBytes);
+
+					if (response)
+					{
+						if (useLengthInBytes)
+						{
+							this->count = (length / sizeof(dataType));
+						}
+						else
+						{
+							this->count = length;
+						}
+					}
+
+					return response;
 				}
 
 				inline bool init(const std::vector<dataType>& indexData, GLenum usage, bool should_unbind=true, bool __useLengthInBytes=false)
@@ -87,6 +108,8 @@ namespace game
 						destroyGLBuffer(instance);
 
 						instance = noinstance;
+
+						count = 0;
 					}
 
 					return;
@@ -104,6 +127,12 @@ namespace game
 					glBindBuffer(target, noinstance);
 
 					return;
+				}
+
+				// This reports the number of elements of size 'dataType' in this buffer-object.
+				inline std::size_t size() const
+				{
+					return count;
 				}
 		};
 	}

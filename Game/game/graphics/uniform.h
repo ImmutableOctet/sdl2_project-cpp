@@ -29,17 +29,17 @@ namespace game
 
 		// OpenGL type constants:
 		template <typename unsupported = std::enable_if<false>>
-		GLenum getGLType() { return GL_FALSE; }
+		inline constexpr GLenum getGLType() { return GL_FALSE; }
 
-		template <> inline GLenum getGLType<bool>() { return GL_BOOL; } // GLboolean
-		template <> inline GLenum getGLType<GLbyte>() { return GL_BYTE; }
-		template <> inline GLenum getGLType<GLubyte>() { return GL_UNSIGNED_BYTE; }
-		template <> inline GLenum getGLType<GLshort>() { return GL_SHORT; }
-		template <> inline GLenum getGLType<GLushort>() { return GL_UNSIGNED_SHORT; }
-		template <> inline GLenum getGLType<GLint>() { return GL_INT; }
-		template <> inline GLenum getGLType<GLuint>() { return GL_UNSIGNED_INT; }
-		template <> inline GLenum getGLType<GLfloat>() { return GL_FLOAT; }
-		template <> inline GLenum getGLType<GLdouble>() { return GL_DOUBLE; }
+		template <> inline constexpr GLenum getGLType<bool>() { return GL_BOOL; } // GLboolean
+		template <> inline constexpr GLenum getGLType<GLbyte>() { return GL_BYTE; }
+		template <> inline constexpr GLenum getGLType<GLubyte>() { return GL_UNSIGNED_BYTE; }
+		template <> inline constexpr GLenum getGLType<GLshort>() { return GL_SHORT; }
+		template <> inline constexpr GLenum getGLType<GLushort>() { return GL_UNSIGNED_SHORT; }
+		template <> inline constexpr GLenum getGLType<GLint>() { return GL_INT; }
+		template <> inline constexpr GLenum getGLType<GLuint>() { return GL_UNSIGNED_INT; }
+		template <> inline constexpr GLenum getGLType<GLfloat>() { return GL_FLOAT; }
+		template <> inline constexpr GLenum getGLType<GLdouble>() { return GL_DOUBLE; }
 
 		template <typename handleType=GLuint>
 		inline void destroyGLBuffers(std::vector<handleType>& instances, bool clear=true)
