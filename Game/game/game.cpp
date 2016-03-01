@@ -205,13 +205,13 @@ namespace game
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		defaultShader.bind();
 
 		testVAO.bind();
 
-		glDrawElements(GL_TRIANGLES, testVAO.getElements().size(), getGLType<elementBufferObject::type>(), nullptr);
+		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(testVAO.getElements().size()), getGLType<elementBufferObject::type>(), nullptr);
 
 		testVAO.unbind();
 
