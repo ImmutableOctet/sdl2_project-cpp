@@ -33,7 +33,14 @@ namespace game
 				vertexArrayObject& operator=(vertexArrayObject&&);
 
 				// Methods:
-				void init(vertexBufferObject&& vertexData, elementBufferObject&& elementData, bool should_unbind=true);
+
+				// This performs the initial setup for binding data to this object.
+				// A call to this overload should be followed by a call to one of the others.
+				// Alternatively, a call to 'destroy' will suffice.
+				bool init(bool should_unbind=false);
+
+				bool init(const std::vector<GLfloat>& vertexData, GLenum vertUsage, const std::vector<GLuint>& elementData, GLenum elemUsage, bool should_unbind=true);
+				bool init(vertexBufferObject&& vertexData, elementBufferObject&& elementData, bool should_unbind=true);
 
 				void destroy() override;
 

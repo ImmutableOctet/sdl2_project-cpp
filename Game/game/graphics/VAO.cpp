@@ -51,7 +51,39 @@ namespace game
 		}
 
 		// Methods:
-		void vertexArrayObject::init(vertexBufferObject&& vertexData, elementBufferObject&& elementData, bool should_unbind)
+		bool vertexArrayObject::init(const std::vector<GLfloat>& vertexData, GLenum vertUsage, const std::vector<GLuint>& elementData, GLenum elemUsage, bool should_unbind)
+		{
+			if (exists())
+			{
+				return false;
+			}
+
+			// Allocate a VAO handle.
+			glGenVertexArrays(1, &instance);
+
+			bind();
+
+			vertices.init(vertexData, vertUsage, false);
+			elements.init(elementData, elemUsage, false);
+
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+			glEnableVertexAttribArray(0);
+
+			// Unbind the vertex-buffer, but keep the element-buffer bound.
+			vertices.unbind();
+			//elements.unbind();
+
+			// Check if we were requested to unbind:
+			if (should_unbind)
+			{
+				// Unbind this VAO.
+				unbind();
+			}
+
+			return true;
+		}
+
+		bool vertexArrayObject::init(vertexBufferObject&& vertexData, elementBufferObject&& elementData, bool should_unbind)
 		{
 			// Take ownership of 'vertexData' and 'elementData':
 			vertices = std::move(vertexData);
@@ -79,7 +111,7 @@ namespace game
 				unbind();
 			}
 
-			return;
+			return true;
 		}
 
 		void vertexArrayObject::destroy()

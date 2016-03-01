@@ -109,10 +109,11 @@ namespace game
 			std::cout << shaderLog;
 		}
 
-		testVAO = graphics::vertexArrayObject(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
+		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW);
+		//testVAO.init(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
 
 		// Set the default clear-color.
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		return;
 	}
@@ -207,9 +208,12 @@ namespace game
 		using namespace game::graphics;
 
 		auto vertexPos2DLocation = defaultShader.getAttribute("LVertexPos2D");
+		
+		glViewport(0, 0, video.width, video.height);
+		
+		//glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		//glViewport(0, 0, video.width, video.height);
-		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		defaultShader.bind();
@@ -220,19 +224,7 @@ namespace game
 
 		testVAO.unbind();
 
-		/*
-		glEnableVertexAttribArray(vertexPos2DLocation);
-
-		glBindBuffer(GL_ARRAY_BUFFER, testVertices[0]);
-		glVertexAttribPointer(vertexPos2DLocation, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), NULL);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, testIndices[0]);
-		glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_INT, NULL);
-
-		glDisableVertexAttribArray(vertexPos2DLocation);
-		*/
-
-		defaultShader.unbind();
+		//defaultShader.unbind();
 
 		SDL_GL_SwapWindow(window);
 

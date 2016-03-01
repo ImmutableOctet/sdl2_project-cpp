@@ -66,12 +66,18 @@ namespace game
 				// Methods:
 				inline bool init(const dataType* indexData, GLsizei length, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
 				{
+					// Before anything else, make sure we don't have any existing content:
+					if (exists())
+					{
+						return false;
+					}
+
 					return generateGLBuffer(this->instance, indexData, length, usage, target, should_unbind, useLengthInBytes);
 				}
 
-				inline bool init(const std::vector<dataType>& indexData, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
+				inline bool init(const std::vector<dataType>& indexData, GLenum usage, bool should_unbind=true, bool __useLengthInBytes=false)
 				{
-					return init(indexData.data(), static_cast<GLsizei>(indexData.size()), usage, useLengthInBytes);
+					return init(indexData.data(), static_cast<GLsizei>(indexData.size()), usage, __useLengthInBytes);
 				}
 
 				inline void destroy() override
