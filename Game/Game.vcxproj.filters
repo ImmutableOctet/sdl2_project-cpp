@@ -54,6 +54,9 @@
     <ClCompile Include="game\graphics\VAO.cpp">
       <Filter>Source Files\game\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="game\util.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\game.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="game\graphics\buffer_object.h">
       <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\util.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

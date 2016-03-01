@@ -4,6 +4,8 @@
 
 // Local:
 #include "config.h"
+
+#include "util.h"
 #include "display.h"
 #include "graphics/graphics.h"
 

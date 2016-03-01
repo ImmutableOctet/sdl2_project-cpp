@@ -7,7 +7,6 @@
 // STL:
 #include <stdexcept>
 #include <iostream>
-#include <vector>
 
 // C STDLIB:
 #include <cstddef>
@@ -73,18 +72,8 @@ namespace game
 	void application::onCreate(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
 		// Temporary vertex shader source code:
-		const GLchar* vShaderSource = "#version 330 core\n"
-										"layout (location = 0) in vec3 position;\n"
-										"void main()\n"
-										"{\n"
-											"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-										"}\0";
-		const GLchar* fShaderSource = "#version 330 core\n"
-										"out vec4 color;\n"
-										"void main()\n"
-										"{\n"
-											"color = vec4(0.8f, 0.1f, 0.1f, 0.8f);\n"
-										"}\n\0";
+		std::string vShaderSource = utilities::load_string("default_vert.glsl");
+		std::string fShaderSource = utilities::load_string("default_frag.glsl");
 
 		std::vector<GLfloat> vertexData =
 		{
