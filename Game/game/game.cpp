@@ -216,6 +216,8 @@ namespace game
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 		defaultShader.bind();
 
 		testVAO.bind();
