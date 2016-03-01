@@ -95,9 +95,6 @@
     <ClInclude Include="game\graphics\VBO.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="game\graphics\VAO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\graphics\resource.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
@@ -112,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="game\util.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\graphics\VAO.h">
+      <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

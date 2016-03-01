@@ -117,7 +117,10 @@ namespace game
 
 				bool setVertices(vertexBufferObject&& input);
 				bool setElements(elementBufferObject&& input);
+
+				void draw(GLenum mode=GL_TRIANGLES);
 			protected:
+				// Fields:
 				vertexBufferObject vertices;
 				elementBufferObject elements;
 		};

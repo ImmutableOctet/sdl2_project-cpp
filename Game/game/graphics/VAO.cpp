@@ -114,5 +114,16 @@ namespace game
 
 			return true;
 		}
+
+		void vertexArrayObject::draw(GLenum mode)
+		{
+			bind();
+
+			glDrawElements(mode, static_cast<GLsizei>(elements.size()), getGLType<elementBufferObject::type>(), nullptr);
+
+			unbind();
+
+			return;
+		}
 	}
 }

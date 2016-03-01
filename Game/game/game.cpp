@@ -209,11 +209,7 @@ namespace game
 
 		defaultShader.bind();
 
-		testVAO.bind();
-
-		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(testVAO.getElements().size()), getGLType<elementBufferObject::type>(), nullptr);
-
-		testVAO.unbind();
+		testVAO.draw();
 
 		defaultShader.unbind();
 
