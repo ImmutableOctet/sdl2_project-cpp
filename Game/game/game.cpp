@@ -244,18 +244,33 @@ namespace game
 
 	void application::handleEvents()
 	{
+		using namespace std;
+
 		systemEvent e;
 
 		while (SDL_PollEvent(&e))
 		{
 			switch (e.type)
 			{
+				case SDL_WINDOWEVENT:
+					switch (e.window.event)
+					{
+						case SDL_WINDOWEVENT_RESIZED:
+							cout << "Window resized: " << e.window.data1 << "x" << e.window.data2 << endl;
+
+							video.width = e.window.data1;
+							video.height = e.window.data2;
+
+							break;
+					}
+
+					break;
 				case SDL_MOUSEBUTTONDOWN:
-					// Nothing so far.
+					cout << "Mouse button detected: " << e.button.button << endl;
 
 					break;
 				case SDL_KEYDOWN:
-					// Nothing so far.
+					cout << "Keyboard button detected: " << e.key.keysym.sym << endl;
 
 					break;
 				case SDL_QUIT:
