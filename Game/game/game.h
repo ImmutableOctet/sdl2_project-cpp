@@ -111,6 +111,7 @@ namespace game
 
 			virtual void onUpdate();
 			virtual void onRender(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo);
+			virtual void onResize(displaySize_t width, displaySize_t height);
 			virtual bool onUnhandledEvent(const systemEvent& e);
 
 			void handleEvents();

@@ -233,6 +233,14 @@ namespace game
 		return;
 	}
 
+	void application::onResize(displaySize_t width, displaySize_t height)
+	{
+		video.width = width;
+		video.height = height;
+
+		return;
+	}
+
 	bool application::onUnhandledEvent(const systemEvent & e)
 	{
 		using namespace std;
@@ -256,10 +264,11 @@ namespace game
 					switch (e.window.event)
 					{
 						case SDL_WINDOWEVENT_RESIZED:
-							cout << "Window resized: " << e.window.data1 << "x" << e.window.data2 << endl;
+							#ifdef GAME_CONSOLE
+								cout << "Window resized: " << e.window.data1 << "x" << e.window.data2 << endl;
+							#endif
 
-							video.width = e.window.data1;
-							video.height = e.window.data2;
+							onResize(e.window.data1, e.window.data2);
 
 							break;
 					}

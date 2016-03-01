@@ -14,22 +14,35 @@
 // Namespace(s):
 namespace game
 {
+	// Typedefs:
+	using displaySize_t = int;
+	using windowCoordinate_t = int;
+
 	namespace display
 	{
 		// Typedefs:
 		using systemWindow = SDL_Window*;
 
+		using size_t = displaySize_t;
+		using coordinate_t = windowCoordinate_t;
+
 		// Structures:
 		struct displayMode
 		{
-			int width = SDL_WINDOWPOS_UNDEFINED;
-			int height = SDL_WINDOWPOS_UNDEFINED;
+			// Typedefs:
+			using size_t = displaySize_t;
+
+			size_t width = SDL_WINDOWPOS_UNDEFINED;
+			size_t height = SDL_WINDOWPOS_UNDEFINED;
 		};
 
 		struct windowMode : displayMode
 		{
-			int x = SDL_WINDOWPOS_UNDEFINED;
-			int y = SDL_WINDOWPOS_UNDEFINED;
+			// Typedefs:
+			//using coordinate_t = windowCoordinate_t;
+
+			coordinate_t x = SDL_WINDOWPOS_UNDEFINED;
+			coordinate_t y = SDL_WINDOWPOS_UNDEFINED;
 
 			bool vsync = true; // int vsync = 1;
 
