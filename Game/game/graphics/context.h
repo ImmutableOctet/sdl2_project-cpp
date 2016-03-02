@@ -17,7 +17,7 @@ namespace game
 		// Structures:
 		struct contextInfo
 		{
-			// Nothing so far.
+			GLint max_attributes;
 		};
 
 		// Functions:
@@ -54,5 +54,8 @@ namespace game
 		*/
 
 		void deinitializeGL();
+
+		// This retrieves a 'contextInfo' object using the current graphical context.
+		void getContextInfo(contextInfo& renderInfo_out);
 	}
 }

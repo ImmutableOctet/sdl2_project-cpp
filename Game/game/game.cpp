@@ -36,7 +36,8 @@ namespace game
 
 		// Create an OpenGL context.
 		graphicsContext = SDL_GL_CreateContext(this->window);
-		renderInfo = {};
+
+		graphics::getContextInfo(renderInfo);
 
 		if (graphicsContext == graphics::nocontext)
 		{

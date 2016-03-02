@@ -52,6 +52,19 @@ namespace game
 		void deinitializeGL()
 		{
 			// Nothing so far.
+
+			return;
+		}
+
+		void getContextInfo(contextInfo& renderInfo)
+		{
+			// Zero-initialize the container.
+			renderInfo = {};
+
+			// Get the maximum number of vertex-attributes.
+			glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &renderInfo.max_attributes);
+
+			return;
 		}
 	}
 }
