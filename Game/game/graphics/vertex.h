@@ -26,15 +26,13 @@ namespace game
 			// Methods:
 			inline std::size_t elementCount() const
 			{
-				return (position.length() + color.length()); // texcoords.length()
+				return (position.length() + color.length() + texcoords.length()); // sizeof(vertex) / sizeof(GLfloat);
 			}
 
 			// Operator overloads:
 			inline operator GLfloat*() const
 			{
-				void* x = (void*)this;
-
-				return (GLfloat*)x;
+				return (GLfloat*)&position;
 			}
 
 			// Fields:

@@ -82,10 +82,10 @@ namespace game
 
 		std::vector<vertex> vertexData =
 		{
-			vertex { { 0.5f,  0.5f, 0.0f },	/*	Top Right	*/ { 1.0f, 0.0f, 0.0f, 0.5f }, /*	RGBA	*/ 	/* Texture Coords */ },	// { 0.0, 0.0 }
-			vertex { { 0.5f, -0.5f, 0.0f },	/*	Bottom Right*/ { 0.0f, 1.0f, 0.0f, 0.1f }, /*	RGBA	*/  /* Texture Coords */ },	// { 0.0, 0.0 }
-			vertex { { -0.5f, -0.5f, 0.0f },/*	Bottom Left	*/ { 0.0f, 0.0f, 1.0f, 0.5f }, /*	RGBA	*/  /* Texture Coords */ },	// { 0.0, 0.0 }
-			vertex { { -0.5f,  0.5f, 0.0f },/*	Top Left	*/ { 0.25f, 0.5f, 1.0f, 1.0f }, /*	RGBA	*/  /* Texture Coords */ }, // { 0.0, 0.0 }
+			vertex { { 0.5f,  0.5f, 0.0f },	/*	Top Right	*/ { 1.0f, 0.0f, 0.0f, 0.5f }, /*	RGBA	*/ 	/* Texture Coords */ { 0.0, 0.0 } },
+			vertex { { 0.5f, -0.5f, 0.0f },	/*	Bottom Right*/ { 0.0f, 1.0f, 0.0f, 0.1f }, /*	RGBA	*/  /* Texture Coords */ { 0.0, 0.0 } },
+			vertex { { -0.5f, -0.5f, 0.0f },/*	Bottom Left	*/ { 0.0f, 0.0f, 1.0f, 0.5f }, /*	RGBA	*/  /* Texture Coords */ { 0.0, 0.0 } },
+			vertex { { -0.5f,  0.5f, 0.0f },/*	Top Left	*/ { 0.25f, 0.5f, 1.0f, 1.0f }, /*	RGBA	*/  /* Texture Coords */ { 0.0, 0.0 } }
 		};
 
 		std::vector<GLuint> indexData =
