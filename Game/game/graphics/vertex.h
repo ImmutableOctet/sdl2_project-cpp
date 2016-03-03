@@ -38,7 +38,7 @@ namespace game
 			// Fields:
 			position_t position;
 			color_t color;
-			//texcoords_t texcoords;
+			texcoords_t texcoords;
 		};
 
 		// Typedefs:

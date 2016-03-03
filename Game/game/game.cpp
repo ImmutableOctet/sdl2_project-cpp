@@ -103,7 +103,7 @@ namespace game
 			std::cout << shaderLog;
 		}
 
-		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true);
+		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
 		//testVAO.init(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
 
 		// Set the default clear-color.

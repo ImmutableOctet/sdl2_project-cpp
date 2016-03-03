@@ -8,6 +8,12 @@
 
 #include "uniform.h"
 
+// STL:
+#include <type_traits>
+
+// C STDLIB:
+#include <cstddef>
+
 // Namespace(s):
 namespace game
 {
@@ -25,10 +31,54 @@ namespace game
 
 				static const GLuint VERTEX_DATA_INDEX = 0;
 				static const GLuint COLOR_DATA_INDEX = 1;
+				static const GLuint TEXTURE_DATA_INDEX = 2;
 
 				static const GLsizei VERTEX_DATA_LENGTH = 3; // 4;
 				static const GLsizei COLOR_DATA_BASE_LENGTH = 3;
 				static const GLsizei COLOR_DATA_EXT_LENGTH = (COLOR_DATA_BASE_LENGTH + COLOR_DATA_EXT_SIZE);
+				static const GLsizei TEXTURE_DATA_LENGTH = 2;
+
+				// Structures:
+				struct vertexData_descriptor
+				{
+					// Fields:
+					bool color;
+					bool color_alpha;
+					bool texture_coords;
+				};
+
+				struct vertexData_strideInfo
+				{
+					// Fields:
+					GLsizei vertexStride;
+					GLsizei colorStride;
+					GLsizei textureStride;
+
+					// Operator overloads:
+
+					// This is used to retrieve the virtual address mapped to 'index'.
+					inline const GLvoid* operator[](std::size_t index) const
+					{
+						GLbyte* v_output = 0;
+
+						if (index > 0)
+						{
+							v_output += vertexStride;
+
+							if (index > 1)
+							{
+								v_output += colorStride;
+
+								if (index > 2)
+								{
+									v_output += textureStride;
+								}
+							}
+						}
+
+						return reinterpret_cast<const GLvoid*>(v_output);
+					}
+				};
 
 				// Constructor(s):
 				vertexArrayObject();
@@ -44,6 +94,48 @@ namespace game
 				vertexArrayObject& operator=(vertexArrayObject&&);
 
 				// Methods:
+
+				// Intermediate routines:
+				template <typename vertexType = GLfloat, typename colorType = vertexType, typename texCoordType = vertexType>
+				inline GLsizei describe_calculateStride(GLsizei vertex, GLsizei colors, GLsizei textureCoords, vertexData_strideInfo* opt_out=nullptr)
+				{
+					GLsizei vertexStride = (vertex * sizeof(vertexType));
+					GLsizei colorStride = (colors * sizeof(colorType));
+					GLsizei textureStride = (textureCoords * sizeof(texCoordType));
+
+					if (opt_out != nullptr)
+					{
+						*opt_out = {};
+						opt_out->vertexStride = vertexStride;
+						opt_out->colorStride = colorStride;
+						opt_out->textureStride = textureStride;
+					}
+
+					return (vertexStride + colorStride + textureStride);
+				}
+
+				inline GLsizei describe_getColorCount(bool color_enabled, bool color_alpha_enabled)
+				{
+					GLsizei colors = 0;
+
+					if (color_enabled)
+					{
+						colors += COLOR_DATA_BASE_LENGTH;
+
+						if (color_alpha_enabled)
+						{
+							colors += COLOR_DATA_EXT_SIZE; // colors = COLOR_DATA_EXT_LENGTH;
+						}
+					}
+
+					return colors;
+				}
+
+				template <typename vertexType = GLfloat, typename colorType = vertexType, typename texCoordType = vertexType>
+				inline GLsizei describe_calculateStride(const vertexData_descriptor& config, vertexData_strideInfo* opt_out=nullptr)
+				{
+					return describe_calculateStride<vertexType, colorType, texCoordType>(VERTEX_DATA_LENGTH, describe_getColorCount(config.color, config.color_alpha), (config.texture_coords) ? TEXTURE_DATA_LENGTH : 0, opt_out);
+				}
 
 				/*
 					These methods describe the contents of 'vertices', which
@@ -62,44 +154,28 @@ namespace game
 					For a much simpler experience, use the fully featured overload of 'init' found in this class.
 				*/
 
-				template <typename vertexType=GLfloat, typename colorType=vertexType>
-				inline void describeVertexData(bool color_enabled, bool color_alpha_enabled=false, bool normalized=false, GLuint index=VERTEX_DATA_INDEX) // GL_FALSE
+				template <typename vertexType=GLfloat>
+				inline void describeVertexPosition(GLsizei stride, bool normalized=false, GLuint index=VERTEX_DATA_INDEX, const GLvoid* __v_firstElement=0) // GL_FALSE
 				{
-					GLsizei stride = (VERTEX_DATA_LENGTH * sizeof(vertexType));
-					GLsizei colors = 0;
-
-					if (color_enabled)
-					{
-						colors += COLOR_DATA_BASE_LENGTH;
-
-						if (color_alpha_enabled)
-						{
-							colors += COLOR_DATA_EXT_SIZE;
-						}
-					}
-
-					stride += (colors * sizeof(colorType));
-
-					glVertexAttribPointer(index, VERTEX_DATA_LENGTH, getGLType<vertexType>(), normalized, stride, reinterpret_cast<GLvoid*>(0));
+					glVertexAttribPointer(index, VERTEX_DATA_LENGTH, getGLType<vertexType>(), normalized, stride, __v_firstElement);
 					glEnableVertexAttribArray(index);
 
 					return;
 				}
 
-				template <typename colorType=GLfloat, typename vertexType=colorType>
-				inline void describeColorData(bool alpha_enabled, bool normalized=false, GLuint index=COLOR_DATA_INDEX)
+				template <typename colorType=GLfloat>
+				inline void describeVertexColor(GLsizei stride, const GLvoid* v_firstElement, bool alpha_enabled, bool normalized=false, GLuint index=COLOR_DATA_INDEX)
 				{
-					// Resolve the number of color channels we're working with.
-					GLsizei colors = ((!alpha_enabled) ? COLOR_DATA_BASE_LENGTH : COLOR_DATA_EXT_LENGTH);
+					glVertexAttribPointer(index, describe_getColorCount(true, alpha_enabled), getGLType<colorType>(), normalized, stride, v_firstElement);
+					glEnableVertexAttribArray(index);
 
-					GLsizei stride = (colors * sizeof(colorType));
+					return;
+				}
 
-					GLsizei vertices = VERTEX_DATA_LENGTH;
-					GLsizei vertexStride = (vertices * sizeof(vertexType));
-
-					stride += vertexStride;
-
-					glVertexAttribPointer(index, colors, getGLType<colorType>(), normalized, stride, reinterpret_cast<const GLvoid*>(vertexStride));
+				template <typename texCoordType=GLfloat>
+				inline void describeVertexTextureCoords(GLsizei stride, const GLvoid* v_firstElement, bool normalized=false, GLuint index=TEXTURE_DATA_INDEX)
+				{
+					glVertexAttribPointer(index, TEXTURE_DATA_LENGTH, getGLType<texCoordType>(), normalized, stride, v_firstElement);
 					glEnableVertexAttribArray(index);
 
 					return;
@@ -118,35 +194,57 @@ namespace game
 				bool init(bool should_unbind=true);
 
 				template <typename vertContainer, typename elemContainer, typename VBOContentType=GLfloat, typename EBOContentType=GLuint>
-				inline bool init(const vertContainer& vertexData, GLenum vertUsage, const elemContainer& elementData, GLenum elemUsage, bool vertexColor=false, bool vertexColor_alpha=false, bool should_unbind=true)
+				inline bool init(const vertContainer& vertexData, GLenum vertUsage, const elemContainer& elementData, GLenum elemUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
 				{
 					if (contentsExist())
 					{
 						return false;
 					}
 
+					// Perform the initial setup process.
 					init(false);
 
+					// Initialize our vertex-data and element-data (Indices):
 					vertices.init(vertexData, vertUsage, false);
 					elements.init(elementData, elemUsage, false);
 
-					describeVertexData<VBOContentType, VBOContentType>(vertexColor, vertexColor_alpha);
+					// Describe the contents of 'vertices' to this VAO:
+
+					// Load our configuration from the passed parameters. (Interface may be changed later)
+					const vertexData_descriptor config = { vertexColor, vertexColor_alpha, texCoords };
+
+					// Allocate a default initialized/uninitialized stride-information block.
+					vertexData_strideInfo strideInfo;
+
+					// Calculate the stride of our vertex entries, copying data into 'strideInfo' for later use.
+					auto stride = describe_calculateStride<VBOContentType, VBOContentType, VBOContentType>(config, &strideInfo);
+
+					// Describe the vertex positions.
+					describeVertexPosition<VBOContentType>(stride);
 
 					if (vertexColor)
 					{
-						describeColorData<VBOContentType, VBOContentType>(vertexColor_alpha);
+						// Describe the color data.
+						describeVertexColor<VBOContentType>(stride, strideInfo[1], vertexColor_alpha);
+					}
+
+					if (texCoords)
+					{
+						// Describe the texture-coordinates.
+						describeVertexTextureCoords<VBOContentType>(stride, strideInfo[2]);
 					}
 
 					// Unbind the vertex-buffer, but keep the element-buffer bound.
 					vertices.unbind(); // elements.unbind();
 
-					// Check if we were requested to unbind:
+					// Check if the user wants us to unbind:
 					if (should_unbind)
 					{
 						// Unbind this VAO.
 						unbind();
 					}
 
+					// Return the default response.
 					return true;
 				}
 
