@@ -117,8 +117,8 @@ namespace game
 
 				bool init(bool should_unbind=true);
 
-				template <typename VBOContentType=GLfloat>
-				inline bool init(const std::vector<VBOContentType>& vertexData, GLenum vertUsage, const std::vector<GLuint>& elementData, GLenum elemUsage, bool vertexColor=false, bool vertexColor_alpha=false, bool should_unbind=true)
+				template <typename vertContainer, typename elemContainer, typename VBOContentType=GLfloat, typename EBOContentType=GLuint>
+				inline bool init(const vertContainer& vertexData, GLenum vertUsage, const elemContainer& elementData, GLenum elemUsage, bool vertexColor=false, bool vertexColor_alpha=false, bool should_unbind=true)
 				{
 					if (contentsExist())
 					{

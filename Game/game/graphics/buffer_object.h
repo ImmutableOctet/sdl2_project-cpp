@@ -7,7 +7,6 @@
 // STL:
 #include <utility>
 #include <stdexcept>
-#include <vector>
 
 // C STDLIB:
 #include <cstddef>
@@ -24,6 +23,7 @@ namespace game
 				// Typedefs:
 				using super = resource<resourceHandle_t, noinstance_value>;
 			protected:
+				// Fields:
 				std::size_t count = 0;
 			public:
 				// Typedefs:
@@ -40,11 +40,12 @@ namespace game
 					}
 				}
 
-				inline bufferObject(const std::vector<dataType>& indexData, GLenum usage)
+				template <typename containerType>
+				inline bufferObject(const containerType& indexData, GLenum usage)
 				{
 					if (!init(indexData, usage))
 					{
-						throw std::runtime_error("Failed to initialize buffer-object using 'std::vector'.");
+						throw std::runtime_error("Failed to initialize buffer-object using a generic container.");
 					}
 				}
 
@@ -96,7 +97,8 @@ namespace game
 					return response;
 				}
 
-				inline bool init(const std::vector<dataType>& indexData, GLenum usage, bool should_unbind=true, bool __useLengthInBytes=false)
+				template <typename containerType> // contentType=dataType
+				inline bool init(const containerType& indexData, GLenum usage, bool should_unbind=true, bool __useLengthInBytes=false)
 				{
 					return init(indexData.data(), static_cast<GLsizei>(indexData.size()), usage, __useLengthInBytes);
 				}

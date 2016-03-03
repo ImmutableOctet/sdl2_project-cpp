@@ -41,8 +41,8 @@ namespace game
 		template <> inline constexpr GLenum getGLType<GLfloat>() { return GL_FLOAT; }
 		template <> inline constexpr GLenum getGLType<GLdouble>() { return GL_DOUBLE; }
 
-		template <typename handleType=GLuint>
-		inline void destroyGLBuffers(std::vector<handleType>& instances, bool clear=true)
+		template <typename containerType>
+		inline void destroyGLBuffers(containerType& instances, bool clear=true)
 		{
 			if (!instances.empty())
 			{
