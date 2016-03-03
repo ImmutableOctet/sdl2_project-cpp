@@ -61,15 +61,15 @@ namespace game
 					{
 						GLbyte* v_output = 0;
 
-						if (index > 0)
+						if (index > VERTEX_DATA_INDEX)
 						{
 							v_output += vertexStride;
 
-							if (index > 1)
+							if (index > COLOR_DATA_INDEX)
 							{
 								v_output += colorStride;
 
-								if (index > 2)
+								if (index > TEXTURE_DATA_INDEX)
 								{
 									v_output += textureStride;
 								}
@@ -225,13 +225,13 @@ namespace game
 					if (vertexColor)
 					{
 						// Describe the color data.
-						describeVertexColor<VBOContentType>(stride, strideInfo[1], vertexColor_alpha);
+						describeVertexColor<VBOContentType>(stride, strideInfo[COLOR_DATA_INDEX], vertexColor_alpha);
 					}
 
 					if (texCoords)
 					{
 						// Describe the texture-coordinates.
-						describeVertexTextureCoords<VBOContentType>(stride, strideInfo[2]);
+						describeVertexTextureCoords<VBOContentType>(stride, strideInfo[TEXTURE_DATA_INDEX]);
 					}
 
 					// Unbind the vertex-buffer, but keep the element-buffer bound.
