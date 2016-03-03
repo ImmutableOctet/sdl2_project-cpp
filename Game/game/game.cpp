@@ -78,10 +78,10 @@ namespace game
 
 		std::vector<GLfloat> vertexData =
 		{
-			0.5f,  0.5f, 0.0f,  // Top Right
-			0.5f, -0.5f, 0.0f,  // Bottom Right
-			-0.5f, -0.5f, 0.0f,  // Bottom Left
-			-0.5f,  0.5f, 0.0f   // Top Left
+			0.5f,  0.5f, 0.0f,	/*	Top Right	*/ 1.0f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.0f,	/*	Bottom Right*/ 0.0f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.0f,	/*	Bottom Left	*/ 0.0f, 0.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f,	/*	Top Left	*/ 0.25f, 0.5f, 1.0f,
 		};
 
 		std::vector<GLuint> indexData =
@@ -90,7 +90,7 @@ namespace game
 			1, 2, 3
 		};
 
-		GLchar shaderLog[512];
+		GLchar shaderLog[512] = {};
 
 		if (!defaultShader.build(vShaderSource, fShaderSource, shaderLog, 512))
 		{
@@ -99,7 +99,7 @@ namespace game
 			std::cout << shaderLog;
 		}
 
-		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW);
+		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true);
 		//testVAO.init(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
 
 		// Set the default clear-color.
@@ -196,8 +196,6 @@ namespace game
 	void application::onRender(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
 		using namespace game::graphics;
-
-		auto vertexPos2DLocation = defaultShader.getAttribute("LVertexPos2D");
 		
 		glViewport(0, 0, video.width, video.height);
 		

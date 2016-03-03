@@ -115,7 +115,7 @@ namespace game
 			return true;
 		}
 
-		void vertexArrayObject::draw(GLenum mode)
+		void vertexArrayObject::draw(GLenum mode) // const
 		{
 			bind();
 
