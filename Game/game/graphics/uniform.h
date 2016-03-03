@@ -7,6 +7,7 @@
 // Includes:
 #include "opengl.h"
 #include "types.h"
+#include "vertex.h"
 
 //#include <GL/glew.h>
 
@@ -132,6 +133,21 @@ namespace game
 
 			// Return the default response.
 			return true;
+		}
+
+		template <typename handleType=GLuint>
+		inline bool generateGLBuffer(handleType& instance, const vertex_t* inputData, GLsizei length, GLenum usage, GLenum target, bool should_unbind = true, bool raw_length=false)
+		{
+			if (inputData == nullptr)
+			{
+				return false;
+			}
+
+			const auto& firstEntry = (*inputData);
+			
+			auto entryElements = firstEntry.elementCount();
+
+			return generateGLBuffer(instance, static_cast<const GLfloat*>(firstEntry), length * static_cast<GLsizei>(entryElements), usage, target, should_unbind, raw_length);
 		}
 
 		// Shader related:

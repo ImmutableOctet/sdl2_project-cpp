@@ -3,7 +3,11 @@
 // Includes:
 #include "types.h"
 
-//#include <glm/glm.hpp>
+// GLM:
+#include <glm/glm.hpp>
+
+// C STDLIB:
+#include <cstddef>
 
 // Namespace(s):
 namespace game
@@ -11,7 +15,7 @@ namespace game
 	namespace graphics
 	{
 		// Structures:
-		template <typename positionType=GLfloat, typename colorType=GLfloat, typename texCoordsType=GLfloat>
+		template <typename positionType=glm::vec3, typename colorType=glm::vec4, typename texCoordsType=glm::vec2>
 		struct vertex
 		{
 			// Typedefs:
@@ -19,10 +23,27 @@ namespace game
 			using color_t = colorType;
 			using texcoords_t = texCoordsType;
 
+			// Methods:
+			inline std::size_t elementCount() const
+			{
+				return (position.length() + color.length()); // texcoords.length()
+			}
+
+			// Operator overloads:
+			inline operator GLfloat*() const
+			{
+				void* x = (void*)this;
+
+				return (GLfloat*)x;
+			}
+
 			// Fields:
 			position_t position;
 			color_t color;
-			texcoords_t texcoords;
+			//texcoords_t texcoords;
 		};
+
+		// Typedefs:
+		using vertex_t = vertex<>;
 	}
 }

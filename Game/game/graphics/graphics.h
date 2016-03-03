@@ -8,6 +8,7 @@
 #include "uniform.h"
 #include "texture.h"
 #include "shader.h"
+#include "vertex.h"
 #include "VAO.h"
 
 // Namespace(s):

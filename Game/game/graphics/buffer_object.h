@@ -72,7 +72,8 @@ namespace game
 				*/
 
 				// Methods:
-				inline bool init(const dataType* data, GLsizei length, GLenum usage, bool should_unbind=true, bool useLengthInBytes=false)
+				template <typename containerType> // contentType=dataType
+				inline bool init(const containerType& indexData, GLenum usage, bool should_unbind=true)
 				{
 					// Before anything else, make sure we don't have any existing content:
 					if (exists())
@@ -80,27 +81,16 @@ namespace game
 						return false;
 					}
 
-					bool response = generateGLBuffer(this->instance, data, length, usage, target, should_unbind, useLengthInBytes);
+					auto length = indexData.size();
+
+					bool response = generateGLBuffer(this->instance, indexData.data(), static_cast<GLsizei>(length), usage, target, should_unbind, false);
 
 					if (response)
 					{
-						if (useLengthInBytes)
-						{
-							this->count = (length / sizeof(dataType));
-						}
-						else
-						{
-							this->count = length;
-						}
+						this->count = length;
 					}
 
 					return response;
-				}
-
-				template <typename containerType> // contentType=dataType
-				inline bool init(const containerType& indexData, GLenum usage, bool should_unbind=true, bool __useLengthInBytes=false)
-				{
-					return init(indexData.data(), static_cast<GLsizei>(indexData.size()), usage, __useLengthInBytes);
 				}
 
 				inline void destroy() override
