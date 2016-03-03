@@ -78,7 +78,7 @@ namespace game
 		std::string vShaderSource = utilities::load_string("default_vert.glsl");
 		std::string fShaderSource = utilities::load_string("default_frag.glsl");
 
-		using vertex = graphics::vertex<>;
+		using vertex = graphics::vertex_t;
 
 		std::vector<vertex> vertexData =
 		{
@@ -87,10 +87,6 @@ namespace game
 			vertex { { -0.5f, -0.5f, 0.0f },/*	Bottom Left	*/ { 0.0f, 0.0f, 1.0f, 0.5f }, /*	RGBA	*/  /* Texture Coords */ },	// { 0.0, 0.0 }
 			vertex { { -0.5f,  0.5f, 0.0f },/*	Top Left	*/ { 0.25f, 0.5f, 1.0f, 1.0f }, /*	RGBA	*/  /* Texture Coords */ }, // { 0.0, 0.0 }
 		};
-
-		auto thing = (GLfloat*)vertexData.data();
-
-		std::cout << thing[3] << std::endl;
 
 		std::vector<GLuint> indexData =
 		{
