@@ -192,6 +192,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\graphics\uniform.h" />
     <ClInclude Include="game\graphics\VAO.h" />
     <ClInclude Include="game\graphics\VBO.h" />
+    <ClInclude Include="game\graphics\vertex.h" />
     <ClInclude Include="game\util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
