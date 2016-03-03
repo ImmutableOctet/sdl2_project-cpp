@@ -90,13 +90,13 @@ namespace game
 			try
 			{
 				// Build our vertex shader's source code.
-				vertexShader = buildProgram(vShaderSource, GL_VERTEX_SHADER);
+				vertexShader = buildProgram(vShaderSource, GL_VERTEX_SHADER, log_out, log_maxLength);
 
 				if (vertexShader == noinstance)
 					throw std::runtime_error("Failed to compile vertex shader.");
 
 				// Build our fragment shader's source code.
-				fragmentShader = buildProgram(fShaderSource, GL_FRAGMENT_SHADER);
+				fragmentShader = buildProgram(fShaderSource, GL_FRAGMENT_SHADER, log_out, log_maxLength);
 
 				if (fragmentShader == noinstance)
 					throw std::runtime_error("Failed to compile fragment shader.");
