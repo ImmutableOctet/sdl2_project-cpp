@@ -83,10 +83,10 @@ namespace game
 		std::vector<vertex> vertexData =
 		{
 				// Positions:					// Colors:			// Texture UVs:
-			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 0.0f, 0.0f, 1.0f },	{ 1.0f, 1.0f } },	// Top, right
-			{ { 0.5f, -0.5f, 0.0f },	{ 0.0f, 1.0f, 0.0f, 0.1f },	{ 1.0f, 0.0f } },	// Bottom, right
-			{ { -0.5f, -0.5f, 0.0f },	{ 0.0f, 0.0f, 1.0f, 0.2f },	{ 0.0f, 0.0f } },	// Bottom, left
-			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 0.5f, 0.1f, 1.0f },	{ 0.0f, 1.0f } }	// Top, left
+			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 0.0f, 0.0f, 0.2f },	{ 4.0f, 4.0f } },	// Top, right
+			{ { 0.5f, -0.5f, 0.0f },	{ 0.5f, 0.3f, 0.8f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
+			{ { -0.5f, -0.5f, 0.0f },	{ 0.4f, 0.2f, 0.4f, 0.1f },	{ 0.0f, 0.0f } },	// Bottom, left
+			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 0.0f, 1.0f, 0.5f },	{ 0.0f, 4.0f } }	// Top, left
 		};
 
 		std::vector<GLuint> indexData =
@@ -114,8 +114,7 @@ namespace game
 
 		for (auto i = 0; i < testTextures.size(); i++)
 		{
-			auto& testTexture = testTextures[i];
-			testTexture.load(texturePaths[i], true);
+			testTextures[i].load(texturePaths[i], true);
 		}
 
 		// Set the default clear-color.
@@ -227,9 +226,21 @@ namespace game
 
 		defaultShader.bind();
 
-		testTexture.bind();
+		for (GLint i = 0; i < testTextures.size(); i++)
+		{
+			glActiveTexture(GL_TEXTURE0+i);
+			testTextures[i].bind();
+
+			setUniform(glGetUniformLocation(defaultShader.getInstance(), (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
+		}
+
 		testVAO.draw();
-		testTexture.unbind();
+		
+		for (auto i = 0; i < testTextures.size(); i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			testTextures[i].unbind();
+		}
 
 		defaultShader.unbind();
 
