@@ -19,6 +19,7 @@
 
 // STL:
 #include <vector>
+#include <array>
 #include <string>
 #include <utility>
 
@@ -127,7 +128,7 @@ namespace game
 			graphics::shader defaultShader;
 
 			graphics::vertexArrayObject testVAO;
-			graphics::texture testTexture;
+			std::array<graphics::texture, 2> testTextures;
 
 			bool closed = false;
 	};

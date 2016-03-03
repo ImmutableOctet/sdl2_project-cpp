@@ -107,16 +107,16 @@ namespace game
 		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
 		//testVAO.init(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
 
-		testTexture.load("test.png", true, false);
+		const char* texturePaths[] =
+		{
+			"01.png", "02.png"
+		};
 
-		// Make this texture repeat using mirroring:
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		testTexture.unbind();
+		for (auto i = 0; i < testTextures.size(); i++)
+		{
+			auto& testTexture = testTextures[i];
+			testTexture.load(texturePaths[i], true);
+		}
 
 		// Set the default clear-color.
 		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
