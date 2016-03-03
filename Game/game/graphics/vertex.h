@@ -11,13 +11,13 @@ namespace game
 	namespace graphics
 	{
 		// Structures:
-		template <typename position_t, typename color_t, typename texcoord_t>
+		template <typename position_t, typename color_t, typename texcoords_t>
 		struct vertex
 		{
 			// Fields:
-			position_t x, y, z; // w;
-			color_t r, g, b; // a;
-			texcoord_t u, v;
+			position_t position;
+			color_t color;
+			texcoords_t texcoords;
 		};
 	}
 }
