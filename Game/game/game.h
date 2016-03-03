@@ -127,6 +127,7 @@ namespace game
 			graphics::shader defaultShader;
 
 			graphics::vertexArrayObject testVAO;
+			graphics::texture testTexture;
 
 			bool closed = false;
 	};

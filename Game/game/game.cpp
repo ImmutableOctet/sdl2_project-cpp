@@ -83,10 +83,10 @@ namespace game
 		std::vector<vertex> vertexData =
 		{
 				// Positions:					// Colors:			// Texture UVs:
-			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 0.0f, 0.0f, 1.0f },	{ 0.0f, 1.0f } },	// Top, right
+			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 0.0f, 0.0f, 1.0f },	{ 1.0f, 1.0f } },	// Top, right
 			{ { 0.5f, -0.5f, 0.0f },	{ 0.0f, 1.0f, 0.0f, 0.1f },	{ 1.0f, 0.0f } },	// Bottom, right
 			{ { -0.5f, -0.5f, 0.0f },	{ 0.0f, 0.0f, 1.0f, 0.2f },	{ 0.0f, 0.0f } },	// Bottom, left
-			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 0.5f, 0.1f, 1.0f },	{ 1.0f, 1.0f } }	// Top, left
+			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 0.5f, 0.1f, 1.0f },	{ 0.0f, 1.0f } }	// Top, left
 		};
 
 		std::vector<GLuint> indexData =
@@ -106,6 +106,17 @@ namespace game
 
 		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
 		//testVAO.init(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
+
+		testTexture.load("test.png", true, false);
+
+		// Make this texture repeat using mirroring:
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		testTexture.unbind();
 
 		// Set the default clear-color.
 		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -204,7 +215,7 @@ namespace game
 		
 		glViewport(0, 0, video.width, video.height);
 
-		glClearColor(1.0f, 0.6f, 0.8f, 1.0f);
+		glClearColor(0.0f, 0.6f, 0.4f, 1.0f);
 		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -216,7 +227,9 @@ namespace game
 
 		defaultShader.bind();
 
+		testTexture.bind();
 		testVAO.draw();
+		testTexture.unbind();
 
 		defaultShader.unbind();
 

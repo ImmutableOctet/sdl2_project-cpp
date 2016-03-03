@@ -31,11 +31,11 @@ namespace game
 				texture& operator=(texture&& input) = default;
 
 				// Methods:
-				virtual bool load(const char* path, bool should_unbind=true);
+				virtual bool load(const char* path, bool generateMipmap=true, bool should_unbind=true);
 				
-				inline bool load(const std::string& path, bool should_unbind=true)
+				inline bool load(const std::string& path, bool generateMipmap=true, bool should_unbind=true)
 				{
-					return load(path.c_str(), should_unbind);
+					return load(path.c_str(), generateMipmap, should_unbind);
 				}
 
 				void destroy() override;

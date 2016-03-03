@@ -39,7 +39,7 @@ namespace game
 		}
 
 		// Methods:
-		bool texture::load(const char* path, bool should_unbind)
+		bool texture::load(const char* path, bool generateMipmap, bool should_unbind)
 		{
 			try
 			{
@@ -53,13 +53,18 @@ namespace game
 				bind();
 
 				// Upload the surface's contents to the GPU.
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels); // 4
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels); // GL_RGB // 4
 				
-				// Release the surface we loaded.
+				// Release the surface we loaded, now that its contents live on the GPU.
 				SDL_FreeSurface(surface);
 
-				// Not sure about these yet:
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				if (generateMipmap)
+				{
+					glGenerateMipmap(GL_TEXTURE_2D);
+				}
+
+				// Set the default format.
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // GL_LINEAR
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 				if (should_unbind)
@@ -69,7 +74,7 @@ namespace game
 			}
 			catch (const std::exception&)
 			{
-				
+				unbind();
 				destroy();
 
 				// Tell the user the bad news.
