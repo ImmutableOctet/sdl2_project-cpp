@@ -99,7 +99,7 @@ namespace game
 
 					stride += vertexStride;
 
-					glVertexAttribPointer(index, colors, getGLType<colorType>(), normalized, stride, reinterpret_cast<GLvoid*>(vertexStride));
+					glVertexAttribPointer(index, colors, getGLType<colorType>(), normalized, stride, reinterpret_cast<const GLvoid*>(vertexStride));
 					glEnableVertexAttribArray(index);
 
 					return;

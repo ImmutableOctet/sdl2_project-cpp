@@ -7,9 +7,11 @@
 // STL:
 #include <stdexcept>
 #include <iostream>
+//#include <chrono>
 
 // C STDLIB:
 #include <cstddef>
+#include <cmath>
 
 namespace game
 {
@@ -78,10 +80,10 @@ namespace game
 
 		std::vector<GLfloat> vertexData =
 		{
-			0.5f,  0.5f, 0.0f,	/*	Top Right	*/ 1.0f, 0.0f, 0.0f,
-			0.5f, -0.5f, 0.0f,	/*	Bottom Right*/ 0.0f, 1.0f, 0.0f,
-			-0.5f, -0.5f, 0.0f,	/*	Bottom Left	*/ 0.0f, 0.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f,	/*	Top Left	*/ 0.25f, 0.5f, 1.0f,
+			0.5f,  0.5f, 0.0f,	/*	Top Right	*/ 1.0f, 0.0f, 0.0f, 0.5f,
+			0.5f, -0.5f, 0.0f,	/*	Bottom Right*/ 0.0f, 1.0f, 0.0f, 0.1f,
+			-0.5f, -0.5f, 0.0f,	/*	Bottom Left	*/ 0.0f, 0.0f, 1.0f, 0.5f,
+			-0.5f,  0.5f, 0.0f,	/*	Top Left	*/ 0.25f, 0.5f, 1.0f, 1.0f
 		};
 
 		std::vector<GLuint> indexData =
@@ -99,7 +101,7 @@ namespace game
 			std::cout << shaderLog;
 		}
 
-		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true);
+		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true);
 		//testVAO.init(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
 
 		// Set the default clear-color.
@@ -198,19 +200,24 @@ namespace game
 		using namespace game::graphics;
 		
 		glViewport(0, 0, video.width, video.height);
-		
-		glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
+
+		glClearColor(1.0f, 0.6f, 0.8f, 1.0f);
 		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		defaultShader.bind();
 
 		testVAO.draw();
 
 		defaultShader.unbind();
+
+		glDisable(GL_BLEND);
 
 		SDL_GL_SwapWindow(window);
 
