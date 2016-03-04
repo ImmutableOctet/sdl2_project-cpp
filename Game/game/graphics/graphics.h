@@ -9,6 +9,7 @@
 #include "texture.h"
 #include "shader.h"
 #include "vertex.h"
+#include "camera.h"
 #include "VAO.h"
 
 // Namespace(s):
