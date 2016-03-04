@@ -88,10 +88,10 @@ namespace game
 		std::vector<vertex> vertexData =
 		{
 				// Positions:					// Colors:			// Texture UVs:
-			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.8f },	{ 4.0f, 4.0f } },	// Top, right
+			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 4.0f, 4.0f } },	// Top, right
 			{ { 0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
 			{ { -0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.7f },	{ 0.0f, 0.0f } },	// Bottom, left
-			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.5f },	{ 0.0f, 4.0f } }	// Top, left
+			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 0.0f, 4.0f } }	// Top, left
 		};
 
 		std::vector<GLuint> indexData =
@@ -221,11 +221,12 @@ namespace game
 		glEnable(GL_DEPTH_TEST);
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDepthFunc(GL_LESS);
 
 		glViewport(0, 0, video.width, video.height);
 
-		glClearColor(0.0f, 0.6f, 0.4f, 1.0f);
-		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		//glClearColor(0.0f, 0.6f, 0.4f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -240,7 +241,7 @@ namespace game
 		glm::mat4 projection;
 
 		// Move the camera backward.
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -6.0f));
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
 
 		// Set the projection area:
 		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 20.0f);
@@ -261,10 +262,10 @@ namespace game
 			// Rotate our model.
 			if (i == 0)
 			{
-				model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+				model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.8f, 0.5f, 1.0f));
 			}
 
-			model = glm::translate(model, glm::vec3(0.0f, static_cast<GLfloat>(i), 0.0f));
+			model = glm::translate(model, glm::vec3(0.0f, 0.1*static_cast<GLfloat>(i), 0.0f));
 
 			// Upload our matrices:
 			glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
