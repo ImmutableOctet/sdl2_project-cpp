@@ -130,6 +130,8 @@ namespace game
 			graphics::vertexArrayObject testVAO;
 			std::array<graphics::texture, 2> testTextures;
 
+			graphics::camera testCamera;
+
 			bool closed = false;
 	};
 }
