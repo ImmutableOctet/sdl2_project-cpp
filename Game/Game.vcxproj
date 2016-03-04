@@ -165,6 +165,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
   <ItemGroup>
     <ClCompile Include="game\display.cpp" />
     <ClCompile Include="game\game.cpp" />
+    <ClCompile Include="game\graphics\camera.cpp" />
     <ClCompile Include="game\graphics\context.cpp" />
     <ClCompile Include="game\graphics\FBO.cpp" />
     <ClCompile Include="game\graphics\graphics.cpp" />
@@ -179,6 +180,7 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\display.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\graphics\buffer_object.h" />
+    <ClInclude Include="game\graphics\camera.h" />
     <ClInclude Include="game\graphics\resource.h" />
     <ClInclude Include="game\graphics\context.h" />
     <ClInclude Include="game\graphics\FBO.h" />
