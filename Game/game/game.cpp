@@ -13,6 +13,11 @@
 #include <cstddef>
 #include <cmath>
 
+// GLM:
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 namespace game
 {
 	// Classes:
@@ -83,10 +88,10 @@ namespace game
 		std::vector<vertex> vertexData =
 		{
 				// Positions:					// Colors:			// Texture UVs:
-			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 0.0f, 0.0f, 0.2f },	{ 4.0f, 4.0f } },	// Top, right
-			{ { 0.5f, -0.5f, 0.0f },	{ 0.5f, 0.3f, 0.8f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
-			{ { -0.5f, -0.5f, 0.0f },	{ 0.4f, 0.2f, 0.4f, 0.1f },	{ 0.0f, 0.0f } },	// Bottom, left
-			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 0.0f, 1.0f, 0.5f },	{ 0.0f, 4.0f } }	// Top, left
+			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.8f },	{ 4.0f, 4.0f } },	// Top, right
+			{ { 0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
+			{ { -0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.7f },	{ 0.0f, 0.0f } },	// Bottom, left
+			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.5f },	{ 0.0f, 4.0f } }	// Top, left
 		};
 
 		std::vector<GLuint> indexData =
@@ -226,12 +231,40 @@ namespace game
 
 		defaultShader.bind();
 
+		const auto shaderInst = defaultShader.getInstance();
+
+		glm::mat4 view;
+		glm::mat4 model;
+		glm::mat4 projection;
+
+		// Rotate our model.
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		// Move the camera backward.
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+		// Set the projection area:
+		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 100.0f);
+
+		// Get the locations of our vertices in 'shaderInst' 
+		auto modelLocation = glGetUniformLocation(shaderInst, "model");
+		auto viewLocation = glGetUniformLocation(shaderInst, "view");
+		auto projLocation = glGetUniformLocation(shaderInst, "projection");
+
+		// Upload the texture mix-value:
+		setUniform(glGetUniformLocation(shaderInst, "mix_value"), 0.4f);
+
+		// Upload our test matrix:
+		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
 		for (GLint i = 0; i < testTextures.size(); i++)
 		{
-			glActiveTexture(GL_TEXTURE0+i);
+			glActiveTexture(GL_TEXTURE0 + i);
 			testTextures[i].bind();
 
-			setUniform(glGetUniformLocation(defaultShader.getInstance(), (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
+			setUniform(glGetUniformLocation(shaderInst, (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
 		}
 
 		testVAO.draw();
