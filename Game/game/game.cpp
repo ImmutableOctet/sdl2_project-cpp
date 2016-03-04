@@ -217,34 +217,33 @@ namespace game
 	{
 		using namespace game::graphics;
 		
+		glEnable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		glViewport(0, 0, video.width, video.height);
 
 		glClearColor(0.0f, 0.6f, 0.4f, 1.0f);
 		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+		// Start using 'defaultShader'.
 		defaultShader.bind();
 
 		const auto shaderInst = defaultShader.getInstance();
 
 		glm::mat4 view;
-		glm::mat4 model;
 		glm::mat4 projection;
 
-		// Rotate our model.
-		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
 		// Move the camera backward.
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -6.0f));
 
 		// Set the projection area:
-		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 20.0f);
 
 		// Get the locations of our vertices in 'shaderInst' 
 		auto modelLocation = glGetUniformLocation(shaderInst, "model");
@@ -254,31 +253,51 @@ namespace game
 		// Upload the texture mix-value:
 		setUniform(glGetUniformLocation(shaderInst, "mix_value"), 0.4f);
 
-		// Upload our test matrix:
-		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
-
-		for (GLint i = 0; i < testTextures.size(); i++)
+		// Rending some objects:
+		for (auto i = 0; i < 2; i++)
 		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			testTextures[i].bind();
+			glm::mat4 model;
 
-			setUniform(glGetUniformLocation(shaderInst, (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
+			// Rotate our model.
+			if (i == 0)
+			{
+				model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			}
+
+			model = glm::translate(model, glm::vec3(0.0f, static_cast<GLfloat>(i), 0.0f));
+
+			// Upload our matrices:
+			glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+			glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+			glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
+			for (GLint i = 0; i < testTextures.size(); i++)
+			{
+				glActiveTexture(GL_TEXTURE0 + i);
+				testTextures[i].bind();
+
+				setUniform(glGetUniformLocation(shaderInst, (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
+			}
+
+			testVAO.draw();
+
+			for (auto i = 0; i < testTextures.size(); i++)
+			{
+				glActiveTexture(GL_TEXTURE0 + i);
+				testTextures[i].unbind();
+			}
 		}
 
-		testVAO.draw();
-		
-		for (auto i = 0; i < testTextures.size(); i++)
-		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			testTextures[i].unbind();
-		}
-
+		// Stop using 'defaultShader'.
 		defaultShader.unbind();
 
+		// Disable depth-testing.
+		glDisable(GL_DEPTH_TEST);
+
+		// Disable blending.
 		glDisable(GL_BLEND);
 
+		// Flip the front and back buffers.
 		SDL_GL_SwapWindow(window);
 
 		return;
@@ -326,7 +345,7 @@ namespace game
 
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-					cout << "Mouse button detected: " << e.button.button << endl;
+					cout << "Mouse button detected: " << static_cast<int>(e.button.button) << endl;
 
 					break;
 				case SDL_KEYDOWN:
