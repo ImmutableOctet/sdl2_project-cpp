@@ -181,6 +181,7 @@ xcopy /y /e "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\graphics\buffer_object.h" />
     <ClInclude Include="game\graphics\camera.h" />
+    <ClInclude Include="game\graphics\model.h" />
     <ClInclude Include="game\graphics\resource.h" />
     <ClInclude Include="game\graphics\context.h" />
     <ClInclude Include="game\graphics\FBO.h" />

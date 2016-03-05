@@ -122,5 +122,8 @@
     <ClInclude Include="game\graphics\camera.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="game\graphics\model.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
