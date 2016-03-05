@@ -125,7 +125,7 @@ namespace game
 			}
 			else
 			{
-				glDrawElements(mode, static_cast<GLsizei>(vertices.size()), getGLType<vertexBufferObject::type>(), nullptr);
+				glDrawArrays(mode, 0, static_cast<GLsizei>(vertices.size()));
 			}
 
 			unbind();

@@ -82,7 +82,7 @@ namespace game
 		static const auto MODE_FULL = 0;
 		static const auto MODE_DEFAULT = 1;
 
-		const auto mode = MODE_FULL; // MODE_DEFAULT;
+		const auto mode = MODE_DEFAULT;
 
 		// Temporary vertex shader source code:
 		std::string vShaderSource;
