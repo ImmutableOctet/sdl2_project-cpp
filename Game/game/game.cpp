@@ -123,7 +123,10 @@ namespace game
 		}
 
 		// Set the default clear-color.
-		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+		// Initialize our camera.
+		testCamera = graphics::camera(glm::vec3(0.0f, 0.0f, -4.0f));
 
 		return;
 	}
