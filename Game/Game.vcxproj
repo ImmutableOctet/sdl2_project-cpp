@@ -105,8 +105,8 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)bin\x86" "$(TargetDir)"
-xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
+      <Command>xcopy /y /e "$(SolutionDir)bin\x86" "$(TargetDir)"
+xcopy /y /e "$(SolutionDir)resources" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,8 +120,8 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)bin\x64" "$(TargetDir)"
-xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
+      <Command>xcopy /y /e "$(SolutionDir)bin\x64" "$(TargetDir)"
+xcopy /y /e "$(SolutionDir)resources" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,8 +139,8 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)bin\x86" "$(TargetDir)"
-xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
+      <Command>xcopy /y /e "$(SolutionDir)bin\x86" "$(TargetDir)"
+xcopy /y /e "$(SolutionDir)resources" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,8 +158,8 @@ xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y "$(SolutionDir)bin\x64" "$(TargetDir)"
-xcopy /y "$(SolutionDir)resources" "$(TargetDir)"</Command>
+      <Command>xcopy /y /e "$(SolutionDir)bin\x64" "$(TargetDir)"
+xcopy /y /e "$(SolutionDir)resources" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

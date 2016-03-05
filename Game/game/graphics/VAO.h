@@ -97,7 +97,7 @@ namespace game
 
 				// Intermediate routines:
 				template <typename vertexType = GLfloat, typename colorType = vertexType, typename texCoordType = vertexType>
-				inline GLsizei describe_calculateStride(GLsizei vertex, GLsizei colors, GLsizei textureCoords, vertexData_strideInfo* opt_out=nullptr)
+				inline GLsizei describe_calculateStride(GLsizei vertex, GLsizei colors, GLsizei textureCoords, vertexData_strideInfo* opt_out=nullptr) const
 				{
 					GLsizei vertexStride = (vertex * sizeof(vertexType));
 					GLsizei colorStride = (colors * sizeof(colorType));
@@ -114,7 +114,7 @@ namespace game
 					return (vertexStride + colorStride + textureStride);
 				}
 
-				inline GLsizei describe_getColorCount(bool color_enabled, bool color_alpha_enabled)
+				inline GLsizei describe_getColorCount(bool color_enabled, bool color_alpha_enabled) const
 				{
 					GLsizei colors = 0;
 
@@ -132,7 +132,7 @@ namespace game
 				}
 
 				template <typename vertexType = GLfloat, typename colorType = vertexType, typename texCoordType = vertexType>
-				inline GLsizei describe_calculateStride(const vertexData_descriptor& config, vertexData_strideInfo* opt_out=nullptr)
+				inline GLsizei describe_calculateStride(const vertexData_descriptor& config, vertexData_strideInfo* opt_out=nullptr) const
 				{
 					return describe_calculateStride<vertexType, colorType, texCoordType>(VERTEX_DATA_LENGTH, describe_getColorCount(config.color, config.color_alpha), (config.texture_coords) ? TEXTURE_DATA_LENGTH : 0, opt_out);
 				}
@@ -155,7 +155,7 @@ namespace game
 				*/
 
 				template <typename vertexType=GLfloat>
-				inline void describeVertexPosition(GLsizei stride, bool normalized=false, GLuint index=VERTEX_DATA_INDEX, const GLvoid* __v_firstElement=0) // GL_FALSE
+				inline void describeVertexPosition(GLsizei stride, bool normalized=false, GLuint index=VERTEX_DATA_INDEX, const GLvoid* __v_firstElement=0) const // GL_FALSE
 				{
 					glVertexAttribPointer(index, VERTEX_DATA_LENGTH, getGLType<vertexType>(), normalized, stride, __v_firstElement);
 					glEnableVertexAttribArray(index);
@@ -164,7 +164,7 @@ namespace game
 				}
 
 				template <typename colorType=GLfloat>
-				inline void describeVertexColor(GLsizei stride, const GLvoid* v_firstElement, bool alpha_enabled, bool normalized=false, GLuint index=COLOR_DATA_INDEX)
+				inline void describeVertexColor(GLsizei stride, const GLvoid* v_firstElement, bool alpha_enabled, bool normalized=false, GLuint index=COLOR_DATA_INDEX) const
 				{
 					glVertexAttribPointer(index, describe_getColorCount(true, alpha_enabled), getGLType<colorType>(), normalized, stride, v_firstElement);
 					glEnableVertexAttribArray(index);
@@ -173,12 +173,46 @@ namespace game
 				}
 
 				template <typename texCoordType=GLfloat>
-				inline void describeVertexTextureCoords(GLsizei stride, const GLvoid* v_firstElement, bool normalized=false, GLuint index=TEXTURE_DATA_INDEX)
+				inline void describeVertexTextureCoords(GLsizei stride, const GLvoid* v_firstElement, bool normalized=false, GLuint index=TEXTURE_DATA_INDEX) const
 				{
 					glVertexAttribPointer(index, TEXTURE_DATA_LENGTH, getGLType<texCoordType>(), normalized, stride, v_firstElement);
 					glEnableVertexAttribArray(index);
 
 					return;
+				}
+
+				// This executes the other description-commands.
+				template <typename VBOContentType = GLfloat>
+				inline bool describeVertexData(bool vertexColor, bool vertexColor_alpha, bool texCoords) const
+				{
+					// Describe the contents of 'vertices' to this VAO:
+
+					// Load our configuration from the passed parameters. (Interface may be changed later)
+					const vertexData_descriptor config = { vertexColor, vertexColor_alpha, texCoords };
+
+					// Allocate a default initialized/uninitialized stride-information block.
+					vertexData_strideInfo strideInfo;
+
+					// Calculate the stride of our vertex entries, copying data into 'strideInfo' for later use.
+					auto stride = describe_calculateStride<VBOContentType, VBOContentType, VBOContentType>(config, &strideInfo);
+
+					// Describe the vertex positions.
+					describeVertexPosition<VBOContentType>(stride);
+
+					if (vertexColor)
+					{
+						// Describe the color data.
+						describeVertexColor<VBOContentType>(stride, strideInfo[COLOR_DATA_INDEX], vertexColor_alpha);
+					}
+
+					if (texCoords)
+					{
+						// Describe the texture-coordinates.
+						describeVertexTextureCoords<VBOContentType>(stride, strideInfo[TEXTURE_DATA_INDEX]);
+					}
+
+					// Return the default response.
+					return true;
 				}
 
 				/*
@@ -208,34 +242,42 @@ namespace game
 					vertices.init(vertexData, vertUsage, false);
 					elements.init(elementData, elemUsage, false);
 
-					// Describe the contents of 'vertices' to this VAO:
-
-					// Load our configuration from the passed parameters. (Interface may be changed later)
-					const vertexData_descriptor config = { vertexColor, vertexColor_alpha, texCoords };
-
-					// Allocate a default initialized/uninitialized stride-information block.
-					vertexData_strideInfo strideInfo;
-
-					// Calculate the stride of our vertex entries, copying data into 'strideInfo' for later use.
-					auto stride = describe_calculateStride<VBOContentType, VBOContentType, VBOContentType>(config, &strideInfo);
-
-					// Describe the vertex positions.
-					describeVertexPosition<VBOContentType>(stride);
-
-					if (vertexColor)
-					{
-						// Describe the color data.
-						describeVertexColor<VBOContentType>(stride, strideInfo[COLOR_DATA_INDEX], vertexColor_alpha);
-					}
-
-					if (texCoords)
-					{
-						// Describe the texture-coordinates.
-						describeVertexTextureCoords<VBOContentType>(stride, strideInfo[TEXTURE_DATA_INDEX]);
-					}
+					// Describe the vertex-data we uploaded via 'vertices'.
+					describeVertexData<VBOContentType>(vertexColor, vertexColor_alpha, texCoords);
 
 					// Unbind the vertex-buffer, but keep the element-buffer bound.
 					vertices.unbind(); // elements.unbind();
+
+					// Check if the user wants us to unbind:
+					if (should_unbind)
+					{
+						// Unbind this VAO.
+						unbind();
+					}
+
+					// Return the default response.
+					return true;
+				}
+
+				template <typename vertContainer, typename VBOContentType=GLfloat>
+				inline bool init(const vertContainer& vertexData, GLenum vertUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
+				{
+					if (contentsExist())
+					{
+						return false;
+					}
+
+					// Perform the initial setup process.
+					init(false);
+
+					// Initialize/upload our vertex-data:
+					vertices.init(vertexData, vertUsage, false);
+
+					// Describe the vertex-data we uploaded via 'vertices'.
+					describeVertexData<VBOContentType>(vertexColor, vertexColor_alpha, texCoords);
+
+					// Unbind the vertex-buffer.
+					vertices.unbind();
 
 					// Check if the user wants us to unbind:
 					if (should_unbind)
@@ -279,7 +321,7 @@ namespace game
 				bool setElements(elementBufferObject&& input);
 
 				void draw(GLenum mode=GL_TRIANGLES);
-			protected:
+
 				// Fields:
 				vertexBufferObject vertices;
 				elementBufferObject elements;

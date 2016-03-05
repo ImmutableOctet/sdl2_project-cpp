@@ -59,7 +59,17 @@ namespace game
 			return this->position;
 		}
 
+		glm::vec3& camera::getPosition()
+		{
+			return this->position;
+		}
+
 		const glm::vec3& camera::getRotation() const
+		{
+			return this->rotation;
+		}
+
+		glm::vec3& camera::getRotation()
 		{
 			return this->rotation;
 		}

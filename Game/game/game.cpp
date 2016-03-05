@@ -79,26 +79,28 @@ namespace game
 
 	void application::onCreate(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
+		static const auto MODE_FULL = 0;
+		static const auto MODE_DEFAULT = 1;
+
+		const auto mode = MODE_FULL; // MODE_DEFAULT;
+
 		// Temporary vertex shader source code:
-		std::string vShaderSource = utilities::load_string("default_vert.glsl");
-		std::string fShaderSource = utilities::load_string("default_frag.glsl");
-
-		using vertex = graphics::vertex_t;
-
-		std::vector<vertex> vertexData =
+		std::string vShaderSource;
+		std::string fShaderSource;
+		
+		switch (mode)
 		{
-				// Positions:					// Colors:			// Texture UVs:
-			{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 4.0f, 4.0f } },	// Top, right
-			{ { 0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
-			{ { -0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.7f },	{ 0.0f, 0.0f } },	// Bottom, left
-			{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 0.0f, 4.0f } }	// Top, left
-		};
+			case MODE_DEFAULT:
+				vShaderSource = utilities::load_string("shaders/default_vert.glsl");
+				fShaderSource = utilities::load_string("shaders/default_frag.glsl");
 
-		std::vector<GLuint> indexData =
-		{
-			0, 1, 3,
-			1, 2, 3
-		};
+				break;
+			case MODE_FULL:
+				vShaderSource = utilities::load_string("shaders/full/vert.glsl");
+				fShaderSource = utilities::load_string("shaders/full/frag.glsl");
+
+				break;
+		}
 
 		GLchar shaderLog[512] = {};
 
@@ -109,9 +111,86 @@ namespace game
 			std::cout << shaderLog;
 		}
 
-		testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
-		//testVAO.init(graphics::vertexBufferObject(vertexData, GL_STATIC_DRAW), graphics::elementBufferObject(indexData, GL_STATIC_DRAW));
+		switch (mode)
+		{
+			case MODE_DEFAULT:
+				{
+					std::vector<GLfloat> vertexData =
+					{
+						-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+						0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+						-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
+						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+						0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+						0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+						0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+						-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+						-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+						-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+						-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+						0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+						0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+						0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+						0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+						0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+						0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+						-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+					};
+
+					testVAO.init(vertexData, GL_STATIC_DRAW, false, false, true);
+				}
+
+				break;
+			case MODE_FULL:
+				{
+					using vertex = graphics::vertex_t;
+
+					std::vector<vertex> vertexData =
+					{
+						// Positions:					// Colors:			// Texture UVs:
+						{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 4.0f, 4.0f } },	// Top, right
+						{ { 0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
+						{ { -0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.7f },	{ 0.0f, 0.0f } },	// Bottom, left
+						{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 0.0f, 4.0f } }	// Top, left
+					};
+
+					std::vector<GLuint> indexData =
+					{
+						0, 1, 3,
+						1, 2, 3
+					};
+
+					testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
+					//testVAO.init(vertexData, GL_STATIC_DRAW, true, true, true);
+				}
+
+				break;
+		}
+
+		// Load some textures:
 		const char* texturePaths[] =
 		{
 			"01.png", "02.png"
@@ -126,7 +205,7 @@ namespace game
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Initialize our camera.
-		testCamera = graphics::camera(glm::vec3(0.0f, 0.0f, -4.0f));
+		testCamera = graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f)); // graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f));
 
 		return;
 	}
@@ -228,8 +307,8 @@ namespace game
 
 		glViewport(0, 0, video.width, video.height);
 
-		//glClearColor(0.0f, 0.6f, 0.4f, 1.0f);
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.6f, 0.4f, 1.0f);
+		//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -244,10 +323,13 @@ namespace game
 		glm::mat4 projection;
 
 		// Move the camera backward.
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
+
+		//view = testCamera.getViewMatrix();
 
 		// Set the projection area:
 		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 20.0f);
+		//projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 20.0f);
 
 		// Get the locations of our vertices in 'shaderInst' 
 		auto modelLocation = glGetUniformLocation(shaderInst, "model");
@@ -350,6 +432,8 @@ namespace game
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 					cout << "Mouse button detected: " << static_cast<int>(e.button.button) << endl;
+
+					testCamera.getRotation().y += 0.1f;
 
 					break;
 				case SDL_KEYDOWN:
