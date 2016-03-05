@@ -119,7 +119,14 @@ namespace game
 		{
 			bind();
 
-			glDrawElements(mode, static_cast<GLsizei>(elements.size()), getGLType<elementBufferObject::type>(), nullptr);
+			if (elements.exists())
+			{
+				glDrawElements(mode, static_cast<GLsizei>(elements.size()), getGLType<elementBufferObject::type>(), nullptr);
+			}
+			else
+			{
+				glDrawElements(mode, static_cast<GLsizei>(vertices.size()), getGLType<vertexBufferObject::type>(), nullptr);
+			}
 
 			unbind();
 

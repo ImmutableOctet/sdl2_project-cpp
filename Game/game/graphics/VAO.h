@@ -228,7 +228,7 @@ namespace game
 				bool init(bool should_unbind=true);
 
 				template <typename vertContainer, typename elemContainer, typename VBOContentType=GLfloat, typename EBOContentType=GLuint>
-				inline bool init(const vertContainer& vertexData, GLenum vertUsage, const elemContainer& elementData, GLenum elemUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
+				inline bool init(const vertContainer& vertexData, std::size_t vertexCount, GLenum vertUsage, const elemContainer& elementData, GLenum elemUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
 				{
 					if (contentsExist())
 					{
@@ -239,7 +239,7 @@ namespace game
 					init(false);
 
 					// Initialize our vertex-data and element-data (Indices):
-					vertices.init(vertexData, vertUsage, false);
+					vertices.init(vertexData, vertexCount, vertUsage, false);
 					elements.init(elementData, elemUsage, false);
 
 					// Describe the vertex-data we uploaded via 'vertices'.
@@ -260,7 +260,7 @@ namespace game
 				}
 
 				template <typename vertContainer, typename VBOContentType=GLfloat>
-				inline bool init(const vertContainer& vertexData, GLenum vertUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
+				inline bool init(const vertContainer& vertexData, std::size_t vertexCount, GLenum vertUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
 				{
 					if (contentsExist())
 					{
@@ -271,7 +271,7 @@ namespace game
 					init(false);
 
 					// Initialize/upload our vertex-data:
-					vertices.init(vertexData, vertUsage, false);
+					vertices.init(vertexData, vertexCount, vertUsage, false);
 
 					// Describe the vertex-data we uploaded via 'vertices'.
 					describeVertexData<VBOContentType>(vertexColor, vertexColor_alpha, texCoords);

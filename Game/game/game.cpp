@@ -160,7 +160,7 @@ namespace game
 						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 					};
 
-					testVAO.init(vertexData, GL_STATIC_DRAW, false, false, true);
+					testVAO.init(vertexData, 36, GL_STATIC_DRAW, false, false, true);
 				}
 
 				break;
@@ -183,7 +183,7 @@ namespace game
 						1, 2, 3
 					};
 
-					testVAO.init(vertexData, GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
+					testVAO.init(vertexData, vertexData.size(), GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
 					//testVAO.init(vertexData, GL_STATIC_DRAW, true, true, true);
 				}
 
