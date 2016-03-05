@@ -205,7 +205,7 @@ namespace game
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Initialize our camera.
-		testCamera = graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f)); // graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f));
+		testCamera = graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f), glm::vec3(0.0f, 0.0f, 0.0f)); // graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f));
 
 		return;
 	}
@@ -299,6 +299,20 @@ namespace game
 	{
 		using namespace game::graphics;
 		
+		const std::vector<glm::vec3> positions =
+		{
+			{ 0.0f, 0.0f, 0.0f },
+			{ 2.0f, 5.0f, -15.0f },
+			{ -1.5f, -2.2f, -2.5f },
+			{ -3.8f, -2.0f, -12.3f },
+			{ 2.4f, -0.4f, -3.5f },
+			{ -1.7f, 3.0f, -7.5f },
+			{ 1.3f, -2.0f, -2.5f },
+			{ 1.5f, 2.0f, -2.5f },
+			{ 1.5f, 0.2f, -1.5f },
+			{ -1.3f, 1.0f, -1.5f }
+		};
+
 		glEnable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
@@ -323,13 +337,13 @@ namespace game
 		glm::mat4 projection;
 
 		// Move the camera backward.
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
+		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
 
-		//view = testCamera.getViewMatrix();
+		view = testCamera.getViewMatrix();
 
 		// Set the projection area:
-		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 20.0f);
-		//projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 20.0f);
+		//projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 20.0f);
+		projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 20.0f);
 
 		// Get the locations of our vertices in 'shaderInst' 
 		auto modelLocation = glGetUniformLocation(shaderInst, "model");

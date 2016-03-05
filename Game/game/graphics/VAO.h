@@ -320,7 +320,7 @@ namespace game
 				bool setVertices(vertexBufferObject&& input);
 				bool setElements(elementBufferObject&& input);
 
-				void draw(GLenum mode=GL_TRIANGLES);
+				void draw(GLenum mode=GL_TRIANGLES, bool bindOps=true);
 
 				// Fields:
 				vertexBufferObject vertices;

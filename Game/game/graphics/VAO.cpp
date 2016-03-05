@@ -115,9 +115,12 @@ namespace game
 			return true;
 		}
 
-		void vertexArrayObject::draw(GLenum mode) // const
+		void vertexArrayObject::draw(GLenum mode, bool bindOps) // const
 		{
-			bind();
+			if (bindOps)
+			{
+				bind();
+			}
 
 			if (elements.exists())
 			{
@@ -128,7 +131,10 @@ namespace game
 				glDrawArrays(mode, 0, static_cast<GLsizei>(vertices.size()));
 			}
 
-			unbind();
+			if (bindOps)
+			{
+				unbind();
+			}
 
 			return;
 		}
