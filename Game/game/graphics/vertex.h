@@ -15,18 +15,19 @@ namespace game
 	namespace graphics
 	{
 		// Structures:
-		template <typename positionType=glm::vec3, typename colorType=glm::vec4, typename texCoordsType=glm::vec2>
+		template <typename positionType=glm::vec3, typename normalsType=glm::vec3, typename colorsType=glm::vec4, typename texCoordsType=glm::vec2>
 		struct vertex
 		{
 			// Typedefs:
 			using position_t = positionType;
-			using color_t = colorType;
+			using normals_t = normalsType;
+			using colors_t = colorsType;
 			using texcoords_t = texCoordsType;
 
 			// Methods:
 			inline std::size_t elementCount() const
 			{
-				return (position.length() + color.length() + texcoords.length()); // sizeof(vertex) / sizeof(GLfloat);
+				return (position.length() + normals.length() + colors.length() + texcoords.length()); // sizeof(vertex) / sizeof(GLfloat);
 			}
 
 			// Operator overloads:
@@ -37,7 +38,8 @@ namespace game
 
 			// Fields:
 			position_t position;
-			color_t color;
+			normals_t normals;
+			colors_t colors;
 			texcoords_t texcoords;
 		};
 

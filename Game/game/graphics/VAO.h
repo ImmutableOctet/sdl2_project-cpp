@@ -30,10 +30,12 @@ namespace game
 				static const GLsizei COLOR_DATA_EXT_SIZE = 1;
 
 				static const GLuint VERTEX_DATA_INDEX = 0;
-				static const GLuint COLOR_DATA_INDEX = 1;
-				static const GLuint TEXTURE_DATA_INDEX = 2;
+				static const GLuint NORMAL_DATA_INDEX = 1;
+				static const GLuint COLOR_DATA_INDEX = 2;
+				static const GLuint TEXTURE_DATA_INDEX = 3;
 
 				static const GLsizei VERTEX_DATA_LENGTH = 3; // 4;
+				static const GLsizei NORMAL_DATA_LENGTH = 3;
 				static const GLsizei COLOR_DATA_BASE_LENGTH = 3;
 				static const GLsizei COLOR_DATA_EXT_LENGTH = (COLOR_DATA_BASE_LENGTH + COLOR_DATA_EXT_SIZE);
 				static const GLsizei TEXTURE_DATA_LENGTH = 2;
@@ -42,6 +44,7 @@ namespace game
 				struct vertexData_descriptor
 				{
 					// Fields:
+					bool normals;
 					bool color;
 					bool color_alpha;
 					bool texture_coords;
@@ -51,6 +54,7 @@ namespace game
 				{
 					// Fields:
 					GLsizei vertexStride;
+					GLsizei normalStride;
 					GLsizei colorStride;
 					GLsizei textureStride;
 
@@ -65,13 +69,18 @@ namespace game
 						{
 							v_output += vertexStride;
 
-							if (index > COLOR_DATA_INDEX)
+							if (index > NORMAL_DATA_INDEX)
 							{
-								v_output += colorStride;
+								v_output += normalStride;
 
-								if (index > TEXTURE_DATA_INDEX)
+								if (index > COLOR_DATA_INDEX)
 								{
-									v_output += textureStride;
+									v_output += colorStride;
+
+									if (index > TEXTURE_DATA_INDEX)
+									{
+										v_output += textureStride;
+									}
 								}
 							}
 						}
@@ -96,10 +105,11 @@ namespace game
 				// Methods:
 
 				// Intermediate routines:
-				template <typename vertexType = GLfloat, typename colorType = vertexType, typename texCoordType = vertexType>
-				inline GLsizei describe_calculateStride(GLsizei vertex, GLsizei colors, GLsizei textureCoords, vertexData_strideInfo* opt_out=nullptr) const
+				template <typename vertexType = GLfloat, typename normalType = vertexType, typename colorType = vertexType, typename texCoordType = vertexType>
+				inline GLsizei describe_calculateStride(GLsizei vertex, GLsizei normals, GLsizei colors, GLsizei textureCoords, vertexData_strideInfo* opt_out=nullptr) const
 				{
 					GLsizei vertexStride = (vertex * sizeof(vertexType));
+					GLsizei normalStride = (normals * sizeof(normalType));
 					GLsizei colorStride = (colors * sizeof(colorType));
 					GLsizei textureStride = (textureCoords * sizeof(texCoordType));
 
@@ -107,11 +117,12 @@ namespace game
 					{
 						*opt_out = {};
 						opt_out->vertexStride = vertexStride;
+						opt_out->normalStride = normalStride;
 						opt_out->colorStride = colorStride;
 						opt_out->textureStride = textureStride;
 					}
 
-					return (vertexStride + colorStride + textureStride);
+					return (vertexStride + normalStride + colorStride + textureStride);
 				}
 
 				inline GLsizei describe_getColorCount(bool color_enabled, bool color_alpha_enabled) const
@@ -131,10 +142,10 @@ namespace game
 					return colors;
 				}
 
-				template <typename vertexType = GLfloat, typename colorType = vertexType, typename texCoordType = vertexType>
+				template <typename vertexType = GLfloat, typename normalType = vertexType, typename colorType = vertexType, typename texCoordType = vertexType>
 				inline GLsizei describe_calculateStride(const vertexData_descriptor& config, vertexData_strideInfo* opt_out=nullptr) const
 				{
-					return describe_calculateStride<vertexType, colorType, texCoordType>(VERTEX_DATA_LENGTH, describe_getColorCount(config.color, config.color_alpha), (config.texture_coords) ? TEXTURE_DATA_LENGTH : 0, opt_out);
+					return describe_calculateStride<vertexType, normalType, colorType, texCoordType>(VERTEX_DATA_LENGTH, (config.normals) ? NORMAL_DATA_LENGTH : 0, describe_getColorCount(config.color, config.color_alpha), (config.texture_coords) ? TEXTURE_DATA_LENGTH : 0, opt_out);
 				}
 
 				/*
@@ -163,6 +174,15 @@ namespace game
 					return;
 				}
 
+				template <typename normalType = GLfloat>
+				inline void describeVertexNormals(GLsizei stride, const GLvoid* v_firstElement, bool normalized = false, GLuint index = NORMAL_DATA_INDEX) const
+				{
+					glVertexAttribPointer(index, NORMAL_DATA_LENGTH, getGLType<normalType>(), normalized, stride, v_firstElement);
+					glEnableVertexAttribArray(index);
+
+					return;
+				}
+
 				template <typename colorType=GLfloat>
 				inline void describeVertexColor(GLsizei stride, const GLvoid* v_firstElement, bool alpha_enabled, bool normalized=false, GLuint index=COLOR_DATA_INDEX) const
 				{
@@ -183,21 +203,26 @@ namespace game
 
 				// This executes the other description-commands.
 				template <typename VBOContentType = GLfloat>
-				inline bool describeVertexData(bool vertexColor, bool vertexColor_alpha, bool texCoords) const
+				inline bool describeVertexData(bool vertexNormals, bool vertexColor, bool vertexColor_alpha, bool texCoords) const
 				{
 					// Describe the contents of 'vertices' to this VAO:
 
 					// Load our configuration from the passed parameters. (Interface may be changed later)
-					const vertexData_descriptor config = { vertexColor, vertexColor_alpha, texCoords };
+					const vertexData_descriptor config = { vertexNormals, vertexColor, vertexColor_alpha, texCoords };
 
 					// Allocate a default initialized/uninitialized stride-information block.
 					vertexData_strideInfo strideInfo;
 
 					// Calculate the stride of our vertex entries, copying data into 'strideInfo' for later use.
-					auto stride = describe_calculateStride<VBOContentType, VBOContentType, VBOContentType>(config, &strideInfo);
+					auto stride = describe_calculateStride<VBOContentType, VBOContentType, VBOContentType, VBOContentType>(config, &strideInfo);
 
 					// Describe the vertex positions.
 					describeVertexPosition<VBOContentType>(stride);
+
+					if (vertexNormals)
+					{
+						describeVertexNormals<VBOContentType>(stride, strideInfo[NORMAL_DATA_INDEX]);
+					}
 
 					if (vertexColor)
 					{
@@ -228,7 +253,7 @@ namespace game
 				bool init(bool should_unbind=true);
 
 				template <typename vertContainer, typename elemContainer, typename VBOContentType=GLfloat, typename EBOContentType=GLuint>
-				inline bool init(const vertContainer& vertexData, std::size_t vertexCount, GLenum vertUsage, const elemContainer& elementData, GLenum elemUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
+				inline bool init(const vertContainer& vertexData, std::size_t vertexCount, GLenum vertUsage, const elemContainer& elementData, GLenum elemUsage, bool vertexNormals, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
 				{
 					if (contentsExist())
 					{
@@ -243,7 +268,7 @@ namespace game
 					elements.init(elementData, elemUsage, false);
 
 					// Describe the vertex-data we uploaded via 'vertices'.
-					describeVertexData<VBOContentType>(vertexColor, vertexColor_alpha, texCoords);
+					describeVertexData<VBOContentType>(vertexNormals, vertexColor, vertexColor_alpha, texCoords);
 
 					// Unbind the vertex-buffer, but keep the element-buffer bound.
 					vertices.unbind(); // elements.unbind();
@@ -260,7 +285,7 @@ namespace game
 				}
 
 				template <typename vertContainer, typename VBOContentType=GLfloat>
-				inline bool init(const vertContainer& vertexData, std::size_t vertexCount, GLenum vertUsage, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
+				inline bool init(const vertContainer& vertexData, std::size_t vertexCount, GLenum vertUsage, bool vertexNormals, bool vertexColor, bool vertexColor_alpha, bool texCoords, bool should_unbind=true)
 				{
 					if (contentsExist())
 					{
@@ -274,7 +299,7 @@ namespace game
 					vertices.init(vertexData, vertexCount, vertUsage, false);
 
 					// Describe the vertex-data we uploaded via 'vertices'.
-					describeVertexData<VBOContentType>(vertexColor, vertexColor_alpha, texCoords);
+					describeVertexData<VBOContentType>(vertexNormals, vertexColor, vertexColor_alpha, texCoords);
 
 					// Unbind the vertex-buffer.
 					vertices.unbind();

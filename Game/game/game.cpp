@@ -160,7 +160,7 @@ namespace game
 						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 					};
 
-					testVAO.init(vertexData, 36, GL_STATIC_DRAW, false, false, true);
+					testVAO.init(vertexData, 36, GL_STATIC_DRAW, false, false, false, true);
 				}
 
 				break;
@@ -170,11 +170,11 @@ namespace game
 
 					std::vector<vertex> vertexData =
 					{
-						// Positions:					// Colors:			// Texture UVs:
-						{ { 0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 4.0f, 4.0f } },	// Top, right
-						{ { 0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
-						{ { -0.5f, -0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.7f },	{ 0.0f, 0.0f } },	// Bottom, left
-						{ { -0.5f,  0.5f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 0.0f, 4.0f } }	// Top, left
+						// Positions:					// Normals:					// Colors:			// Texture UVs:
+						{ { 0.5f,  0.5f, 0.0f },	{ 0.0f, 0.0f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 4.0f, 4.0f } },	// Top, right
+						{ { 0.5f, -0.5f, 0.0f },	{ 0.0f, 0.0f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 1.0f },	{ 4.0f, 0.0f } },	// Bottom, right
+						{ { -0.5f, -0.5f, 0.0f },	{ 0.0f, 0.0f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.7f },	{ 0.0f, 0.0f } },	// Bottom, left
+						{ { -0.5f,  0.5f, 0.0f },	{ 0.0f, 0.0f, 0.0f },	{ 1.0f, 1.0f, 1.0f, 0.0f },	{ 0.0f, 4.0f } }	// Top, left
 					};
 
 					std::vector<GLuint> indexData =
@@ -183,7 +183,7 @@ namespace game
 						1, 2, 3
 					};
 
-					testVAO.init(vertexData, vertexData.size(), GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true);
+					testVAO.init(vertexData, vertexData.size(), GL_STATIC_DRAW, indexData, GL_STATIC_DRAW, true, true, true, true);
 					//testVAO.init(vertexData, GL_STATIC_DRAW, true, true, true);
 				}
 
