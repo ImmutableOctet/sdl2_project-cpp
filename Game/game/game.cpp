@@ -82,7 +82,7 @@ namespace game
 		static const auto MODE_FULL = 0;
 		static const auto MODE_DEFAULT = 1;
 
-		const auto mode = MODE_DEFAULT;
+		const auto mode = MODE_FULL; // MODE_DEFAULT;
 
 		// Temporary vertex shader source code:
 		std::string vShaderSource;
@@ -462,7 +462,7 @@ namespace game
 				case SDL_KEYDOWN:
 					cout << "Keyboard button detected: " << e.key.keysym.sym << endl;
 
-					testCamera.getPosition().z -= 0.1f;
+					testCamera.getPosition().z += 0.2f;
 
 					break;
 				case SDL_QUIT:
