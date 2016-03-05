@@ -19,20 +19,8 @@ namespace game
 		// camera:
 
 		// Constructor(s):
-		camera::camera(const glm::vec3& pos, const glm::vec3& rot, GLfloat fieldOfView, glm::vec3 up, bool rot_in_radians) : position(pos), FOV(fieldOfView), worldUp(up)
+		camera::camera(const glm::vec3& pos, const glm::vec2& rot, GLfloat fieldOfView, glm::vec3 up) : position(pos), rotation(rot), FOV(fieldOfView), worldUp(up)
 		{
-			if (!rot_in_radians)
-			{
-				for (auto i = 0; i < rotation.length(); i++)
-				{
-					rotation[i] = glm::radians(rot[i]);
-				}
-			}
-			else
-			{
-				rotation = rot;
-			}
-
 			updateAngles();
 		}
 
@@ -41,9 +29,12 @@ namespace game
 		{
 			glm::vec3 front;
 
-			front.x = cos(rotation.y) * cos(rotation.x);
-			front.y = sin(rotation.x);
-			front.z = sin(rotation.y) * cos(rotation.x); // rotation.z
+			auto rx = glm::radians(rotation.x);
+			auto ry = glm::radians(rotation.y);
+
+			front.x = cos(ry) * cos(rx);
+			front.y = sin(rx);
+			front.z = sin(ry) * cos(rx); // rz
 
 			this->front = glm::normalize(front);
 
@@ -64,12 +55,12 @@ namespace game
 			return this->position;
 		}
 
-		const glm::vec3& camera::getRotation() const
+		const glm::vec2& camera::getRotation() const
 		{
 			return this->rotation;
 		}
 
-		glm::vec3& camera::getRotation()
+		glm::vec2& camera::getRotation()
 		{
 			return this->rotation;
 		}
@@ -87,6 +78,12 @@ namespace game
 
 		glm::mat4 camera::getViewMatrix() const
 		{
+			//return glm::lookAt(position, position * front, up);
+
+			auto position = this->position;
+
+			position.z = -position.z;
+
 			return glm::lookAt(position, position + front, up);
 		}
 

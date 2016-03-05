@@ -82,7 +82,7 @@ namespace game
 		static const auto MODE_FULL = 0;
 		static const auto MODE_DEFAULT = 1;
 
-		const auto mode = MODE_FULL;
+		const auto mode = MODE_DEFAULT;
 
 		// Temporary vertex shader source code:
 		std::string vShaderSource;
@@ -205,7 +205,7 @@ namespace game
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Initialize our camera.
-		testCamera = graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f), glm::vec3(0.0f, 0.0f, 0.0f)); // graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f));
+		testCamera = graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f), glm::vec2(0.0f, -90.0f)); // graphics::camera(glm::vec3(0.0f, 0.0f, -8.0f));
 
 		return;
 	}
@@ -337,13 +337,13 @@ namespace game
 		glm::mat4 projection;
 
 		// Move the camera backward.
-		//view = testCamera.getViewMatrix();
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
+		view = testCamera.getViewMatrix();
+		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
 
 
 		// Set the projection area:
-		//projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 20.0f);
-		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 2000.0f);
+		projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 1000.0f);
+		//projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 2000.0f);
 
 		// Get the locations of our vertices in 'shaderInst' 
 		auto modelLocation = glGetUniformLocation(shaderInst, "model");
@@ -458,11 +458,11 @@ namespace game
 				case SDL_MOUSEBUTTONDOWN:
 					cout << "Mouse button detected: " << static_cast<int>(e.button.button) << endl;
 
-					testCamera.getRotation().y += 0.1f;
-
 					break;
 				case SDL_KEYDOWN:
 					cout << "Keyboard button detected: " << e.key.keysym.sym << endl;
+
+					testCamera.getPosition().z -= 0.1f;
 
 					break;
 				case SDL_QUIT:
