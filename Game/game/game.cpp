@@ -82,7 +82,7 @@ namespace game
 		static const auto MODE_FULL = 0;
 		static const auto MODE_DEFAULT = 1;
 
-		const auto mode = MODE_DEFAULT;
+		const auto mode = MODE_FULL;
 
 		// Temporary vertex shader source code:
 		std::string vShaderSource;
@@ -299,7 +299,7 @@ namespace game
 	{
 		using namespace game::graphics;
 		
-		const std::vector<glm::vec3> positions =
+		static const std::vector<glm::vec3> positions =
 		{
 			{ 0.0f, 0.0f, 0.0f },
 			{ 2.0f, 5.0f, -15.0f },
@@ -337,13 +337,13 @@ namespace game
 		glm::mat4 projection;
 
 		// Move the camera backward.
-		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
+		//view = testCamera.getViewMatrix();
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
 
-		view = testCamera.getViewMatrix();
 
 		// Set the projection area:
-		//projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 20.0f);
-		projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 20.0f);
+		//projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 20.0f);
+		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 2000.0f);
 
 		// Get the locations of our vertices in 'shaderInst' 
 		auto modelLocation = glGetUniformLocation(shaderInst, "model");
@@ -353,39 +353,50 @@ namespace game
 		// Upload the texture mix-value:
 		setUniform(glGetUniformLocation(shaderInst, "mix_value"), 0.4f);
 
-		// Rending some objects:
-		for (auto i = 0; i < 2; i++)
+		// Upload our main matrices:
+		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
+		// Bind and register our textures:
+		for (GLint i = 0; i < testTextures.size(); i++)
 		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			testTextures[i].bind();
+
+			setUniform(glGetUniformLocation(shaderInst, (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
+		}
+
+		// Rending some objects:
+
+		// Bind the test-VAO.
+		testVAO.bind();
+
+		for (GLuint i = 0; i < positions.size(); i++)
+		{
+			// Build a model matrix:
 			glm::mat4 model;
 
-			// Rotate our model.
-			if (i == 0)
-			{
-				model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.8f, 0.5f, 1.0f));
-			}
+			model = glm::translate(model, positions[i]);
 
-			model = glm::translate(model, glm::vec3(0.0f, 0.1*static_cast<GLfloat>(i), 0.0f));
+			GLfloat angle = 20.0f * (i+1);
 
-			// Upload our matrices:
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
+			// Upload our built matrix.
 			glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-			glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-			glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
-			for (GLint i = 0; i < testTextures.size(); i++)
-			{
-				glActiveTexture(GL_TEXTURE0 + i);
-				testTextures[i].bind();
+			// Draw our model.
+			testVAO.draw(GL_TRIANGLES, false);
+		}
 
-				setUniform(glGetUniformLocation(shaderInst, (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
-			}
+		// Unbind our test-VAO.
+		testVAO.unbind();
 
-			testVAO.draw();
-
-			for (auto i = 0; i < testTextures.size(); i++)
-			{
-				glActiveTexture(GL_TEXTURE0 + i);
-				testTextures[i].unbind();
-			}
+		// Unbind our textures:
+		for (auto i = 0; i < testTextures.size(); i++)
+		{
+			glActiveTexture(GL_TEXTURE0 + i);
+			testTextures[i].unbind();
 		}
 
 		// Stop using 'defaultShader'.
