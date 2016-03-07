@@ -65,6 +65,12 @@ namespace game
 			destroy();
 		}
 
+		// Operator overloads:
+		shader::operator resourceHandle_t() const
+		{
+			return getInstance();
+		}
+
 		// Methods:
 		bool shader::build(const GLchar* vShaderSource, const GLchar* fShaderSource, GLchar* log_out, GLsizei log_maxLength, shaderHandle* vertex_out, shaderHandle* fragment_out)
 		{

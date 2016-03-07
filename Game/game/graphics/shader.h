@@ -19,6 +19,8 @@ namespace game
 				// Typedefs:
 				using location = shaderLocation;
 
+				using lock = resource_lock<shader>;
+
 				// Functions:
 				static shaderHandle buildProgram(const GLchar* str, GLenum shaderType, GLchar* log_out=nullptr, GLsizei log_maxLength=0);
 
@@ -40,6 +42,8 @@ namespace game
 
 				// Operator overloads:
 				shader& operator=(shader&&) = default;
+
+				operator resourceHandle_t() const;
 
 				// Methods:
 

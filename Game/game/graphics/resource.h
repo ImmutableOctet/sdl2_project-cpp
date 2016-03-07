@@ -11,10 +11,13 @@ namespace game
 	namespace graphics
 	{
 		// Classes:
-		template <typename resourceHandle_t, resourceHandle_t noinstance_value=resourceHandle_t()>
+		template <typename resourceHandle, resourceHandle noinstance_value=resourceHandle()>
 		class resource
 		{
 			public:
+				// Typedefs:
+				using resourceHandle_t = resourceHandle;
+
 				// Constant variable(s):
 				static const resourceHandle_t noinstance = noinstance_value;
 

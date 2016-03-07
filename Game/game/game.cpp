@@ -328,79 +328,76 @@ namespace game
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		// Start using 'defaultShader'.
-		defaultShader.bind();
-
-		const auto shaderInst = defaultShader.getInstance();
-
-		glm::mat4 view;
-		glm::mat4 projection;
-
-		// Move the camera backward.
-		view = testCamera.getViewMatrix();
-		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -8.0f));
-
-
-		// Set the projection area:
-		projection = testCamera.getProjectionMatrixFrom(video.width, video.height, 0.1f, 1000.0f);
-		//projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(video.width) / static_cast<GLfloat>(video.height), 0.1f, 2000.0f);
-
-		// Get the locations of our vertices in 'shaderInst' 
-		auto modelLocation = glGetUniformLocation(shaderInst, "model");
-		auto viewLocation = glGetUniformLocation(shaderInst, "view");
-		auto projLocation = glGetUniformLocation(shaderInst, "projection");
-
-		// Upload the texture mix-value:
-		setUniform(glGetUniformLocation(shaderInst, "mix_value"), 0.4f);
-
-		// Upload our main matrices:
-		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
-
-		// Bind and register our textures:
-		for (GLint i = 0; i < testTextures.size(); i++)
+		// Default shader:
 		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			testTextures[i].bind();
+			// Start using the default shader.
+			auto shaderLock = shader::lock(defaultShader);
 
-			setUniform(glGetUniformLocation(shaderInst, (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
+			const shader::resourceHandle_t shaderInst = defaultShader;
+
+			glm::mat4 view;
+			glm::mat4 projection;
+
+			// Move the camera backward.
+			view = testCamera.getViewMatrix();
+
+			// Set the projection area:
+			projection = testCamera.getProjectionMatrixFrom(video.width, video.height);
+
+			// Get the locations of our vertices in 'shaderInst' 
+			auto modelLocation = glGetUniformLocation(shaderInst, "model");
+			auto viewLocation = glGetUniformLocation(shaderInst, "view");
+			auto projLocation = glGetUniformLocation(shaderInst, "projection");
+
+			// Upload the texture mix-value:
+			setUniform(glGetUniformLocation(shaderInst, "mix_value"), 0.4f);
+
+			// Upload our main matrices:
+			glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+			glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
+			// Bind and register our textures:
+			for (GLint i = 0; i < testTextures.size(); i++)
+			{
+				glActiveTexture(GL_TEXTURE0 + i);
+				testTextures[i].bind();
+
+				setUniform(glGetUniformLocation(shaderInst, (std::string("textureHandle_") + std::to_string(i)).c_str()), i);
+			}
+
+			// Rending some objects:
+
+			// Bind the test-VAO.
+			testVAO.bind();
+
+			for (GLuint i = 0; i < positions.size(); i++)
+			{
+				// Build a model matrix:
+				glm::mat4 model;
+
+				model = glm::translate(model, positions[i]);
+
+				GLfloat angle = 20.0f * static_cast<GLfloat>(i+1);
+
+				model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
+				// Upload our built matrix.
+				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+
+				// Draw our model.
+				testVAO.draw(GL_TRIANGLES, false);
+			}
+
+			// Unbind our test-VAO.
+			testVAO.unbind();
+
+			// Unbind our textures:
+			for (auto i = 0; i < testTextures.size(); i++)
+			{
+				glActiveTexture(GL_TEXTURE0 + i);
+				testTextures[i].unbind();
+			}
 		}
-
-		// Rending some objects:
-
-		// Bind the test-VAO.
-		testVAO.bind();
-
-		for (GLuint i = 0; i < positions.size(); i++)
-		{
-			// Build a model matrix:
-			glm::mat4 model;
-
-			model = glm::translate(model, positions[i]);
-
-			GLfloat angle = 20.0f * (i+1);
-
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
-			// Upload our built matrix.
-			glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-
-			// Draw our model.
-			testVAO.draw(GL_TRIANGLES, false);
-		}
-
-		// Unbind our test-VAO.
-		testVAO.unbind();
-
-		// Unbind our textures:
-		for (auto i = 0; i < testTextures.size(); i++)
-		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			testTextures[i].unbind();
-		}
-
-		// Stop using 'defaultShader'.
-		defaultShader.unbind();
 
 		// Disable depth-testing.
 		glDisable(GL_DEPTH_TEST);
