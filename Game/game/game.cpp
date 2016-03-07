@@ -91,13 +91,13 @@ namespace game
 		switch (mode)
 		{
 			case MODE_DEFAULT:
-				vShaderSource = utilities::load_string("shaders/default_vert.glsl");
-				fShaderSource = utilities::load_string("shaders/default_frag.glsl");
+				vShaderSource = utilities::load_string("shaders/default.vert");
+				fShaderSource = utilities::load_string("shaders/default.frag");
 
 				break;
 			case MODE_FULL:
-				vShaderSource = utilities::load_string("shaders/full/vert.glsl");
-				fShaderSource = utilities::load_string("shaders/full/frag.glsl");
+				vShaderSource = utilities::load_string("shaders/test/test.vert");
+				fShaderSource = utilities::load_string("shaders/test/test.frag");
 
 				break;
 		}
