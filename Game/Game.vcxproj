@@ -176,11 +176,13 @@ xcopy /y /e "$(SolutionDir)resources" "$(TargetDir)"</Command>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\compiler_config.h" />
     <ClInclude Include="game\config.h" />
     <ClInclude Include="game\display.h" />
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\graphics\buffer_object.h" />
     <ClInclude Include="game\graphics\camera.h" />
+    <ClInclude Include="game\graphics\config.h" />
     <ClInclude Include="game\graphics\model.h" />
     <ClInclude Include="game\graphics\resource.h" />
     <ClInclude Include="game\graphics\context.h" />

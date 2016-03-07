@@ -1,4 +1,6 @@
 // Includes:
+#include "config.h"
+
 #include "shader.h"
 
 #include <utility>
@@ -233,6 +235,7 @@ namespace game
 				if (value != 0)
 				{
 					glGetIntegerv(GL_LIST_MODE, &value);
+
 					result = (value == GL_COMPILE);
 				}
 				else
@@ -280,14 +283,20 @@ namespace game
 
 		void shader_lock::bind()
 		{
-			bind(true);
+			#ifdef SHADER_LOCK_SAFE
+				bind(true);
+			#else
+				bind(false);
+			#endif
 
 			return;
 		}
 
 		void shader_lock::unbind()
 		{
+			//#ifdef SHADER_LOCK_SAFE
 			unbind(true);
+			//#endif
 
 			return;
 		}

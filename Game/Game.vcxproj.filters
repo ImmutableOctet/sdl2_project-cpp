@@ -125,5 +125,11 @@
     <ClInclude Include="game\graphics\model.h">
       <Filter>Header Files\game\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="game\graphics\config.h">
+      <Filter>Header Files\game\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game\compiler_config.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
