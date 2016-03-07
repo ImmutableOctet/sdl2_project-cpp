@@ -79,10 +79,10 @@ namespace game
 
 	void application::onCreate(const graphics::context& graphicsContext, const graphics::contextInfo& renderInfo)
 	{
-		static const auto MODE_FULL = 0;
-		static const auto MODE_DEFAULT = 1;
+		static const auto MODE_TEST_EVERYTHING = 0;
+		static const auto MODE_STANDARD = 1;
 
-		const auto mode = MODE_FULL; // MODE_DEFAULT;
+		const auto mode = MODE_STANDARD; // MODE_TEST_EVERYTHING;
 
 		// Temporary vertex shader source code:
 		std::string vShaderSource;
@@ -90,12 +90,12 @@ namespace game
 		
 		switch (mode)
 		{
-			case MODE_DEFAULT:
+			case MODE_STANDARD:
 				vShaderSource = utilities::load_string("shaders/default.vert");
 				fShaderSource = utilities::load_string("shaders/default.frag");
 
 				break;
-			case MODE_FULL:
+			case MODE_TEST_EVERYTHING:
 				vShaderSource = utilities::load_string("shaders/test/test.vert");
 				fShaderSource = utilities::load_string("shaders/test/test.frag");
 
@@ -113,7 +113,7 @@ namespace game
 
 		switch (mode)
 		{
-			case MODE_DEFAULT:
+			case MODE_STANDARD:
 				{
 					std::vector<GLfloat> vertexData =
 					{
@@ -164,7 +164,7 @@ namespace game
 				}
 
 				break;
-			case MODE_FULL:
+			case MODE_TEST_EVERYTHING:
 				{
 					using vertex = graphics::vertex_t;
 
