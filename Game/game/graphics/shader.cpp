@@ -227,26 +227,26 @@ namespace game
 		{
 			if (nested)
 			{
-				bool result = true;
 				GLint value;
 
-				glGetIntegerv(GL_LIST_INDEX, &value);
+				#ifdef SHADER_LOCK_LEGACY
+					bool result = false;
 
-				if (value != 0)
-				{
-					glGetIntegerv(GL_LIST_MODE, &value);
+					// Legacy check:
+					glGetIntegerv(GL_LIST_INDEX, &value);
 
-					result = (value == GL_COMPILE);
-				}
-				else
-				{
-					result = false;
-				}
+					if (value != 0)
+					{
+						glGetIntegerv(GL_LIST_MODE, &value);
 
-				if (!result)
-				{
-					throw std::runtime_error("Invalid environment to perform a nested shader-lock.");
-				}
+						result = (value == GL_COMPILE);
+					}
+
+					if (!result)
+					{
+						throw std::runtime_error("Invalid environment to perform a nested shader-lock.");
+					}
+				#endif
 
 				// Retrieve the current shader handle.
 				glGetIntegerv(GL_CURRENT_PROGRAM, &value);
