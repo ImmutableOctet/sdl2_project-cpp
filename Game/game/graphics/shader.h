@@ -9,6 +9,9 @@ namespace game
 {
 	namespace graphics
 	{
+		// Forward declarations:
+		//class shader;
+
 		// Classes:
 		class shader : public resource<shaderHandle>
 		{
@@ -19,8 +22,6 @@ namespace game
 				// Typedefs:
 				using location = shaderLocation;
 
-				using lock = resource_lock<shader>;
-
 				// Functions:
 				static shaderHandle buildProgram(const GLchar* str, GLenum shaderType, GLchar* log_out=nullptr, GLsizei log_maxLength=0);
 
@@ -28,6 +29,9 @@ namespace game
 				{
 					return buildProgram(str.c_str(), shaderType, log_out, log_maxLength);
 				}
+
+				static void bindProgram(shaderHandle instance);
+				static void unbindProgram();
 
 				// Constructor(s):
 				shader();
@@ -73,6 +77,26 @@ namespace game
 				{
 					return glGetAttribLocation(instance, name);
 				}
+		};
+
+		class shader_lock : public resource_lock<shader>
+		{
+			private:
+				using super = resource_lock<shader>;
+			public:
+				// Assume constructor equivalency.
+				using super::resource_lock;
+
+				// Methods:
+				void bind(shaderHandle prev_inst);
+				void bind(bool nested);
+				void unbind(bool resolveNesting);
+
+				virtual void bind() override;
+				virtual void unbind() override;
+			protected:
+				// Fields:
+				shaderHandle prevHandle = shader::noinstance; // resourceHandle_t // resourceType_t::noinstance
 		};
 	}
 }

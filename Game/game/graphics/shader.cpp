@@ -45,6 +45,20 @@ namespace game
 			return shaderInstance;
 		}
 
+		void shader::bindProgram(shaderHandle instance)
+		{
+			glUseProgram(instance);
+
+			return;
+		}
+
+		void shader::unbindProgram()
+		{
+			glUseProgram(noinstance);
+
+			return;
+		}
+
 		// Constructor(s):
 		shader::shader()
 		{
@@ -183,14 +197,97 @@ namespace game
 
 		void shader::bind() const
 		{
-			glUseProgram(instance);
+			bindProgram(instance);
 
 			return;
 		}
 
 		void shader::unbind() const
 		{
-			glUseProgram(noinstance);
+			unbindProgram();
+
+			return;
+		}
+
+		// shader_lock:
+
+		// Methods:
+		void shader_lock::bind(shaderHandle prev_inst) // resourceHandle_t
+		{
+			prevHandle = prev_inst;
+
+			super::bind();
+
+			return;
+		}
+
+		void shader_lock::bind(bool nested)
+		{
+			if (nested)
+			{
+				bool result = true;
+				GLint value;
+
+				glGetIntegerv(GL_LIST_INDEX, &value);
+
+				if (value != 0)
+				{
+					glGetIntegerv(GL_LIST_MODE, &value);
+					result = (value == GL_COMPILE);
+				}
+				else
+				{
+					result = false;
+				}
+
+				if (!result)
+				{
+					throw std::runtime_error("Invalid environment to perform a nested shader-lock.");
+				}
+
+				// Retrieve the current shader handle.
+				glGetIntegerv(GL_CURRENT_PROGRAM, &value);
+
+				if (value != shader::noinstance) // resourceType_t::noinstance
+				{
+					bind(static_cast<shaderHandle>(value)); // resourceHandle_t
+
+					return;
+				}
+			}
+
+			super::bind();
+			
+			return;
+		}
+
+		void shader_lock::unbind(bool resolveNesting)
+		{
+			super::unbind();
+
+			if (resolveNesting)
+			{
+				if (prevHandle != shader::noinstance) // resourceType_t::noinstance
+				{
+					shader::bindProgram(prevHandle);
+
+					prevHandle = shader::noinstance; // resourceType_t::noinstance
+				}
+			}
+
+			return;
+		}
+
+		void shader_lock::bind()
+		{
+			bind(true);
+
+			return;
+		}
+
+		void shader_lock::unbind()
+		{
+			unbind(true);
 
 			return;
 		}

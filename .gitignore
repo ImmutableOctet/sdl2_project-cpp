@@ -3,6 +3,7 @@ build
 bin
 resources
 library
+backup
 *.pdb
 *.sdf
 *.opendb

@@ -82,7 +82,7 @@ namespace game
 		static const auto MODE_TEST_EVERYTHING = 0;
 		static const auto MODE_STANDARD = 1;
 
-		const auto mode = MODE_STANDARD; // MODE_TEST_EVERYTHING;
+		const auto mode = MODE_TEST_EVERYTHING; // MODE_STANDARD;
 
 		// Temporary vertex shader source code:
 		std::string vShaderSource;
@@ -117,50 +117,50 @@ namespace game
 				{
 					std::vector<GLfloat> vertexData =
 					{
-						-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-						0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-						-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-						0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-						0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-						0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-						-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-						-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-						-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-						-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-						0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-						0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-						0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-						0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-						0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-						0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-						-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-						-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-						0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-						0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-						-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-						-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+						-0.5f, -0.5f, -0.5f, // 0.0f, 0.0f,
+						0.5f, -0.5f, -0.5f,  //1.0f, 0.0f,
+						0.5f,  0.5f, -0.5f,  //1.0f, 1.0f,
+						0.5f,  0.5f, -0.5f,  //1.0f, 1.0f,
+						-0.5f,  0.5f, -0.5f, // 0.0f, 1.0f,
+						-0.5f, -0.5f, -0.5f, // 0.0f, 0.0f,
+											 //
+						-0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+						0.5f, -0.5f,  0.5f,  //1.0f, 0.0f,
+						0.5f,  0.5f,  0.5f,  //1.0f, 1.0f,
+						0.5f,  0.5f,  0.5f,  //1.0f, 1.0f,
+						-0.5f,  0.5f,  0.5f, // 0.0f, 1.0f,
+						-0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+											 //
+						-0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+						-0.5f,  0.5f, -0.5f, // 1.0f, 1.0f,
+						-0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+						-0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+						-0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+						-0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+											 //
+						0.5f,  0.5f,  0.5f,  //1.0f, 0.0f,
+						0.5f,  0.5f, -0.5f,  //1.0f, 1.0f,
+						0.5f, -0.5f, -0.5f,  //0.0f, 1.0f,
+						0.5f, -0.5f, -0.5f,  //0.0f, 1.0f,
+						0.5f, -0.5f,  0.5f,  //0.0f, 0.0f,
+						0.5f,  0.5f,  0.5f,  //1.0f, 0.0f,
+											 //
+						-0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+						0.5f, -0.5f, -0.5f,  //1.0f, 1.0f,
+						0.5f, -0.5f,  0.5f,  //1.0f, 0.0f,
+						0.5f, -0.5f,  0.5f,  //1.0f, 0.0f,
+						-0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+						-0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+											 //
+						-0.5f,  0.5f, -0.5f, // 0.0f, 1.0f,
+						0.5f,  0.5f, -0.5f,  //1.0f, 1.0f,
+						0.5f,  0.5f,  0.5f,  //1.0f, 0.0f,
+						0.5f,  0.5f,  0.5f,  //1.0f, 0.0f,
+						-0.5f,  0.5f,  0.5f, // 0.0f, 0.0f,
+						-0.5f,  0.5f, -0.5f // 0.0f, 1.0f
 					};
 
-					testVAO.init(vertexData, 36, GL_STATIC_DRAW, false, false, false, true);
+					testVAO.init(vertexData, 36, GL_STATIC_DRAW, false, false, false, false); // true
 				}
 
 				break;
@@ -331,7 +331,7 @@ namespace game
 		// Default shader:
 		{
 			// Start using the default shader.
-			auto shaderLock = shader::lock(defaultShader);
+			auto shaderLock = shader_lock(defaultShader);
 
 			const shader::resourceHandle_t shaderInst = defaultShader;
 

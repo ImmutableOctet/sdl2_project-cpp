@@ -126,6 +126,7 @@ namespace game
 			display::windowMode video;
 
 			graphics::shader defaultShader;
+			graphics::shader testLightShader;
 
 			graphics::vertexArrayObject testVAO;
 			std::array<graphics::texture, 2> testTextures;

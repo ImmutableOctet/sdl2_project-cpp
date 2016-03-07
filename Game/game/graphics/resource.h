@@ -76,31 +76,38 @@ namespace game
 		template <typename resourceType>
 		class resource_lock
 		{
+			public:
+				// Typedefs:
+				using resourceType_t = resourceType;
+				//using resourceHandle_t = resourceType::resourceHandle_t;
 			protected:
+				// Fields:
 				const resourceType* resource_ref = nullptr;
 			public:
+				// Constructor(s):
 				resource_lock() = delete;
 				resource_lock(const resource_lock&) = delete;
 
-				inline resource_lock(const resourceType* rptr) : resource_ref(rptr)
+				inline resource_lock(const resourceType_t* rptr) : resource_ref(rptr)
 				{
 					bind();
 				}
 				
-				inline resource_lock(const resourceType& ref) : resource_lock(&ref) { /* Nothing so far. */ }
+				inline resource_lock(const resourceType_t& ref) : resource_lock(&ref) { /* Nothing so far. */ }
 
 				inline resource_lock(resource_lock&& res) // = default
 				{
 					std::swap(this->resource_ref, res.resource_ref);
 				}
 
+				// Destructor(s):
 				inline ~resource_lock()
 				{
 					unbind();
 				}
 
 				// Methods:
-				inline void bind() const
+				inline virtual void bind() // const
 				{
 					if (resource_ref == nullptr)
 					{
@@ -112,7 +119,7 @@ namespace game
 					return;
 				}
 
-				inline void unbind() const
+				inline virtual void unbind() // const
 				{
 					if (resource_ref == nullptr)
 					{
@@ -124,7 +131,7 @@ namespace game
 					return;
 				}
 
-				inline resourceType& getReference() const
+				inline resourceType_t& getReference() const
 				{
 					return *resource_ref;
 				}
